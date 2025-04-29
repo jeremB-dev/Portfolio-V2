@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import '../styles/BackgroundAnimation.css';
+
 
 const BackgroundAnimation = ({ type = 'particles', opacity = 0.08, color = '#53ba5f', speed = 'slow' }) => {
   const canvasRef = useRef(null);

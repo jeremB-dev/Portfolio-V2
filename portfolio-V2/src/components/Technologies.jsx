@@ -2,40 +2,27 @@ import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import { useAnimation } from '../components/AnimationContext';
-import '../styles/toggleAnimation.css';
+
 
 function Technologies() {
-  const { animationsEnabled, setAnimationsEnabled } = useAnimation();
+  const { animationsEnabled } = useAnimation();
 
   return (
     <section id="technologies">
-      {/* Bouton pour désactiver les animations */}
-      <div className="animation-toggle">
-        <span className="toggle-icon">🚫</span>
-        <div className="animation-toggle-wrapper">
-          <label className="switch">
-            <input 
-              type="checkbox" 
-              checked={animationsEnabled}
-              onChange={() => setAnimationsEnabled(!animationsEnabled)}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="animation-toggle-tooltip">
-            {animationsEnabled ? "Désactiver animations" : "Activer animations"}
-          </div>
-        </div>
-        <span className="toggle-icon">✨</span>
-      </div>
 
-      {animationsEnabled && (
+{animationsEnabled && (
         <BackgroundAnimation 
           type="particles" 
           opacity={1} 
           color="#53ba5f" 
           speed="fast" 
+          particleSize={15} // Augmenter la taille des particules
+          particleCount={500} // Augmenter le nombre de particules
+          movementType="bounce"
+          rotationSpeed="medium" // Ajouter une rotation si supporté
         />
       )}
+
 
       <h2>Technologies apprises</h2>
       <ul>
@@ -91,17 +78,6 @@ function Technologies() {
             height="64"
           />
           <p>React</p>
-        </li>
-        <li>
-          <img
-            src="/assets/logos/redux.svg"
-            alt="logo techno Redux"
-            className="tech-logo"
-            loading="lazy"
-            width="64"
-            height="64"
-          />
-          <p>Redux</p>
         </li>
       </ul>
       <h2>Outils et plateformes</h2>

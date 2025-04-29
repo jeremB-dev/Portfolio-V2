@@ -3,10 +3,10 @@ import { HashLink } from 'react-router-hash-link';
 import ProjectCard from './ProjectCard';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import { useAnimation } from '../components/AnimationContext';
-import '../styles/toggleAnimation.css';
+
 
 function Projects() {
-  const { animationsEnabled, setAnimationsEnabled } = useAnimation();
+  const { animationsEnabled } = useAnimation();
 
   const projects = [
     {
@@ -16,7 +16,8 @@ function Projects() {
       image: "/assets/Captures/ohmyfood/home.webp",
       description: `J'ai dévelopé la partie front-end d'un site pour une architecte d'intérieur.\nCe projet inclut :\n- La création d'une page dynamique présentant les travaux de l'architecte.\n- La gestion des événements utilisateurs et la manipulation du DOM en JavaScript.\n- Le développement d'une page de connexion et d'une modale pour uploader des médias.\n\nJ'ai appris à communiquer avec une API, à gérer des formulaires et à tester les fonctionnalités avec un code back-end. Ce projet m'a permis de consolider mes compétences en JavaScript pour les applications web modernes.`,
       technologies: ["html", "sass"],
-      github: "https://github.com/jeremB-dev/Ohmyfood"
+      github: "https://github.com/jeremB-dev/Ohmyfood",
+      link: "/details/ohmyfood", 
     },
     {
       id: 2,
@@ -49,31 +50,17 @@ function Projects() {
 
   return (
     <section id="projects">
-      {/* Bouton pour désactiver les animations */}
-      <div className="animation-toggle">
-        <span className="toggle-icon">🚫</span>
-        <div className="animation-toggle-wrapper">
-          <label className="switch">
-            <input 
-              type="checkbox" 
-              checked={animationsEnabled}
-              onChange={() => setAnimationsEnabled(!animationsEnabled)}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="animation-toggle-tooltip">
-            {animationsEnabled ? "Désactiver animations" : "Activer animations"}
-          </div>
-        </div>
-        <span className="toggle-icon">✨</span>
-      </div>
 
-      {animationsEnabled && (
+{animationsEnabled && (
         <BackgroundAnimation 
           type="particles" 
           opacity={1} 
           color="#53ba5f" 
           speed="fast" 
+          particleSize={15} // Augmenter la taille des particules
+          particleCount={500} // Augmenter le nombre de particules
+          movementType="bounce"
+          rotationSpeed="medium" // Ajouter une rotation si supporté
         />
       )}
 

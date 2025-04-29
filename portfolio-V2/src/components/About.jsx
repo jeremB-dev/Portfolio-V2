@@ -1,32 +1,15 @@
 import React, { useContext } from 'react';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import { AnimationContext } from '../components/AnimationContext';
-import '../styles/toggleAnimation.css';
+
 import { HashLink } from 'react-router-hash-link';
 
 function About() {
-  const { animationsEnabled, setAnimationsEnabled } = useContext(AnimationContext);
+  const { animationsEnabled} = useContext(AnimationContext);
 
   return (
     <section id="about">
-      {/* Bouton pour désactiver les animations */}
-      <div className="animation-toggle">
-        <span className="toggle-icon">🚫</span>
-        <div className="animation-toggle-wrapper">
-          <label className="switch">
-            <input 
-              type="checkbox" 
-              checked={animationsEnabled}
-              onChange={() => setAnimationsEnabled(!animationsEnabled)}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="animation-toggle-tooltip">
-            {animationsEnabled ? "Désactiver animations" : "Activer animations"}
-          </div>
-        </div>
-        <span className="toggle-icon">✨</span>
-      </div>
+
 
       {animationsEnabled && (
         <BackgroundAnimation 

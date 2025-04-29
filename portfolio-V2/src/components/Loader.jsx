@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import '../styles/Loader.css';
+
 
 function Loader({ onFinished }) {
   const [fadeOut, setFadeOut] = useState(false);

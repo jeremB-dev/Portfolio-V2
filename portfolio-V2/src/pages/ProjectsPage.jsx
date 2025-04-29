@@ -7,7 +7,7 @@ function ProjectsPage() {
     <div className="projects-page">
       <Projects />
       <div className="section-navigation">
-        <p>Découvrez <Link to="/technologies">les technologies que je maîtrise</Link> ou <Link to="/contact">contactez-moi</Link> pour discuter de vos projets.</p>
+        <p>Découvrez <Link to="/technologies">les technologies que je maîtrise</Link> ou <Link to="/ContactPage">contactez-moi</Link> pour discuter de vos projets.</p>
       </div>
     </div>
   );

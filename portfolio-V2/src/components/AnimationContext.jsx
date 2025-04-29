@@ -24,7 +24,8 @@ export default function AnimationProvider({ children }) {
   );
 }
 
-// ✅ Exports nommés
+// Exporter le contexte
 export { AnimationContext };
-export const useAnimation = () => useContext(AnimationContext);
 
+// Ajouter cette fonction utilitaire pour utiliser le contexte
+export const useAnimation = () => useContext(AnimationContext);

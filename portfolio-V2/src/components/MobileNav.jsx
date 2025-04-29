@@ -1,74 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAnimation } from './AnimationContext';
 import { useTheme } from './ThemeContext';
 
-function SimpleNav() {
+function MobileNav() {
+  // États et contextes
   const { animationsEnabled, setAnimationsEnabled } = useAnimation();
   const { darkMode, setDarkMode } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  
+  // Fonction pour basculer le menu mobile
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
+  
+  // Fonction pour fermer le menu mobile (après un clic sur un lien)
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
   };
   
-  // Empêcher le défilement du body quand le menu mobile est ouvert
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileMenuOpen]);
-
   return (
     <>
-      {/* Utiliser la même structure que Header.jsx */}
-      <header className="header">
-        <div className="header-content">
-          <div className="left-section">
-            <div className="logo-perso">
-              <Link to="/">
-                <img 
-                  src="/assets/logo-perso/logo-perso.webp" 
-                  alt="Logo JB" 
-                  className="logo-perso" 
-                  width="80" 
-                  height="80" 
-                />
-              </Link>
-            </div>
-            <h1>Jérémy Brunel</h1>
-          </div>
-          
-          <nav className="header-nav">
-            <ul>
-              <li><NavLink to="/" className={({isActive}) => isActive ? "active" : ""}>Accueil</NavLink></li>
-              <li><NavLink to="/technologies" className={({isActive}) => isActive ? "active" : ""}>Technologies</NavLink></li>
-              <li><NavLink to="/projects" className={({isActive}) => isActive ? "active" : ""}>Projets</NavLink></li>
-              <li><NavLink to="/contact" className={({isActive}) => isActive ? "active" : ""}>Contact</NavLink></li>
-            </ul>
-          </nav>
-          
-          <div 
-            className={`menu-hamburger ${mobileMenuOpen ? 'active' : ''}`} 
-            onClick={toggleMobileMenu}
-            aria-label="Menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
+      {/* Overlay qui s'affiche derrière le menu */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-overlay" onClick={closeMobileMenu}></div>
+      )}
+      
+      {/* Conteneur du menu mobile */}
+      <div className="mobile-navigation-container">
+        {/* Menu hamburger pour mobile */}
+        <div className={`menu-hamburger ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
         
+        {/* Menu mobile qui apparaît/disparaît en fonction de l'état */}
         <div className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}>
           <div className="mobile-nav-header">
             <div className="mobile-logo">
@@ -79,6 +46,7 @@ function SimpleNav() {
               <span>×</span>
             </div>
           </div>
+          
           <ul className="mobile-nav-links">
             <li><NavLink to="/" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Accueil</NavLink></li>
             <li><NavLink to="/technologies" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Technologies</NavLink></li>
@@ -86,7 +54,9 @@ function SimpleNav() {
             <li><NavLink to="/contact" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Contact</NavLink></li>
           </ul>
           
+          {/* Conteneur pour les switches dans le menu mobile */}
           <div className="mobile-switches-container">
+            {/* Switch pour les animations */}
             <div className="toggle-item">
               <span className="toggle-icon">{animationsEnabled ? "✨" : "🚫"}</span>
               <div className="switch-wrapper">
@@ -102,6 +72,7 @@ function SimpleNav() {
               </div>
             </div>
           
+            {/* Switch pour le thème */}
             <div className="toggle-item">
               <span className="toggle-icon">{darkMode ? "🌙" : "☀️"}</span>
               <div className="switch-wrapper">
@@ -118,19 +89,9 @@ function SimpleNav() {
             </div>
           </div>
         </div>
-      </header>
-      
-      {/* Overlay pour le menu mobile */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav-overlay" onClick={closeMobileMenu}></div>
-      )}
-      
-      {/* Switchs pour les autres pages - masqués en mobile */}
-      <div className="switches-bar simple-nav-switchs desktop-only">
-        {/* Contenu masqué par CSS */}
       </div>
     </>
   );
 }
 
-export default SimpleNav;
+export default MobileNav;

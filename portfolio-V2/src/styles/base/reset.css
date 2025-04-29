@@ -1,0 +1,58 @@
+/* reset.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background: var(--gradient-background);
+    color: #fff;
+    line-height: 1.6;
+    padding-top: 120px;
+  }
+  
+  @media (max-width: 1024px) {
+    body {
+      padding-top: 0;
+    }
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--transition-fast);
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  ul, ol {
+    list-style: none;
+  }
+  
+  button, input, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    border: none;
+    outline: none;
+  }
+  
+  .content-container {
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    height: 100%;
+    width: 100%;
+  }
+  
+  .content-container.visible {
+    opacity: 1;
+  }

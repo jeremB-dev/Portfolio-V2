@@ -1,9 +1,8 @@
+// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/index.css';
+import './styles/main.css';
 import App from './App';
-
-console.log("main.jsx is executing")
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

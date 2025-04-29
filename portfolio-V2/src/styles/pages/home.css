@@ -1,0 +1,157 @@
+/* home.css */
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 80px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .profile-text {
+    flex: 1;
+    margin-right: 20px;
+    width: 100%;
+  }
+  
+  .profile-text p {
+    line-height: 1.6;
+    font-size: x-large;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .profile-photo {
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+  }
+  
+  .profile-photo-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .about-title {
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 80px;
+  }
+  
+  .career-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 25px;
+    margin: 20px 0;
+    padding: 15px 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .career-section {
+    flex: 1;
+    max-width: 600px;
+  }
+  
+  .career-text {
+    line-height: 1.6;
+    font-size: medium;
+    text-align: left;
+    padding: 0 20px;
+  }
+  
+  .career-divider {
+    width: 3px;
+    height: auto;
+    align-self: stretch;
+    background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
+    margin: 0 15px;
+  }
+  
+  @media (max-width: 1024px) {
+    .profile-photo {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .career-container {
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin: 15px 0;
+      padding: 10px 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .profile {
+      flex-direction: column-reverse;
+      gap: 30px;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .profile-text {
+      margin-right: 0;
+      padding: 0;
+    }
+    
+    .profile-text p {
+      font-size: large;
+      text-align: left;
+    }
+    
+    .profile-photo {
+      width: 220px;
+      height: 220px;
+    }
+    
+    .profile-photo-container {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .about-title {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+    
+    .career-section {
+      max-width: 100%;
+      text-align: center;
+    }
+    
+    .career-text {
+      padding: 0 15px;
+    }
+    
+    .career-divider {
+      width: 90%;
+      height: 3px;
+      margin: 15px 0 50px 0;
+      background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profile-text p {
+      font-size: medium;
+    }
+    
+    .profile-photo {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .about-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .career-divider {
+      width: 100%;
+    }
+  }

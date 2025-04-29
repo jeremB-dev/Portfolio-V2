@@ -1,0 +1,30 @@
+/* projects.css - Styles spécifiques à la page projets */
+
+/* Mise en page de la grille de projets */
+.projects-page {
+    padding: 20px 0;
+  }
+  
+  /* Styles spécifiques au titre de la section projets */
+  .projects-page h2 {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Styles de la navigation entre sections au bas de la page */
+  .projects-page .section-navigation {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  /* Modifications spécifiques à la vue détaillée d'un projet */
+  .project-detail-section {
+    margin-top: 30px;
+  }
+  
+  /* Animation spécifique quand on survole une carte sur cette page */
+  .projects-page .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }

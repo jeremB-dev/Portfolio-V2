@@ -1,0 +1,429 @@
+/* header.css */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-l);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--color-background);
+  z-index: var(--z-index-header);
+  transition: all var(--transition-bezier);
+  flex-direction: column;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--container-max-width);
+  width: 100%;
+  margin: -10px auto;
+  padding: 0 var(--spacing-xxl);
+}
+
+/* Section gauche avec logo et nom */
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+/* Assurer la même apparence dans Header et SimpleNav */
+.left-section h1 {
+  font-size: 2.5rem;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.logo-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.header .header-nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Pousse la navigation vers la droite */
+}
+
+.logo-perso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+}
+
+.logo-perso img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.darkened {
+  opacity: 0.7;
+  filter: brightness(0.7);
+}
+
+.mobile-nav {
+  flex-direction: column;
+  background-color: var(--color-background);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 300px;
+  /* Modification de la hauteur - 70% au lieu de 100vh */
+  height: 70vh;
+  /* Ajout d'une hauteur maximale */
+  max-height: 500px;
+  /* Ajout d'un arrondissement en bas à gauche */
+  border-bottom-left-radius: 15px;
+  box-shadow: var(--shadow-sm);
+  z-index: var(--z-index-modal);
+  transform: translateX(100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  overflow-y: auto;
+  display: none; /* Par défaut sur desktop */
+}
+
+.mobile-nav-open {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mobile-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-logo span {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.mobile-close {
+  font-size: 44px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  color: var(--color-primary);
+}
+
+.mobile-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 15px;
+  margin: 0;
+}
+
+.mobile-nav-links li {
+  margin-bottom: 10px;
+}
+
+.mobile-nav-links a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: bold;
+  display: block;
+  padding: 12px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mobile-nav-links a:hover {
+  background-color: rgba(83, 186, 95, 0.1);
+  color: var(--color-primary);
+}
+
+.mobile-nav-links a.active {
+  color: var(--color-primary);
+  background-color: rgba(83, 186, 95, 0.1);
+}
+
+/* Classes pour les affichages conditionnels */
+.desktop-only {
+  display: flex;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* Title page styles */
+.title-page {
+  margin-top: 50px;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Overlay pour le menu mobile */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: calc(var(--z-index-modal) - 1);
+  display: none;
+}
+
+.mobile-nav-overlay.active,
+.mobile-nav-open ~ .mobile-nav-overlay {
+  display: block;
+}
+
+/* Styles pour les switchs dans le menu mobile */
+.mobile-switches-container {
+  padding: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.mobile-switches-container .toggle-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.mobile-switches-container .toggle-icon {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.mobile-switches-container .switch-wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.mobile-switches-container .toggle-label {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+/* Media queries */
+@media (max-width: 1300px) {
+  .left-section h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 1090px) {
+  .header-content {
+    padding: 0 var(--spacing-l);
+  }
+  
+  .left-section h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .left-section h1 {
+    font-size: 1.5rem;
+  }
+  
+  .logo-perso {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: var(--spacing-s);
+    position: relative; /* Changer de fixed à relative sur mobile */
+  }
+  
+  .header-content {
+    justify-content: space-between;
+    padding: 0 var(--spacing-m);
+    margin: 0 auto; /* Correction: supprimer la marge négative */
+  }
+  
+  .left-section {
+    gap: 0.8rem; /* Correction: espacement plus uniforme */
+    justify-content: center; /* Correction: centrer les éléments */
+  }
+  
+  .left-section h1 {
+    font-size: 1.3rem;
+    margin: 0; /* Correction: s'assurer qu'il n'y a pas de marge */
+    padding: 0; /* Correction: s'assurer qu'il n'y a pas de padding */
+  }
+  
+  .header .header-nav {
+    display: none; /* Masquer le menu de navigation standard */
+  }
+  
+  .logo-perso {
+    width: 50px; /* Correction: taille réduite et uniforme */
+    height: 50px;
+    margin: 0; /* Correction: supprimer toute marge */
+  }
+
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-only {
+    display: flex;
+  }
+  
+  /* Corrections pour le menu mobile */
+  .mobile-nav {
+    display: flex !important;
+  }
+  
+  .title-page {
+    margin-top: 0px;
+    padding: 0 1rem;
+  }
+  
+  .title-page h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  /* Pour éviter que la photo ne soit cachée par le header */
+  .profile-photo-container {
+    margin-top: 20px;
+  }
+  
+  /* Masquer les switchs desktop sur mobile */
+  .switches-bar.home-only {
+    display: none;
+  }
+  
+  /* Assurer que les switchs dans le menu mobile s'affichent correctement */
+  .mobile-switches-container {
+    display: block;
+  }
+  
+  /* Ajustements pour les sections de contenu */
+  section {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: var(--spacing-xs);
+  }
+  
+  .header-content {
+    padding: 0 var(--spacing-s);
+    margin: 0 auto;
+  }
+  
+  .logo-perso {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .left-section {
+    gap: 0.5rem;
+  }
+  
+  .left-section h1 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Styles pour le menu hamburger (visible uniquement en mobile) */
+.menu-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 101;
+  padding: 10px;
+}
+
+.menu-hamburger span {
+  height: 3px;
+  width: 25px;
+  background-color: var(--color-primary);
+  margin-bottom: 4px;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animation pour le menu hamburger quand il est actif */
+.menu-hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .menu-hamburger {
+    display: flex; /* Afficher uniquement sur mobile */
+    margin: 0; /* Correction: s'assurer qu'il n'y a pas de marge */
+  }
+  
+  /* Cacher les switchs sur desktop dans le menu mobile */
+  .switches-bar.desktop-only {
+    display: none;
+  }
+  
+  /* Assurer que les switchs dans le menu mobile sont visibles */
+  .mobile-switches-container {
+    display: block;
+  }
+}
+
+/* Cacher les switchs sur desktop dans le menu mobile */
+@media (min-width: 769px) {
+  .mobile-switches-container {
+    display: none;
+  }
+}
+
+/* Fix pour assurer que le contenu principal ne soit pas caché */
+.main-content {
+  padding-top: 100px; /* Valeur par défaut pour desktop */
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 20px; /* Valeur réduite pour mobile puisque le header n'est plus fixed */
+  }
+}

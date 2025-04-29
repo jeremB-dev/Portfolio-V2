@@ -9,18 +9,25 @@ import TechnologiesPage from './pages/TechnologiesPage.jsx';
 import ProjectsPage from './pages/ProjectsPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import AnimationProvider from './components/AnimationContext';
-import ThemeProvider from './components/ThemeContext'; // Nouveau import
+import ThemeProvider from './components/ThemeContext';
 
-import './styles/App.css';
-import './styles/theme.css'; // Import du CSS de thème
-
-function AppContent() {
+// Composant pour choisir la navigation en fonction de la page
+function NavigationWrapper() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   
   return (
-    <div className="App">
+    <>
       {isHomePage ? <Header /> : <SimpleNav />}
+    </>
+  );
+}
+
+function AppContent() {
+  return (
+    <div className="App">
+      <NavigationWrapper />
+
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -48,7 +55,7 @@ function App() {
 
   return (
     <AnimationProvider>
-      <ThemeProvider> {/* Ajout du ThemeProvider */}
+      <ThemeProvider>
         {loading && <Loader onFinished={handleLoaderFinished} />}
         <div className={`content-container ${contentVisible ? 'visible' : ''}`}>
           <Router>

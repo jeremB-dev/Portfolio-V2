@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import BackgroundAnimation from '../components/BackgroundAnimation';
 import { useAnimation } from '../components/AnimationContext';
-import '../styles/toggleAnimation.css';
+
 
 function Contact() {
-  const { animationsEnabled, setAnimationsEnabled } = useAnimation();
+  const { animationsEnabled } = useAnimation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -20,59 +21,62 @@ function Contact() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     
-    // Ici vous pouvez ajouter la logique pour envoyer le formulaire
-    console.log('Formulaire soumis:', formData);
-    
-    // Afficher la modal de succès
+    // Afficher immédiatement la modal de succès
     setShowSuccessModal(true);
     
-    // Redirection après 3 secondes
-    setTimeout(() => {
-      setShowSuccessModal(false);
+    try {
+      // Créer un objet FormData pour l'envoi
+      const form = new FormData();
+      form.append('name', formData.name);
+      form.append('email', formData.email);
+      form.append('message', formData.message);
+      form.append('_captcha', 'false'); // Désactiver le captcha de FormSubmit
+      
+      // Envoi à FormSubmit
+      await fetch('https://formsubmit.co/jeremybrunel.dev@gmail.com', {
+        method: 'POST',
+        body: form
+      });
+      
       // Réinitialiser le formulaire
       setFormData({
         name: '',
         email: '',
         message: ''
       });
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi:', error);
+    } finally {
+      setLoading(false);
       
-      // Faire défiler vers le haut
-      window.scrollTo(0, 0);
-    }, 3000);
+      // Fermer la modale après 3 secondes
+      setTimeout(() => {
+        setShowSuccessModal(false);
+        window.scrollTo(0, 0);
+      }, 3000);
+    }
   };
 
   return (
     <section id="contact">
-      {/* Bouton pour désactiver les animations */}
-      <div className="animation-toggle">
-        <span className="toggle-icon">🚫</span>
-        <div className="animation-toggle-wrapper">
-          <label className="switch">
-            <input 
-              type="checkbox" 
-              checked={animationsEnabled}
-              onChange={() => setAnimationsEnabled(!animationsEnabled)}
-            />
-            <span className="slider round"></span>
-          </label>
-          <div className="animation-toggle-tooltip">
-            {animationsEnabled ? "Désactiver animations" : "Activer animations"}
-          </div>
-        </div>
-        <span className="toggle-icon">✨</span>
-      </div>
 
-      {animationsEnabled && (
+{animationsEnabled && (
         <BackgroundAnimation 
           type="particles" 
           opacity={1} 
           color="#53ba5f" 
           speed="fast" 
+          particleSize={15} // Augmenter la taille des particules
+          particleCount={500} // Augmenter le nombre de particules
+          movementType="bounce"
+          rotationSpeed="medium" // Ajouter une rotation si supporté
         />
       )}
+
 
       <h2>Obtenez mon CV</h2>
       <div className="cv-container">
@@ -115,14 +119,16 @@ function Contact() {
           value={formData.message}
           onChange={handleChange}
         ></textarea>
-        <button type="submit" className="btn">Envoyer</button>
+        <button type="submit" className="btn" disabled={loading}>
+          {loading ? 'Envoi en cours...' : 'Envoyer'}
+        </button>
       </form>
       <div id="success-modal" className="modal-overlay" style={{ display: showSuccessModal ? 'flex' : 'none' }}>
         <div className="modal">
           <h3>Votre message a bien été envoyé !</h3>
           <p>
-            Merci pour votre message. Je vous répondrais dans les plus brefs
-            delais.
+            Merci pour votre message. Je vous répondrai dans les plus brefs
+            délais.
           </p>
           <p className="redirect-text">Redirection vers la page dans un instant...</p>
         </div>
