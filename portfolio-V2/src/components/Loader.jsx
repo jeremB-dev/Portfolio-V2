@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-
+import '../styles/animations/loader.css';
 
 function Loader({ onFinished }) {
   const [fadeOut, setFadeOut] = useState(false);
@@ -15,6 +15,7 @@ function Loader({ onFinished }) {
     "Initialisation du portfolio...",
     "Chargement des compétences...",
     "Préparation des projets...",
+    "Mise en place du formulaire...",
     "Finalisation..."
   ];
 
@@ -34,6 +35,9 @@ function Loader({ onFinished }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  const [logoIntensify, setLogoIntensify] = useState(false);
+  const [logoDescending, setLogoDescending] = useState(false);
+
   useEffect(() => {
     const duration = 3800; // Durée totale en ms
     const interval = 20; // Intervalle de mise à jour en ms
@@ -51,32 +55,79 @@ function Loader({ onFinished }) {
         Math.floor((newProgress / 100) * phases.length)
       );
       setActivePhase(phaseIndex);
+      
+      // Intensifier l'éclairage du logo à partir de 80%
+      if (newProgress >= 80 && !logoIntensify) {
+        setLogoIntensify(true);
+      }
 
       // Quand on atteint 100%
       if (newProgress === 100) {
         clearInterval(timer);
         setTimeout(() => {
-          // Première phase d'explosion
-          setExploding(true);
+          // Animation de grossissement du logo
+          setLogoDescending(true);
           
-          // Seconde phase d'explosion (encore plus intense)
+          // Début de l'explosion pendant le grossissement du logo
           setTimeout(() => {
-            setUltraExplosion(true);
-            
-            // Fondu vers le site
+            setExploding(true);
             setTimeout(() => {
-              setFadeOut(true);
+              setUltraExplosion(true);
               setTimeout(() => {
-                if (onFinished) onFinished();
-              }, 800);
-            }, 400);
-          }, 300);
+                setFadeOut(true);
+                setTimeout(() => {
+                  if (onFinished) onFinished();
+                }, 800);
+              }, 400);
+            }, 300);
+          }, 200); // Démarrer l'explosion plus tôt
         }, 300);
       }
     }, interval);
 
     return () => clearInterval(timer);
   }, [onFinished, phases.length]);
+
+  // Générer des éléments flottants et d'explosion
+  const renderFloatingElements = () => (
+    <>
+      {[...Array(6)].map((_, i) => (
+        <div 
+          key={i}
+          className="floating-circle"
+          style={{
+            '--circle-x': `${Math.random() * 80 + 10}%`,
+            '--circle-y': `${Math.random() * 80 + 10}%`,
+            '--circle-size': `${Math.random() * 60 + 40}px`,
+            '--circle-opacity': `${Math.random() * 0.15 + 0.05}`,
+            '--circle-drift-x': `${Math.random() * 40 - 20}px`,
+            '--circle-drift-y': `${Math.random() * 40 - 20}px`,
+            '--circle-duration': `${Math.random() * 10 + 15}s`
+          }}
+        ></div>
+      ))}
+    </>
+  );
+
+  const renderCodeLines = () => (
+    <>
+      {[...Array(10)].map((_, i) => (
+        <div 
+          key={i}
+          className="code-line"
+          style={{
+            '--line-width': `${Math.random() * 120 + 80}px`,
+            '--line-left': `${Math.random() * 80 + 10}%`,
+            '--line-top': `${Math.random() * 80 + 10}%`,
+            '--line-opacity': `${Math.random() * 0.15 + 0.05}`,
+            '--line-duration': `${Math.random() * 5 + 5}s`,
+            '--line-delay': `${Math.random() * 5}s`,
+            '--line-rotate': `${Math.random() * 360}deg`
+          }}
+        ></div>
+      ))}
+    </>
+  );
 
   return (
     <div 
@@ -89,47 +140,17 @@ function Loader({ onFinished }) {
     >
       <div className="gradient-background"></div>
       
-      {/* Éléments flottants élégants */}
+      {/* Éléments flottants */}
       <div className="floating-elements">
-        {[...Array(6)].map((_, i) => (
-          <div 
-            key={i}
-            className="floating-circle"
-            style={{
-              '--circle-x': `${Math.random() * 80 + 10}%`,
-              '--circle-y': `${Math.random() * 80 + 10}%`,
-              '--circle-size': `${Math.random() * 60 + 40}px`,
-              '--circle-opacity': `${Math.random() * 0.15 + 0.05}`,
-              '--circle-drift-x': `${Math.random() * 40 - 20}px`,
-              '--circle-drift-y': `${Math.random() * 40 - 20}px`,
-              '--circle-duration': `${Math.random() * 10 + 15}s`
-            }}
-          ></div>
-        ))}
+        {renderFloatingElements()}
         
         <div className="code-lines">
-          {[...Array(10)].map((_, i) => (
-            <div 
-              key={i}
-              className="code-line"
-              style={{
-                '--line-width': `${Math.random() * 120 + 80}px`,
-                '--line-left': `${Math.random() * 80 + 10}%`,
-                '--line-top': `${Math.random() * 80 + 10}%`,
-                '--line-opacity': `${Math.random() * 0.15 + 0.05}`,
-                '--line-duration': `${Math.random() * 5 + 5}s`,
-                '--line-delay': `${Math.random() * 5}s`,
-                '--line-rotate': `${Math.random() * 360}deg`
-              }}
-            ></div>
-          ))}
+          {renderCodeLines()}
         </div>
       </div>
       
-      {/* Flash d'explosion éblouissant */}
+      {/* Éléments d'explosion */}
       <div className="explosion-flash"></div>
-      
-      {/* Noyau d'explosion */}
       <div className="explosion-core"></div>
       
       {/* Vagues d'explosion */}
@@ -161,7 +182,7 @@ function Loader({ onFinished }) {
         ))}
       </div>
       
-      {/* Rayons lumineux massifs */}
+      {/* Rayons lumineux */}
       <div className="rays-container">
         {[...Array(36)].map((_, i) => (
           <div 
@@ -180,8 +201,14 @@ function Loader({ onFinished }) {
       
       <div className="loader-content">
         <div className="logo-container">
-          <div className="logo-text">
-            <span>JB</span>
+          {/* Logo remplaçant les initiales JB */}
+          <div className={`logo-img ${logoDescending ? 'logo-descending' : ''} ${logoIntensify ? 'logo-intensify' : ''}`}>
+            <img 
+              src="/assets/logo-perso/logo-perso.webp" 
+              alt="Logo JB" 
+              width="180" 
+              height="180"
+            />
           </div>
         </div>
         
