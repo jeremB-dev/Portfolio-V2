@@ -1,27 +1,23 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+// ThemeContext.jsx
+import React, { createContext, useState, useEffect } from 'react';
 
-// Crée le contexte
+// Crée le contexte - mais n'est pas exporté directement ici
 const ThemeContext = createContext({
   darkMode: false,
   setDarkMode: () => {}
 });
 
-// Le Provider
+// Seul le Provider est exporté comme export par défaut
 export default function ThemeProvider({ children }) {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    // Vérifie les préférences système ou localStorage
+  // Initialiser avec localStorage et préférences du système
+  const [darkMode, setDarkMode] = useState(() => {
     const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('theme');
     
-    if (savedTheme === 'dark' || (savedTheme === null && prefersDarkMode)) {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark-theme');
-    }
-  }, []);
+    return savedTheme === 'dark' || (savedTheme === null && prefersDarkMode);
+  });
 
-  // Met à jour les classes CSS et localStorage quand le thème change
+  // Mettre à jour le DOM et localStorage quand le thème change
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark-theme');
@@ -41,6 +37,5 @@ export default function ThemeProvider({ children }) {
   );
 }
 
-// Exports nommés
+// Exporter le contexte comme export nommé
 export { ThemeContext };
-export const useTheme = () => useContext(ThemeContext);

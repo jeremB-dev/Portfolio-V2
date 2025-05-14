@@ -1,25 +1,26 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import BackgroundAnimation from '../components/BackgroundAnimation';
-import { useAnimation } from '../components/AnimationContext';
+import useAnimation from '../hooks/useAnimation';
+import useWindowSize from '../hooks/useWindowSize';
 
 
 function Technologies() {
   const { animationsEnabled } = useAnimation();
+  const { isMobile, isTablet } = useWindowSize();
 
   return (
     <section id="technologies">
-
-{animationsEnabled && (
+      {animationsEnabled && (
         <BackgroundAnimation 
           type="particles" 
-          opacity={1} 
+          opacity={0.6}
           color="#53ba5f" 
-          speed="fast" 
-          particleSize={15} // Augmenter la taille des particules
-          particleCount={500} // Augmenter le nombre de particules
-          movementType="bounce"
-          rotationSpeed="medium" // Ajouter une rotation si supporté
+          speed="fast"
+          particleSize={14}
+          particleCount={120}  // Sera automatiquement réduit à environ 18 sur mobile
+          isMobile={isMobile}
+          isTablet={isTablet}
         />
       )}
 

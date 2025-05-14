@@ -1,5 +1,6 @@
+// src/components/ThemeToggle.jsx
 import React from 'react';
-import { useTheme } from './ThemeContext';
+import useTheme from '../hooks/useTheme';
 
 const ThemeToggle = () => {
   const { darkMode, setDarkMode } = useTheme();
@@ -13,6 +14,7 @@ const ThemeToggle = () => {
             type="checkbox" 
             checked={darkMode}
             onChange={() => setDarkMode(!darkMode)}
+            aria-label={`Passer au thème ${darkMode ? 'clair' : 'sombre'}`}
           />
           <span className="slider round"></span>
         </label>

@@ -1,7 +1,8 @@
+// src/components/SimpleNav.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useAnimation } from './AnimationContext';
-import { useTheme } from './ThemeContext';
+import useAnimation from '../hooks/useAnimation';
+import useTheme from '../hooks/useTheme';
 
 function SimpleNav() {
   const { animationsEnabled, setAnimationsEnabled } = useAnimation();
@@ -29,9 +30,22 @@ function SimpleNav() {
     };
   }, [mobileMenuOpen]);
 
+  // Ajout d'un gestionnaire pour la touche Échap
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <>
-      {/* Utiliser la même structure que Header.jsx */}
       <header className="header">
         <div className="header-content">
           <div className="left-section">
@@ -58,26 +72,36 @@ function SimpleNav() {
             </ul>
           </nav>
           
-          <div 
+          <button 
             className={`menu-hamburger ${mobileMenuOpen ? 'active' : ''}`} 
             onClick={toggleMobileMenu}
-            aria-label="Menu"
+            aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu-simple"
           >
             <span></span>
             <span></span>
             <span></span>
-          </div>
+          </button>
         </div>
         
-        <div className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}>
+        <div 
+          id="mobile-menu-simple"
+          className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}
+          aria-hidden={!mobileMenuOpen}
+        >
           <div className="mobile-nav-header">
             <div className="mobile-logo">
               <img src="/assets/logo-perso/logo-perso.webp" alt="Logo JB" width="40" height="40" />
               <span>Jérémy Brunel</span>
             </div>
-            <div className="mobile-close" onClick={closeMobileMenu}>
+            <button 
+              className="mobile-close" 
+              onClick={closeMobileMenu}
+              aria-label="Fermer le menu"
+            >
               <span>×</span>
-            </div>
+            </button>
           </div>
           <ul className="mobile-nav-links">
             <li><NavLink to="/" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Accueil</NavLink></li>
@@ -95,6 +119,7 @@ function SimpleNav() {
                     type="checkbox"
                     checked={animationsEnabled}
                     onChange={() => setAnimationsEnabled(!animationsEnabled)}
+                    aria-label={`Animations ${animationsEnabled ? 'activées' : 'désactivées'}`}
                   />
                   <span className="slider round"></span>
                 </label>
@@ -110,6 +135,7 @@ function SimpleNav() {
                     type="checkbox"
                     checked={darkMode}
                     onChange={() => setDarkMode(!darkMode)}
+                    aria-label={`Thème ${darkMode ? 'sombre' : 'clair'}`}
                   />
                   <span className="slider round"></span>
                 </label>
@@ -120,12 +146,14 @@ function SimpleNav() {
         </div>
       </header>
       
-      {/* Overlay pour le menu mobile */}
       {mobileMenuOpen && (
-        <div className="mobile-nav-overlay" onClick={closeMobileMenu}></div>
+        <div 
+          className="mobile-nav-overlay" 
+          onClick={closeMobileMenu}
+          role="presentation"
+        ></div>
       )}
       
-      {/* Switchs pour les autres pages - masqués en mobile */}
       <div className="switches-bar simple-nav-switchs desktop-only">
         {/* Contenu masqué par CSS */}
       </div>

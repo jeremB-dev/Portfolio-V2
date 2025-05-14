@@ -1,3 +1,4 @@
+// src/pages/TechnologiesPage.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Technologies from '../components/Technologies.jsx';

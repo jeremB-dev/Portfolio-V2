@@ -1,167 +1,158 @@
-/* navigation.css */
-/* Styles pour la navigation dans le header */
 .header-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-  padding: 0;
-  margin: 0;
+ display: flex;
+ list-style: none;
+ gap: 2rem;
+ padding: 0;
+ margin: 0;
 }
 
 .header-nav ul li a {
-  color: var(--color-text);
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: color var(--transition-fast);
-  padding: 0.5rem;
+ color: var(--color-text);
+ text-decoration: none;
+ font-size: 1.1rem;
+ transition: color var(--transition-fast);
+ padding: 0.5rem;
 }
 
 .header-nav ul li a:hover {
-  color: var(--color-primary);
+ color: var(--color-primary);
 }
 
 .header-nav ul li a.active {
-  color: var(--color-primary);
-  font-weight: bold;
+ color: var(--color-primary);
+ font-weight: bold;
 }
 
-/* Navigation avec effet soulignement */
 nav a {
-  position: relative;
-  padding-bottom: 3px;
+ position: relative;
+ padding-bottom: 3px;
 }
 
 nav a::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--color-primary);
-  transition: width var(--transition-fast);
-  transform-origin: left;
+ content: "";
+ position: absolute;
+ bottom: 0;
+ left: 0;
+ width: 0;
+ height: 2px;
+ background-color: var(--color-primary);
+ transition: width var(--transition-fast);
+ transform-origin: left;
 }
 
 nav a:hover::before {
-  width: 100%;
+ width: 100%;
 }
 
 nav a.active::before {
-  width: 100%;
+ width: 100%;
 }
 
-/* Styles pour la barre de switchs - visible sur la page d'accueil */
 .switches-bar {
-  display: flex; /* Afficher par défaut */
-  justify-content: center;
-  align-items: center;
-  padding: 8px 0;
-  width: 100%;
-  background-color: var(--color-background);
-  position: fixed;
-  top: 100px; /* Position ajustée pour être sous le header */
-  left: 0;
-  z-index: 990;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 8px 0;
+ width: 100%;
+ background-color: var(--color-background);
+ position: fixed;
+ top: 100px;
+ left: 0;
+ z-index: 990;
+ box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Classes spécifiques pour la visibilité conditionnelle */
 .home-only {
-  display: flex; /* Assurez-vous que c'est visible */
+ display: flex;
 }
 
-/* Masquer les switchs sur les autres pages (SimpleNav) */
 .simple-nav-switchs {
-  display: none !important;
+ display: none !important;
 }
 
 .toggle-item {
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
+ display: flex;
+ align-items: center;
+ margin: 0 10px;
 }
 
 .toggle-icon {
-  font-size: 16px;
-  margin: 0 5px;
+ font-size: 16px;
+ margin: 0 5px;
 }
 
 .switch-wrapper {
-  display: flex;
-  align-items: center;
+ display: flex;
+ align-items: center;
 }
 
 .toggle-label {
-  font-size: 12px;
-  margin-left: 8px;
-  white-space: nowrap;
+ font-size: 12px;
+ margin-left: 8px;
+ white-space: nowrap;
 }
 
-/* Conteneur des switchs pour le menu mobile */
 .mobile-switches-container {
-  padding: 15px;
-  margin-top: auto;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+ padding: 15px;
+ margin-top: auto;
+ border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .mobile-switches-container .toggle-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
+ display: flex;
+ align-items: center;
+ margin-bottom: 15px;
 }
 
 .mobile-switches-container .toggle-item:last-child {
-  margin-bottom: 0;
+ margin-bottom: 0;
 }
 
 .mobile-switches-container .toggle-icon {
-  margin-right: 10px;
-  font-size: 1.2rem;
+ margin-right: 10px;
+ font-size: 1.2rem;
 }
 
-/* Media queries */
 @media (max-width: 1300px) {
-  .switches-bar {
-    top: 100px;
-  }
+ .switches-bar {
+   top: 100px;
+ }
 }
 
 @media (max-width: 900px) {
-  .switches-bar {
-    top: 90px; /* Ajuster pour le header mobile */
-  }
+ .switches-bar {
+   top: 90px;
+ }
 }
 
 @media (max-width: 768px) {
-  .header-nav ul {
-    display: none; /* Masquer les liens de navigation sur mobile */
-  }
-  
-  nav a {
-    font-size: 0.9rem;
-  }
-  
-  .switches-bar {
-    top: 68px; /* Ajuster pour le header mobile */
-    padding: 3px 0;
-    position: absolute; /* Changer de fixed à absolute sur mobile */
-  }
-  
-  .toggle-label {
-    display: none; /* Masquer les labels sur mobile */
-  }
+ .header-nav ul {
+   display: none;
+ }
+ 
+ nav a {
+   font-size: 0.9rem;
+ }
+ 
+ .switches-bar {
+   top: 68px;
+   padding: 3px 0;
+   position: absolute;
+ }
+ 
+ .toggle-label {
+   display: none;
+ }
 }
 
 @media (min-width: 769px) {
-  /* Sur desktop */
-  .mobile-switches-container {
-    display: none; /* Masquer les switchs mobiles sur desktop */
-  }
+ .mobile-switches-container {
+   display: none;
+ }
 }
 
 @media (max-width: 480px) {
-  .switches-bar {
-    top: 50px; /* Ajuster pour le header mobile */
-  }
+ .switches-bar {
+   top: 50px;
+ }
 }

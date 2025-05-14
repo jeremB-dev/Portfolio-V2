@@ -1,58 +1,65 @@
-/* reset.css */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles de base pour body */
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--gradient-background);
+  color: #fff;
+  line-height: 1.6;
+  padding-top: 120px;
+}
+
+/* Reset typographique */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+
+/* Liens et éléments interactifs */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+/* Médias et listes */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* Éléments de formulaire */
+button, 
+input, 
+textarea {
+  font: inherit;
+  border: none;
+  outline: none;
+}
+
+/* Conteneur de contenu */
+.content-container {
+  opacity: 0;
+  transition: opacity var(--transition-slow);
+  height: 100%;
+  width: 100%;
+}
+
+.content-container.visible {
+  opacity: 1;
+}
+
+/* Media query */
+@media (max-width: 1024px) {
   body {
-    font-family: "Poppins", sans-serif;
-    background: var(--gradient-background);
-    color: #fff;
-    line-height: 1.6;
-    padding-top: 120px;
+    padding-top: 0;
   }
-  
-  @media (max-width: 1024px) {
-    body {
-      padding-top: 0;
-    }
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-    transition: color var(--transition-fast);
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  ul, ol {
-    list-style: none;
-  }
-  
-  button, input, textarea {
-    font-family: inherit;
-    font-size: inherit;
-    border: none;
-    outline: none;
-  }
-  
-  .content-container {
-    opacity: 0;
-    transition: opacity var(--transition-slow);
-    height: 100%;
-    width: 100%;
-  }
-  
-  .content-container.visible {
-    opacity: 1;
-  }
+}

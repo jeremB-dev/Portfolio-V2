@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import About from '../components/About.jsx';
@@ -7,8 +8,8 @@ function Home() {
     <div className="home-page">
       <About />
       <div className="section-navigation">
-  <p>Découvrez <Link to="/technologies">mes compétences techniques</Link> ou consultez <Link to="/projects">mes projets récents</Link>.</p>
-</div>
+        <p>Découvrez <Link to="/technologies">mes compétences techniques</Link> ou consultez <Link to="/projects">mes projets récents</Link>.</p>
+      </div>
     </div>
   );
 }

@@ -1,28 +1,28 @@
-import React, { useContext } from 'react';
-import BackgroundAnimation from '../components/BackgroundAnimation';
-import { AnimationContext } from '../components/AnimationContext';
-
+// src/components/About.jsx
+import React from 'react';
+import BackgroundAnimation from './BackgroundAnimation';
+import useAnimation from '../hooks/useAnimation';
+import useWindowSize from '../hooks/useWindowSize';
 import { HashLink } from 'react-router-hash-link';
 
 function About() {
-  const { animationsEnabled} = useContext(AnimationContext);
+  const { animationsEnabled } = useAnimation();
+  const { isMobile, isTablet } = useWindowSize();
 
   return (
     <section id="about">
-
-
       {animationsEnabled && (
-        <BackgroundAnimation 
-          type="particles" 
-          opacity={1} 
-          color="#53ba5f" 
-          speed="fast" 
-          particleSize={15} // Augmenter la taille des particules
-          particleCount={500} // Augmenter le nombre de particules
-          movementType="bounce"
-          rotationSpeed="medium" // Ajouter une rotation si supporté
-        />
-      )}
+          <BackgroundAnimation 
+            type="particles" 
+            opacity={0.5}
+            color="#53ba5f" 
+            speed="slow"
+            particleSize={6}
+            particleCount={120}  // Sera automatiquement réduit à environ 24 sur mobile
+            isMobile={isMobile}
+            isTablet={isTablet}
+          />
+        )}
 
       <div className="profile">
         <div className="profile-text">

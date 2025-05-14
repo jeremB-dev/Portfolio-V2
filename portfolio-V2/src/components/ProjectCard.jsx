@@ -1,22 +1,31 @@
+// src/components/ProjectCard.jsx
 import React, { useState, useEffect } from 'react';
 
 function ProjectCard({ project }) {
   const { title, subtitle, image, description, technologies, github } = project;
   const [isOpen, setIsOpen] = useState(false);
 
-  // Ajout d'un effet pour gérer le scroll du document
+  // Gérer la touche Échap pour fermer la carte
   useEffect(() => {
-    if (isOpen) {
-      // Désactiver le scroll du body quand une carte est ouverte
-      document.body.style.overflow = 'hidden';
-      
-      // Nettoyage lors du démontage du composant ou fermeture de la carte
-      return () => {
-        document.body.style.overflow = '';
-      };
-    } else {
+    if (!isOpen) return;
+    
+    // Désactiver le scroll du body quand une carte est ouverte
+    document.body.style.overflow = 'hidden';
+    
+    // Ajouter un gestionnaire pour la touche Échap
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    
+    // Nettoyage lors du démontage du composant ou fermeture de la carte
+    return () => {
       document.body.style.overflow = '';
-    }
+      window.removeEventListener('keydown', handleEscape);
+    };
   }, [isOpen]);
 
   // Fonction pour convertir les sauts de ligne en éléments <br />
@@ -24,7 +33,7 @@ function ProjectCard({ project }) {
     return text.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
-        <br />
+        {index < text.split('\n').length - 1 && <br />}
       </React.Fragment>
     ));
   };
@@ -41,21 +50,16 @@ function ProjectCard({ project }) {
     setIsOpen(false);
   };
 
-  // Empêche la propagation du clic dans la carte ouverte
-  const handleCardContentClick = (e) => {
-    if (isOpen) {
-      e.stopPropagation();
-    }
-  };
-
   return (
     <>
       <div 
         className={`project-card ${isOpen ? 'active' : ''}`} 
-        onClick={(e) => {
-          handleCardContentClick(e);
-          if (!isOpen) {
-            e.preventDefault();
+        onClick={!isOpen ? handleCardClick : undefined}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter' && !isOpen) {
             handleCardClick();
           }
         }}
@@ -78,7 +82,7 @@ function ProjectCard({ project }) {
                 <img
                   key={index}
                   src={`/assets/logos/${tech}.svg`}
-                  alt={tech}
+                  alt={`Technologie ${tech}`}
                   loading="lazy"
                   width="32"
                   height="32"
@@ -90,9 +94,8 @@ function ProjectCard({ project }) {
               target="_blank"
               rel="noopener noreferrer"
               className="btn"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
+              onClick={(e) => e.stopPropagation()}
+              aria-label={`Voir le projet ${title} sur GitHub`}
             >
               Voir sur GitHub
             </a>
@@ -101,11 +104,8 @@ function ProjectCard({ project }) {
         {isOpen && (
           <button 
             className="close-button" 
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleClose(e);
-            }}
+            onClick={handleClose}
+            aria-label="Fermer les détails du projet"
           >
             ×
           </button>
@@ -115,10 +115,8 @@ function ProjectCard({ project }) {
       {isOpen && (
         <div 
           className="projects-overlay active" 
-          onClick={(e) => {
-            e.preventDefault();
-            setIsOpen(false);
-          }}
+          onClick={handleClose}
+          role="presentation"
         ></div>
       )}
     </>

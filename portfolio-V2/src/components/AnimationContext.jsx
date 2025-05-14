@@ -1,6 +1,7 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+// src/components/AnimationContext.jsx
+import React, { createContext, useState, useEffect } from 'react';
 
-// Crée le contexte
+// Créer le contexte 
 const AnimationContext = createContext({
   animationsEnabled: true,
   setAnimationsEnabled: () => {}
@@ -8,14 +9,24 @@ const AnimationContext = createContext({
 
 // Le Provider
 export default function AnimationProvider({ children }) {
-  const [animationsEnabled, setAnimationsEnabled] = useState(true);
+  // Initialiser avec localStorage s'il existe, sinon true
+  const [animationsEnabled, setAnimationsEnabled] = useState(() => {
+    const saved = localStorage.getItem('animationsEnabled');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
 
+  // Vérifier les préférences utilisateur pour l'accessibilité
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       setAnimationsEnabled(false);
     }
   }, []);
+  
+  // Sauvegarder dans localStorage quand la valeur change
+  useEffect(() => {
+    localStorage.setItem('animationsEnabled', JSON.stringify(animationsEnabled));
+  }, [animationsEnabled]);
 
   return (
     <AnimationContext.Provider value={{ animationsEnabled, setAnimationsEnabled }}>
@@ -26,6 +37,3 @@ export default function AnimationProvider({ children }) {
 
 // Exporter le contexte
 export { AnimationContext };
-
-// Ajouter cette fonction utilitaire pour utiliser le contexte
-export const useAnimation = () => useContext(AnimationContext);

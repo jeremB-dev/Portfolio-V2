@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// src/App.jsx
+import React, { useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Loader from './components/Loader.jsx';
 import Header from './components/Header.jsx';
@@ -14,16 +15,18 @@ import ThemeProvider from './components/ThemeContext';
 // Composant pour choisir la navigation en fonction de la page
 function NavigationWrapper() {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  
-  return (
-    <>
-      {isHomePage ? <Header /> : <SimpleNav />}
-    </>
-  );
+  // Simplification de la condition
+  return location.pathname === '/' ? <Header /> : <SimpleNav />;
 }
 
 function AppContent() {
+  // Gérer le défilement vers le haut lors des changements de page
+  const location = useLocation();
+  
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  
   return (
     <div className="App">
       <NavigationWrapper />
@@ -45,13 +48,13 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
 
-  const handleLoaderFinished = () => {
+  // Utilisation de useCallback pour éviter de recréer la fonction à chaque rendu
+  const handleLoaderFinished = useCallback(() => {
     setLoading(false);
-    // Petit délai avant de montrer le contenu
     setTimeout(() => {
       setContentVisible(true);
     }, 100);
-  };
+  }, []);
 
   return (
     <AnimationProvider>

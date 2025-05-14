@@ -1,67 +1,84 @@
-/* contact.css */
 .contact-page {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem;
-
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ padding: 5rem;
 }
 
 .contact-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  box-sizing: border-box;
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ padding: 2rem;
+ box-sizing: border-box;
 }
 
 .cv-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 1200px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ margin-top: 20px;
+ margin-bottom: 20px;
+ width: 100%;
+ max-width: 1200px;
 }
 
 .contact-content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 2rem;
 }
 
 .footer {
-  width: 100%;
-  flex-shrink: 0;
-  position: relative;
-  bottom: 0;
-  left: 0;
+ width: 100%;
+ flex-shrink: 0;
+ position: relative;
+ bottom: 0;
+ left: 0;
 }
 
 @media (max-width: 1024px) {
-  .contact-section {
-      padding: 1rem;
-  }
+ .contact-section {
+   padding: 1rem;
+ }
 
-  .cv-container {
-      flex-direction: column;
-  }
+ .cv-container {
+   flex-direction: column;
+ }
 }
 
 @media (max-width: 768px) {
-  .contact-section {
-      padding: 0.5rem;
+  .contact-page,
+  #contact {
+    padding: 20px 10px; /* Réduire le padding latéral pour maximiser l'espace */
   }
-
+  
   .cv-container {
-      margin-top: 10px;
-      margin-bottom: 10px;
+    margin: 15px 0; /* Réduire les marges */
+  }
+  
+  /* Augmenter la taille des titres sur mobile */
+  #contact h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  /* S'assurer que le formulaire occupe toute la largeur */
+  #contactForm {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Pour les très petits écrans, réduire encore les marges */
+  .contact-page,
+  #contact {
+    padding: 15px 5px;
   }
 }

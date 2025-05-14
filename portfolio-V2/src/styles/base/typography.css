@@ -1,74 +1,58 @@
-/* typography.css */
 h1 {
-    font-size: 3rem;
-    color: var(--color-primary);
-    margin: 0;
-    font-weight: 600;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    transition: font-size var(--transition-bezier);
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin: 0;
+  font-weight: 600;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: font-size var(--transition-bezier);
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-top: var(--spacing-xxl);
+  color: var(--color-primary);
+}
+
+h3 {
+  font-size: 1.6rem;
+  margin-bottom: var(--spacing-m);
+}
+
+h4 {
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-m);
+}
+
+p {
+  margin-bottom: var(--spacing-m);
+}
+
+@media (max-width: 1024px) {
+  h1 { font-size: 2.5rem; }
+  h2 { 
+    font-size: 2rem;
+    margin-top: 60px;
   }
-  
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 2.2rem; }
   h2 {
-    font-size: 2.5rem;
-    margin-top: var(--spacing-xxl);
-    color: var(--color-primary);
+    font-size: 1.8rem;
+    margin-top: 60px;
   }
-  
-  h3 {
-    font-size: 1.6rem;
-    margin-bottom: var(--spacing-m);
+}
+
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  h1 { font-size: 1.8rem; }
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 40px;
   }
-  
-  h4 {
-    color: var(--color-text-light);
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-m);
-  }
-  
-  p {
-    margin-bottom: var(--spacing-m);
-  }
-  
-  @media (max-width: 1024px) {
-    h1 {
-      font-size: 2.5rem;
-    }
-    
-    h2 {
-      font-size: 2rem;
-      margin-top: 60px;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 2.2rem;
-    }
-    
-    h2 {
-      font-size: 1.8rem;
-      margin-top: 60px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    body {
-      font-size: 14px;
-    }
-    
-    h1 {
-      font-size: 1.8rem;
-    }
-    
-    h2 {
-      font-size: 1.5rem;
-      margin-top: 40px;
-    }
-    
-    h3 {
-      font-size: 1.3rem;
-    }
-  }
+  h3 { font-size: 1.3rem; }
+}

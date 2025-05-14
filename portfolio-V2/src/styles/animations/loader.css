@@ -1,14 +1,6 @@
-/* src/styles/animations/loader.css - Optimisé */
-
-/**
- * STRUCTURE DE BASE
- */
 .custom-loader {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(135deg, #2c3e50 0%, #395878 100%);
   display: flex;
   justify-content: center;
@@ -27,10 +19,7 @@
 
 .gradient-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0; /* Optimisé */
   background: radial-gradient(
     circle at var(--mouse-x) var(--mouse-y),
     rgba(83, 186, 95, 0.15) 0%,
@@ -39,15 +28,11 @@
   transition: background 0.3s ease;
 }
 
-/**
- * ÉLÉMENTS FLOTTANTS
- */
-.floating-elements {
+/** ÉLÉMENTS FLOTTANTS */
+.floating-elements,
+.code-lines {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   overflow: hidden;
 }
@@ -65,13 +50,6 @@
   filter: blur(5px);
 }
 
-.code-lines {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
 .code-line {
   position: absolute;
   height: 1px;
@@ -85,9 +63,7 @@
   filter: blur(1px);
 }
 
-/**
- * CONTENU DU LOADER
- */
+/** CONTENU DU LOADER */
 .loader-content {
   position: relative;
   display: flex;
@@ -106,7 +82,7 @@
   z-index: 150;
 }
 
-/* Styles pour le logo image */
+/* Styles pour le logo */
 .logo-img {
   display: flex;
   justify-content: center;
@@ -140,7 +116,6 @@
   z-index: 150;
 }
 
-/* Styles pour le texte (ancien style conservé pour compatibilité) */
 .logo-text {
   font-size: 5rem;
   font-weight: bold;
@@ -170,9 +145,7 @@
   animation: fade-message 0.5s ease-in-out;
 }
 
-/**
- * BARRE DE PROGRESSION
- */
+/** BARRE DE PROGRESSION */
 .progress-container {
   width: 100%;
   height: 16px;
@@ -212,10 +185,8 @@
 
 .progress-glow {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0 auto 0 0;
   width: 60px;
-  height: 100%;
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
@@ -225,9 +196,7 @@
   animation: glow-slide 2s linear infinite;
 }
 
-/**
- * EFFETS D'EXPLOSION
- */
+/** EFFETS D'EXPLOSION */
 /* Conteneurs d'effets d'explosion */
 .explosion-flash,
 .explosion-core,
@@ -235,18 +204,10 @@
 .particles-container,
 .rays-container {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  inset: 0;
   pointer-events: none;
   visibility: hidden;
   opacity: 0;
-}
-
-.explosion-flash {
-  background-color: transparent;
-  z-index: 100;
 }
 
 .explosion-core {
@@ -268,13 +229,8 @@
   align-items: center;
 }
 
-.particles-container {
-  z-index: 70;
-}
-
-.rays-container {
-  z-index: 60;
-}
+.particles-container { z-index: 70; }
+.rays-container { z-index: 60; }
 
 /* Affichage des éléments d'explosion */
 .custom-loader.exploding .explosion-flash,
@@ -327,15 +283,11 @@
   box-shadow: 0 0 var(--ray-glow) rgba(83, 255, 107, calc(var(--ray-opacity) * 0.8));
 }
 
-/**
- * ANIMATIONS
- */
+/** ANIMATIONS */
 /* Animation des éléments flottants */
 @keyframes float-circle {
-  0% {
-    transform: translate(-50%, -50%);
-  }
-  100% {
+  0% { transform: translate(-50%, -50%); }
+  100% { 
     transform: translate(
       calc(-50% + var(--circle-drift-x)),
       calc(-50% + var(--circle-drift-y))
@@ -427,12 +379,8 @@
 }
 
 @keyframes glow-slide {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(1000%);
-  }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(1000%); }
 }
 
 /* Animation des effets d'explosion */
@@ -484,6 +432,7 @@
   }
 }
 
+/* Animation pour textes et éléments */
 @keyframes logo-mega-explosion {
   0% {
     transform: scale(1);
@@ -520,6 +469,7 @@
   }
 }
 
+/* Animation pour la barre de progression */
 @keyframes progress-container-explode {
   0% {
     transform: scale(1);
@@ -537,18 +487,14 @@
 }
 
 @keyframes progress-explode {
-  0% {
-    background: linear-gradient(90deg, #53ba5f, #79d984);
-  }
+  0% { background: linear-gradient(90deg, #53ba5f, #79d984); }
   20% {
     background: linear-gradient(90deg, #ffffff, #d9ffdf);
     box-shadow: 
       0 0 50px rgba(255, 255, 255, 1),
       0 0 100px rgba(83, 255, 107, 1);
   }
-  100% {
-    opacity: 0;
-  }
+  100% { opacity: 0; }
 }
 
 @keyframes percentage-explode {
@@ -569,6 +515,7 @@
   }
 }
 
+/* Animation pour les ondes de choc */
 @keyframes shockwave-expand {
   0% {
     width: 0;
@@ -576,9 +523,7 @@
     opacity: 0;
     border-width: 15px;
   }
-  15% {
-    opacity: 0.9;
-  }
+  15% { opacity: 0.9; }
   100% {
     width: calc(15vw * (1 + var(--wave-index)));
     height: calc(15vh * (1 + var(--wave-index)));
@@ -594,9 +539,7 @@
     opacity: 0;
     border-width: 20px;
   }
-  20% {
-    opacity: 1;
-  }
+  20% { opacity: 1; }
   100% {
     width: 250vw;
     height: 250vh;
@@ -605,6 +548,7 @@
   }
 }
 
+/* Animation pour les particules */
 @keyframes particle-explode {
   0% {
     transform: translate(-50%, -50%) rotate(var(--angle)) scale(0);
@@ -643,6 +587,7 @@
   }
 }
 
+/* Animation pour les rayons */
 @keyframes ray-shoot {
   0% {
     height: 0;
@@ -681,127 +626,61 @@
   }
 }
 
-/**
- * DÉCLENCHEMENT DES ANIMATIONS D'EXPLOSION
- */
-/* Animations déclenchées lors de l'explosion */
-.custom-loader.exploding .explosion-flash {
-  animation: mega-flash 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .explosion-core {
-  animation: core-explosion 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .logo-text {
-  animation: logo-mega-explosion 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .logo-img img {
-  animation: logo-mega-explosion 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .loader-text h1 {
-  animation: text-mega-explosion 0.7s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .loader-text p {
-  animation: text-mega-explosion 0.6s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .progress-container {
-  animation: progress-container-explode 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .progress-bar {
-  animation: progress-explode 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .progress-percentage {
-  animation: percentage-explode 0.8s cubic-bezier(0.2, 0.4, 0.9, 1) forwards;
-}
-
-.custom-loader.exploding .shockwave {
+/** DÉCLENCHEMENT DES ANIMATIONS D'EXPLOSION */
+/* Animations standards */
+.custom-loader.exploding .explosion-flash { animation: mega-flash 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .explosion-core { animation: core-explosion 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .logo-text,
+.custom-loader.exploding .logo-img img { animation: logo-mega-explosion 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .loader-text h1,
+.custom-loader.exploding .loader-text p { animation: text-mega-explosion 0.7s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .progress-container { animation: progress-container-explode 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .progress-bar { animation: progress-explode 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .progress-percentage { animation: percentage-explode 0.8s cubic-bezier(0.2, 0.4, 0.9, 1) forwards; }
+.custom-loader.exploding .shockwave { 
   animation: shockwave-expand 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: var(--wave-delay);
 }
-
 .custom-loader.exploding .explosion-particle {
   animation: particle-explode var(--duration) cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: var(--delay);
 }
-
 .custom-loader.exploding .explosion-ray {
   animation: ray-shoot 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: var(--ray-delay);
 }
 
-/* Animations déclenchées pour l'explosion ultra */
+/* Animations ultra */
 .custom-loader.ultra-explosion .shockwave {
   animation: shockwave-expand-ultra 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: calc(var(--wave-delay) * 0.5);
 }
-
 .custom-loader.ultra-explosion .explosion-particle {
   animation: particle-explode-ultra var(--duration) cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: calc(var(--delay) * 0.5);
 }
-
 .custom-loader.ultra-explosion .explosion-ray {
   animation: ray-shoot-ultra 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: calc(var(--ray-delay) * 0.5);
 }
 
-/**
- * MEDIA QUERIES
- */
+/** MEDIA QUERIES */
 @media (max-width: 768px) {
-  .loader-text h1 {
-    font-size: 2.2rem;
-  }
-  
-  .loader-text p {
-    font-size: 1.3rem;
-  }
-  
-  .logo-text {
-    font-size: 4rem;
-  }
-  
-  .logo-img img {
-    width: 65px;
-    height: 65px;
-  }
+  .loader-text h1 { font-size: 2.2rem; }
+  .loader-text p { font-size: 1.3rem; }
+  .logo-text { font-size: 4rem; }
+  .logo-img img { width: 65px; height: 65px; }
 }
 
 @media (max-width: 480px) {
-  .loader-text h1 {
-    font-size: 1.8rem;
+  .loader-text h1 { 
+    font-size: 1.8rem; 
     margin-bottom: 15px;
   }
-  
-  .loader-text p {
-    font-size: 1.1rem;
-  }
-  
-  .logo-text {
-    font-size: 3.5rem;
-  }
-  
-  .progress-container {
-    height: 12px;
-  }
-  
-  .logo-img img {
-    width: 55px;
-    height: 55px;
-  }
-  
-  .logo-img {
-    margin-bottom: 20px;
-  }
-  
-  .loader-content {
-    padding: 20px;
-  }
+  .loader-text p { font-size: 1.1rem; }
+  .logo-text { font-size: 3.5rem; }
+  .progress-container { height: 12px; }
+  .logo-img img { width: 55px; height: 55px; }
+  .logo-img { margin-bottom: 20px; }
+  .loader-content { padding: 20px; }
 }

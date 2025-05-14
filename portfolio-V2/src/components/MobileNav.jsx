@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAnimation } from './AnimationContext';
-import { useTheme } from './ThemeContext';
+import useAnimation from '../hooks/useAnimation';
+import  useTheme from '../hooks/useTheme';
 
 function MobileNav() {
   // États et contextes

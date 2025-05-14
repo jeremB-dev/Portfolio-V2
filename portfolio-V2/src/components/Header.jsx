@@ -1,7 +1,8 @@
+// src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useAnimation } from './AnimationContext';
-import { useTheme } from './ThemeContext';
+import useAnimation from '../hooks/useAnimation';
+import useTheme from '../hooks/useTheme';
 
 function Header() {
   const { animationsEnabled, setAnimationsEnabled } = useAnimation();
@@ -30,6 +31,20 @@ function Header() {
     };
   }, [mobileMenuOpen]);
   
+  // Ajout d'un gestionnaire pour la touche Échap
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [mobileMenuOpen]);
+  
   return (
     <>
       <header className="header">
@@ -49,43 +64,50 @@ function Header() {
           
           <nav className="header-nav">
             <ul>
-              {/* Liens de navigation pour desktop */}
               <li><NavLink to="/technologies" className={({isActive}) => isActive ? "active" : ""}>Technologies</NavLink></li>
               <li><NavLink to="/projects" className={({isActive}) => isActive ? "active" : ""}>Projets</NavLink></li>
               <li><NavLink to="/contact" className={({isActive}) => isActive ? "active" : ""}>Contact</NavLink></li>
             </ul>
           </nav>
           
-          <div 
+          <button 
             className={`menu-hamburger ${mobileMenuOpen ? 'active' : ''}`} 
             onClick={toggleMobileMenu}
-            aria-label="Menu"
+            aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <span></span>
             <span></span>
             <span></span>
-          </div>
+          </button>
         </div>
         
-        <div className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}>
+        <div 
+          id="mobile-menu"
+          className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}
+          aria-hidden={!mobileMenuOpen}
+        >
           <div className="mobile-nav-header">
             <div className="mobile-logo">
               <img src="/assets/logo-perso/logo-perso.webp" alt="Logo JB" width="40" height="40" />
               <span>Jérémy Brunel</span>
             </div>
-            <div className="mobile-close" onClick={closeMobileMenu}>
+            <button 
+              className="mobile-close" 
+              onClick={closeMobileMenu}
+              aria-label="Fermer le menu"
+            >
               <span>×</span>
-            </div>
+            </button>
           </div>
           <ul className="mobile-nav-links">
-            {/* Inclure Accueil dans le menu mobile */}
             <li><NavLink to="/" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Accueil</NavLink></li>
             <li><NavLink to="/technologies" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Technologies</NavLink></li>
             <li><NavLink to="/projects" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Projets</NavLink></li>
             <li><NavLink to="/contact" onClick={closeMobileMenu} className={({isActive}) => isActive ? "active" : ""}>Contact</NavLink></li>
           </ul>
           
-          {/* Switchs dans le menu mobile */}
           <div className="mobile-switches-container">
             <div className="toggle-item">
               <span className="toggle-icon">{animationsEnabled ? "✨" : "🚫"}</span>
@@ -95,6 +117,7 @@ function Header() {
                     type="checkbox"
                     checked={animationsEnabled}
                     onChange={() => setAnimationsEnabled(!animationsEnabled)}
+                    aria-label={`Animations ${animationsEnabled ? 'activées' : 'désactivées'}`}
                   />
                   <span className="slider round"></span>
                 </label>
@@ -110,6 +133,7 @@ function Header() {
                     type="checkbox"
                     checked={darkMode}
                     onChange={() => setDarkMode(!darkMode)}
+                    aria-label={`Thème ${darkMode ? 'sombre' : 'clair'}`}
                   />
                   <span className="slider round"></span>
                 </label>
@@ -120,12 +144,14 @@ function Header() {
         </div>
       </header>
       
-      {/* Overlay pour le menu mobile */}
       {mobileMenuOpen && (
-        <div className="mobile-nav-overlay" onClick={closeMobileMenu}></div>
+        <div 
+          className="mobile-nav-overlay" 
+          onClick={closeMobileMenu}
+          role="presentation"
+        ></div>
       )}
       
-      {/* Barre de switchs pour desktop uniquement */}
       <div className="switches-bar home-only desktop-only">
         <div className="toggle-item">
           <span className="toggle-icon">{animationsEnabled ? "✨" : "🚫"}</span>
@@ -135,6 +161,7 @@ function Header() {
                 type="checkbox"
                 checked={animationsEnabled}
                 onChange={() => setAnimationsEnabled(!animationsEnabled)}
+                aria-label={`Animations ${animationsEnabled ? 'activées' : 'désactivées'}`}
               />
               <span className="slider round"></span>
             </label>
@@ -150,6 +177,7 @@ function Header() {
                 type="checkbox"
                 checked={darkMode}
                 onChange={() => setDarkMode(!darkMode)}
+                aria-label={`Thème ${darkMode ? 'sombre' : 'clair'}`}
               />
               <span className="slider round"></span>
             </label>

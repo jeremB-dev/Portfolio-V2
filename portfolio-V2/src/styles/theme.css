@@ -1,31 +1,27 @@
-/* theme.css */
 :root {
-  /* Variables du thème clair (par défaut) */
-  --background-color: transparent; /* Fond transparent en mode clair */
-  --text-color: #fff; /* Texte blanc pour contraster avec le fond bleu dégradé */
-  --primary-color: #53ba5f;
-  --secondary-color: #6c757d;
-  --accent-color: #ffc107;
-  --border-color: transparent; /* Pas de bordure en mode clair */
-  --form-background: #fff; /* Fond blanc pour les formulaires en mode clair */
-  --form-text: #333; /* Texte foncé pour les formulaires en mode clair */
+ --background-color: transparent;
+ --text-color: #fff;
+ --primary-color: #53ba5f;
+ --secondary-color: #6c757d;
+ --accent-color: #ffc107;
+ --border-color: transparent;
+ --form-background: #fff;
+ --form-text: #333;
 }
 
-/* Thème sombre */
 .dark-theme {
-  --background-color: #212529; /* Fond noir en mode sombre */
-  --text-color: #f8f9fa;
-  --primary-color: #53ba5f;
-  --secondary-color: #adb5bd;
-  --accent-color: #ffc107;
-  --border-color: #495057;
-  --form-background: #333; /* Fond sombre pour les formulaires en mode sombre */
-  --form-text: #fff; /* Texte clair pour les formulaires en mode sombre */
+ --background-color: #212529;
+ --text-color: #f8f9fa;
+ --primary-color: #53ba5f;
+ --secondary-color: #adb5bd;
+ --accent-color: #ffc107;
+ --border-color: #495057;
+ --form-background: #333;
+ --form-text: #fff;
 }
 
-/* Styles spécifiques pour la section principale */
 section {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
+ background-color: var(--background-color);
+ color: var(--text-color);
+ transition: background-color 0.3s, color 0.3s;
 }

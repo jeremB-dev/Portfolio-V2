@@ -1,12 +1,12 @@
 import React from 'react';
-import { HashLink } from 'react-router-hash-link';
 import ProjectCard from './ProjectCard';
-import BackgroundAnimation from '../components/BackgroundAnimation';
-import { useAnimation } from '../components/AnimationContext';
-
+import BackgroundAnimation from './BackgroundAnimation';
+import useAnimation from '../hooks/useAnimation';
+import useWindowSize from '../hooks/useWindowSize';
 
 function Projects() {
   const { animationsEnabled } = useAnimation();
+  const { isMobile, isTablet } = useWindowSize();
 
   const projects = [
     {
@@ -50,17 +50,16 @@ function Projects() {
 
   return (
     <section id="projects">
-
-{animationsEnabled && (
+      {animationsEnabled && (
         <BackgroundAnimation 
           type="particles" 
-          opacity={1} 
+          opacity={0.5}
           color="#53ba5f" 
-          speed="fast" 
-          particleSize={15} // Augmenter la taille des particules
-          particleCount={500} // Augmenter le nombre de particules
-          movementType="bounce"
-          rotationSpeed="medium" // Ajouter une rotation si supporté
+          speed="fast"
+          particleSize={10}
+          particleCount={120} // Sera automatiquement réduit à environ 15 sur mobile
+          isMobile={isMobile}
+          isTablet={isTablet}
         />
       )}
 
