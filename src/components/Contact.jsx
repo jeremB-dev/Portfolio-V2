@@ -52,8 +52,8 @@ function Contact() {
       case 'message':
         if (!value.trim()) {
           error = 'Le message est requis';
-        } else if (value.trim().length < 30) {
-          error = 'Le message doit contenir au moins 30 caractères';
+        } else if (value.trim().length < 10) {
+          error = 'Le message doit contenir au moins 10 caractères';
         }
         break;
         
@@ -103,7 +103,7 @@ function Contact() {
   // Afficher le compteur de caractères pour le message
   const getCharacterCount = () => {
     const count = formData.message.trim().length;
-    const minCount = 30;
+    const minCount = 10;
     
     return `${count}/${minCount} caractères minimum`;
   };
@@ -134,7 +134,7 @@ function Contact() {
       form.append('_captcha', 'false');
       
       // Envoi à FormSubmit
-      const response = await fetch('https://formsubmit.co/jeremybrunel.dev@gmail.com', {
+      const response = await fetch('https://formsubmit.co/5b1600f8373beaa0c86ee075edd76d86', {
         method: 'POST',
         body: form
       });
@@ -159,7 +159,7 @@ function Contact() {
       
       setFormStatus({ loading: false, success: true, error: false, errorMessage: '' });
       
-      // Fermer la modale après 3 secondes
+      // Fermer la modale après 4 secondes
       setTimeout(() => {
         setFormStatus(prev => ({ ...prev, success: false }));
         window.scrollTo(0, 0);
@@ -192,13 +192,14 @@ function Contact() {
 
       <h2>Obtenez mon CV</h2>
       <div className="cv-container">
-        <a href="/assets/CV/Brunel_Jérémy_cv.pdf" download="CV-Jeremy-Brunel.pdf" className="btn">
+        <a href="assets/CV/Brunel_Jérémy_cv.pdf" download="CV-Jeremy-Brunel.pdf" className="btn">
           Cliquer pour télécharger
         </a>
       </div>
       
       <h2>Contactez-moi</h2>
       <form id="contactForm" onSubmit={handleSubmit} noValidate>
+        <input type="hidden" name="_captcha" value="false" />
         <div className="form-group">
           <label htmlFor="name">NOM Prénom :</label>
           <input
@@ -244,7 +245,7 @@ function Contact() {
         <div className="form-group">
           <label htmlFor="message">
             Message :
-            <span className="character-count" style={{ marginLeft: '10px', fontSize: '0.8em', color: formData.message.trim().length < 30 ? '#ff5252' : '#53ba5f' }}>
+            <span className="character-count" style={{ marginLeft: '10px', fontSize: '0.8em', color: formData.message.trim().length < 10 ? '#ff5252' : '#53ba5f' }}>
               {getCharacterCount()}
             </span>
           </label>

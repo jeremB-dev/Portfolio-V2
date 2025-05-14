@@ -14,7 +14,7 @@ function Projects() {
       title: "Projet \"Oh my food\"",
       subtitle: "Un projet HTML avec Sass.",
       image: "assets/Captures/ohmyfood/home.webp",
-      description: `J'ai dévelopé la partie front-end d'un site pour une architecte d'intérieur.\nCe projet inclut :\n- La création d'une page dynamique présentant les travaux de l'architecte.\n- La gestion des événements utilisateurs et la manipulation du DOM en JavaScript.\n- Le développement d'une page de connexion et d'une modale pour uploader des médias.\n\nJ'ai appris à communiquer avec une API, à gérer des formulaires et à tester les fonctionnalités avec un code back-end. Ce projet m'a permis de consolider mes compétences en JavaScript pour les applications web modernes.`,
+      description: `J'ai développé la partie front-end d'un site pour une architecte d'intérieur.\nCe projet inclut :\n- La création d'une page dynamique présentant les travaux de l'architecte.\n- La gestion des événements utilisateurs et la manipulation du DOM en JavaScript.\n- Le développement d'une page de connexion et d'une modale pour uploader des médias.\n\nJ'ai appris à communiquer avec une API, à gérer des formulaires et à tester les fonctionnalités avec un code back-end. Ce projet m'a permis de consolider mes compétences en JavaScript pour les applications web modernes.`,
       technologies: ["html", "sass"],
       github: "https://github.com/jeremB-dev/Ohmyfood",
       link: "/details/ohmyfood", 
