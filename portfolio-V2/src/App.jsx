@@ -1,6 +1,6 @@
 // src/App.jsx
 import React, { useState, useCallback } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Loader from './components/Loader.jsx';
 import Header from './components/Header.jsx';
 import SimpleNav from './components/SimpleNav.jsx';
