@@ -254,7 +254,7 @@ function Contact() {
             rows="5"
             required
             minLength="10"
-            placeholder="Votre message (minimum 30 caractères)"
+            placeholder="Votre message..."
             value={formData.message}
             onChange={handleChange}
             className={fieldErrors.message ? 'error' : ''}

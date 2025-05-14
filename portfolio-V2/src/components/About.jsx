@@ -40,9 +40,11 @@ function About() {
         </div>
         <div className="profile-photo-container">
           <img
-            src="/assets/Photo/photoMoi.webp"
+            src="assets/Photo/photoMoi.webp"
             alt="Jérémy Brunel"
             className="profile-photo"
+            width={300}
+            height={300}
           />
         </div>
       </div>

@@ -68,7 +68,6 @@ function ProjectCard({ project }) {
           src={image}
           alt={title}
           className="project-image"
-          loading="lazy"
           width="400"
           height="200"
         />
@@ -83,7 +82,6 @@ function ProjectCard({ project }) {
                   key={index}
                   src={`/assets/logos/${tech}.svg`}
                   alt={`Technologie ${tech}`}
-                  loading="lazy"
                   width="32"
                   height="32"
                 />
