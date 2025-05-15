@@ -5,6 +5,9 @@ import useAnimation from '../hooks/useAnimation';
 import useWindowSize from '../hooks/useWindowSize';
 
 function Contact() {
+  // Définition de la constante pour la longueur minimale du message
+  const MESSAGE_MIN_LENGTH = 10;
+  
   const { animationsEnabled } = useAnimation();
   const { isMobile, isTablet } = useWindowSize();
   const [formData, setFormData] = useState({
@@ -52,8 +55,8 @@ function Contact() {
       case 'message':
         if (!value.trim()) {
           error = 'Le message est requis';
-        } else if (value.trim().length < 10) {
-          error = 'Le message doit contenir au moins 10 caractères';
+        } else if (value.trim().length < MESSAGE_MIN_LENGTH) {
+          error = `Le message doit contenir au moins ${MESSAGE_MIN_LENGTH} caractères`;
         }
         break;
         
@@ -103,9 +106,8 @@ function Contact() {
   // Afficher le compteur de caractères pour le message
   const getCharacterCount = () => {
     const count = formData.message.trim().length;
-    const minCount = 10;
     
-    return `${count}/${minCount} caractères minimum`;
+    return `${count}/${MESSAGE_MIN_LENGTH} caractères minimum`;
   };
 
   // Gestion de la soumission du formulaire
@@ -245,7 +247,7 @@ function Contact() {
         <div className="form-group">
           <label htmlFor="message">
             Message :
-            <span className="character-count" style={{ marginLeft: '10px', fontSize: '0.8em', color: formData.message.trim().length < 10 ? '#ff5252' : '#53ba5f' }}>
+            <span className="character-count" style={{ marginLeft: '10px', fontSize: '0.8em', color: formData.message.trim().length < MESSAGE_MIN_LENGTH ? '#ff5252' : '#53ba5f' }}>
               {getCharacterCount()}
             </span>
           </label>
@@ -254,7 +256,7 @@ function Contact() {
             name="message"
             rows="5"
             required
-            minLength="10"
+            minLength={MESSAGE_MIN_LENGTH.toString()}
             placeholder="Votre message..."
             value={formData.message}
             onChange={handleChange}
