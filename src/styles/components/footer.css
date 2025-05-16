@@ -1,52 +1,267 @@
 .footer {
- padding: var(--spacing-m) var(--spacing-s);
- margin-top: var(--spacing-xxl);
- background-color: var(--color-background);
- width: 100%;
- height: var(--footer-height);
- display: flex;
- justify-content: flex-end;
- align-items: center;
+  padding: var(--spacing-m) var(--spacing-l);
+  margin-top: var(--spacing-xxl);
+  background-color: var(--color-background);
+  width: 100%;
+  height: var(--footer-height);
 }
 
-.footer p {
- font-size: 0.9rem;
- color: var(--color-text-light);
- margin: 0;
- padding-right: 30px;
- line-height: 1.6;
- font-weight: bold;
- font-family: "Poppins", sans-serif;
- transition: all var(--transition-bezier);
- cursor: default;
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  width: 100%;
 }
 
+/* Style pour les icônes sociales */
+.social-links {
+  display: flex;
+  gap: 15px;
+  position: relative;
+}
+
+.social-links a, 
+.share-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.social-links a:hover, 
+.share-button:hover {
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(83, 186, 95, 0.3);
+}
+
+/* Couleurs spécifiques pour chaque réseau au survol */
+.social-links a.github:hover {
+  background-color: #333; /* Noir GitHub */
+  border-color: #333;
+}
+
+.social-links a.linkedin:hover {
+  background-color: #0077B5; /* Bleu LinkedIn */
+  border-color: #0077B5;
+}
+
+.social-links a.twitter:hover {
+  background-color: #1DA1F2; /* Bleu Twitter */
+  border-color: #1DA1F2;
+}
+
+.share-button:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Styles pour le dropdown de partage */
+.share-dropdown {
+  position: absolute;
+  top: -75px; /* Position au-dessus du bouton de partage */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row; /* Disposition horizontale */
+  gap: 10px;
+  background-color: white;
+  border-radius: 8px;
+  border: #000000 solid 1px;
+  padding: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Petit triangle pointant vers le bouton */
+.share-dropdown::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+/* Style de base pour toutes les options de partage */
+.share-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--color-primary); /* Couleur par défaut */
+}
+
+/* Effet de survol général */
+.share-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Couleurs spécifiques pour chaque réseau au survol */
+.share-option.twitter:hover {
+  background-color: #1DA1F2; /* Couleur officielle Twitter */
+}
+
+.share-option.facebook:hover {
+  background-color: #4267B2; /* Couleur officielle Facebook */
+}
+
+.share-option.linkedin:hover {
+  background-color: #0077B5; /* Couleur officielle LinkedIn */
+}
+
+.share-option.email:hover {
+  background-color: #DB4437; /* Rouge pour email */
+}
+
+.share-option.copy:hover {
+  background-color: #333333; /* Noir/gris foncé pour copier le lien */
+}
+
+.copyright {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
- .footer {
-   padding: 12px 8px;
-   margin-top: 30px;
-   justify-content: center;
- }
- 
- .footer p {
-   padding-right: 0;
-   text-align: center;
- }
+  .footer-container {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 0;
+  }
+  
+  .social-links {
+    order: 2;
+  }
+  
+  .copyright {
+    order: 1;
+    text-align: center;
+  }
+  
+  .share-dropdown {
+    top: -55px;
+    width: auto;
+    min-width: 200px;
+    justify-content: center;
+  }
+}
+
+/* Wrapper pour chaque icône sociale */
+.social-item {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style pour les tooltips - MODIFIÉ POUR APPARAÎTRE AU-DESSUS ET SANS TRANSPARENCE */
+.tooltip {
+  position: absolute;
+  top: -30px; /* Position au-dessus de l'icône */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000; /* Noir solide sans transparence */
+  color: white;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 100;
+  pointer-events: none; /* Pour éviter que le tooltip interfère avec les clics */
+  font-weight: 500; /* Légèrement plus gras pour meilleure lisibilité */
+  letter-spacing: 0.3px; /* Meilleur espacement des lettres */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Légère ombre pour plus de profondeur */
+}
+
+/* Triangle pointant vers l'icône - MODIFIÉ POUR POINTER VERS LE BAS ET SANS TRANSPARENCE */
+.tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* Position en bas du tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px; /* Forme du triangle */
+  border-style: solid;
+  border-color: #000000 transparent transparent transparent; /* Couleurs de bordure modifiées pour correspondre au fond */
+}
+
+/* Affichage du tooltip au survol */
+.social-item a:hover .tooltip,
+.social-item button:hover .tooltip,
+.share-option:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Pour les options de partage dans le dropdown */
+.share-dropdown .tooltip {
+  top: -25px; /* Position au-dessus */
+}
+
+/* Ajustements pour éviter les chevauchements sur mobile */
+@media (max-width: 768px) {
+  .tooltip {
+    top: -25px; /* Position au-dessus sur mobile */
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  
+  .footer {
+    padding: var(--spacing-s) var(--spacing-s);
+  }
+  
+  .social-links a, 
+  .share-button,
+  .share-option {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
- .footer {
-   padding: 10px 5px;
-   margin-top: 20px;
- }
- 
- .footer p {
-   font-size: 0.85rem;
- }
-}
-
-@media (max-width: 360px) {
- .footer p {
-   font-size: 0.8rem;
- }
+  .social-links {
+    gap: 10px;
+  }
 }

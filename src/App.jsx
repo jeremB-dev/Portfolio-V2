@@ -40,7 +40,7 @@ function AppContent() {
         </Routes>
       </main>
       <Footer />
-      <ScrollToTop /> {/* Ajout du composant ici */}
+      <ScrollToTop />
     </div>
   );
 }
