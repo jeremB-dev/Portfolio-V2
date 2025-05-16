@@ -1,4 +1,3 @@
-// src/components/AnimationContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
 
 // Créer le contexte 

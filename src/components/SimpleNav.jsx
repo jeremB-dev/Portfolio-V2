@@ -1,4 +1,3 @@
-// src/components/SimpleNav.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAnimation from '../hooks/useAnimation';

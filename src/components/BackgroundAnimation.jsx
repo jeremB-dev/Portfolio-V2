@@ -1,4 +1,3 @@
-// src/components/BackgroundAnimation.jsx
 import React, { useEffect, useRef, useCallback } from 'react';
 
 const BackgroundAnimation = ({ 

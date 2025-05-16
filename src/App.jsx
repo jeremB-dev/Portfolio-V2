@@ -1,10 +1,10 @@
-// src/App.jsx
 import React, { useState, useCallback } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Loader from './components/Loader.jsx';
 import Header from './components/Header.jsx';
 import SimpleNav from './components/SimpleNav.jsx';
 import Footer from './components/Footer.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 import Home from './pages/Home.jsx';
 import TechnologiesPage from './pages/TechnologiesPage.jsx';
 import ProjectsPage from './pages/ProjectsPage.jsx';
@@ -40,6 +40,7 @@ function AppContent() {
         </Routes>
       </main>
       <Footer />
+      <ScrollToTop /> {/* Ajout du composant ici */}
     </div>
   );
 }

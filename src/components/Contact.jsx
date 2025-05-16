@@ -1,29 +1,25 @@
-// src/components/Contact.jsx
 import React, { useState } from 'react';
 import BackgroundAnimation from './BackgroundAnimation';
 import useAnimation from '../hooks/useAnimation';
 import useWindowSize from '../hooks/useWindowSize';
 
 function Contact() {
-  // Définition de la constante pour la longueur minimale du message
   const MESSAGE_MIN_LENGTH = 10;
-  
   const { animationsEnabled } = useAnimation();
   const { isMobile, isTablet } = useWindowSize();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
-  
-  // État pour les erreurs de validation spécifiques à chaque champ
+
   const [fieldErrors, setFieldErrors] = useState({
     name: '',
     email: '',
     message: ''
   });
-  
-  // État pour le statut global du formulaire
+
   const [formStatus, setFormStatus] = useState({
     loading: false,
     success: false,
@@ -31,90 +27,54 @@ function Contact() {
     errorMessage: ''
   });
 
-  // Fonction pour valider un champ spécifique
   const validateField = (name, value) => {
     let error = '';
-    
     switch (name) {
       case 'name':
-        if (!value.trim()) {
-          error = 'Le nom est requis';
-        } else if (!/^[a-zA-ZÀ-ÿ]+ [a-zA-ZÀ-ÿ]+$/.test(value)) {
-          error = 'Format invalide. Exemple: DUBOIS Julien';
-        }
+        if (!value.trim()) error = 'Le nom est requis';
+        else if (!/^[a-zA-ZÀ-ÿ]+(?:[\s-][a-zA-ZÀ-ÿ]+)*$/.test(value)) error = 'Format invalide.';
         break;
-        
       case 'email':
-        if (!value.trim()) {
-          error = 'L\'email est requis';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          error = 'Format d\'email invalide';
-        }
+        if (!value.trim()) error = 'L\'email est requis';
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = 'Format d\'email invalide';
         break;
-        
       case 'message':
-        if (!value.trim()) {
-          error = 'Le message est requis';
-        } else if (value.trim().length < MESSAGE_MIN_LENGTH) {
-          error = `Le message doit contenir au moins ${MESSAGE_MIN_LENGTH} caractères`;
-        }
+        if (!value.trim()) error = 'Le message est requis';
+        else if (value.trim().length < MESSAGE_MIN_LENGTH) error = `Minimum ${MESSAGE_MIN_LENGTH} caractères`;
         break;
-        
       default:
         break;
     }
-    
     return error;
   };
 
-  // Fonction pour valider le formulaire entier
   const validateForm = () => {
     const errors = {
       name: validateField('name', formData.name),
       email: validateField('email', formData.email),
       message: validateField('message', formData.message)
     };
-    
     setFieldErrors(errors);
-    
-    // Retourne true si aucune erreur n'est présente
-    return !Object.values(errors).some(error => error);
+    return !Object.values(errors).some(Boolean);
   };
 
-  // Gestion du changement des champs
   const handleChange = (e) => {
     const { id, value } = e.target;
-    
-    // Mettre à jour les données du formulaire
-    setFormData(prevState => ({
-      ...prevState,
-      [id]: value
-    }));
-    
-    // Valider le champ en temps réel et mettre à jour l'erreur correspondante
-    setFieldErrors(prevErrors => ({
-      ...prevErrors,
-      [id]: validateField(id, value)
-    }));
-    
-    // Réinitialiser les erreurs générales si l'utilisateur commence à corriger
+    setFormData(prev => ({ ...prev, [id]: value }));
+    setFieldErrors(prev => ({ ...prev, [id]: validateField(id, value) }));
     if (formStatus.error) {
       setFormStatus(prev => ({ ...prev, error: false, errorMessage: '' }));
     }
   };
 
-  // Afficher le compteur de caractères pour le message
   const getCharacterCount = () => {
     const count = formData.message.trim().length;
-    
     return `${count}/${MESSAGE_MIN_LENGTH} caractères minimum`;
   };
 
-  // Gestion de la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Valider le formulaire avant envoi
+
     if (!validateForm()) {
       setFormStatus({
         loading: false,
@@ -124,55 +84,55 @@ function Contact() {
       });
       return;
     }
-    
+
     setFormStatus({ loading: true, success: false, error: false, errorMessage: '' });
-    
+
     try {
-      // Créer un objet FormData pour l'envoi
-      const form = new FormData();
-      form.append('name', formData.name);
-      form.append('email', formData.email);
-      form.append('message', formData.message);
-      form.append('_captcha', 'false');
-      
-      // Envoi à FormSubmit
-      const response = await fetch('https://formsubmit.co/5b1600f8373beaa0c86ee075edd76d86', {
-        method: 'POST',
-        body: form
-      });
-      
+      // ➕ Ajoute l'heure locale au moment de l'envoi
+        const localTime = new Date().toLocaleString('fr-FR', {
+          timeZone: 'Europe/Paris',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        });
+
+        const payload = {
+          ...formData,
+          heure_locale: localTime
+        };
+
+        const response = await fetch("https://formspree.io/f/xdkgbgpo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+
       if (!response.ok) {
-        throw new Error('Erreur lors de l\'envoi du formulaire');
+        throw new Error("Erreur lors de l'envoi du formulaire");
       }
-      
-      // Réinitialiser le formulaire
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
-      
-      // Réinitialiser les erreurs
-      setFieldErrors({
-        name: '',
-        email: '',
-        message: ''
-      });
-      
+
+      setFormData({ name: '', email: '', message: '' });
+      setFieldErrors({ name: '', email: '', message: '' });
       setFormStatus({ loading: false, success: true, error: false, errorMessage: '' });
-      
-      // Fermer la modale après 4 secondes
+
       setTimeout(() => {
         setFormStatus(prev => ({ ...prev, success: false }));
         window.scrollTo(0, 0);
       }, 4000);
     } catch (error) {
-      console.error('Erreur lors de l\'envoi:', error);
-      setFormStatus({ 
-        loading: false, 
-        success: false, 
-        error: true, 
-        errorMessage: error.message || 'Une erreur est survenue lors de l\'envoi'
+      console.error(error);
+      setFormStatus({
+        loading: false,
+        success: false,
+        error: true,
+        errorMessage: error.message || 'Une erreur est survenue'
       });
     }
   };
@@ -186,7 +146,7 @@ function Contact() {
           color="#53ba5f" 
           speed="medium"
           particleSize={6}
-          particleCount={120}  // Sera automatiquement réduit à environ 12 sur mobile
+          particleCount={120}
           isMobile={isMobile}
           isTablet={isTablet}
         />
@@ -198,10 +158,9 @@ function Contact() {
           Cliquer pour télécharger
         </a>
       </div>
-      
+
       <h2>Contactez-moi</h2>
       <form id="contactForm" onSubmit={handleSubmit} noValidate>
-        <input type="hidden" name="_captcha" value="false" />
         <div className="form-group">
           <label htmlFor="name">NOM Prénom :</label>
           <input
@@ -209,20 +168,18 @@ function Contact() {
             id="name"
             name="name"
             required
-            placeholder="ex: DUBOIS Julien"
+            placeholder="ex: DUBOIS Jean"
             value={formData.name}
             onChange={handleChange}
             className={fieldErrors.name ? 'error' : ''}
-            aria-invalid={fieldErrors.name ? 'true' : 'false'}
+            aria-invalid={!!fieldErrors.name}
             aria-describedby={fieldErrors.name ? 'name-error' : undefined}
           />
           {fieldErrors.name && (
-            <div id="name-error" className="error-message">
-              {fieldErrors.name}
-            </div>
+            <div id="name-error" className="error-message">{fieldErrors.name}</div>
           )}
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="email">Email :</label>
           <input
@@ -234,20 +191,22 @@ function Contact() {
             value={formData.email}
             onChange={handleChange}
             className={fieldErrors.email ? 'error' : ''}
-            aria-invalid={fieldErrors.email ? 'true' : 'false'}
+            aria-invalid={!!fieldErrors.email}
             aria-describedby={fieldErrors.email ? 'email-error' : undefined}
           />
           {fieldErrors.email && (
-            <div id="email-error" className="error-message">
-              {fieldErrors.email}
-            </div>
+            <div id="email-error" className="error-message">{fieldErrors.email}</div>
           )}
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="message">
             Message :
-            <span className="character-count" style={{ marginLeft: '10px', fontSize: '0.8em', color: formData.message.trim().length < MESSAGE_MIN_LENGTH ? '#ff5252' : '#53ba5f' }}>
+            <span className="character-count" style={{
+              marginLeft: '10px',
+              fontSize: '0.8em',
+              color: formData.message.trim().length < MESSAGE_MIN_LENGTH ? '#ff5252' : '#53ba5f'
+            }}>
               {getCharacterCount()}
             </span>
           </label>
@@ -256,43 +215,54 @@ function Contact() {
             name="message"
             rows="5"
             required
-            minLength={MESSAGE_MIN_LENGTH.toString()}
             placeholder="Votre message..."
             value={formData.message}
             onChange={handleChange}
             className={fieldErrors.message ? 'error' : ''}
-            aria-invalid={fieldErrors.message ? 'true' : 'false'}
+            aria-invalid={!!fieldErrors.message}
             aria-describedby={fieldErrors.message ? 'message-error' : undefined}
           ></textarea>
           {fieldErrors.message && (
-            <div id="message-error" className="error-message">
-              {fieldErrors.message}
-            </div>
+            <div id="message-error" className="error-message">{fieldErrors.message}</div>
           )}
         </div>
-        
+
         {formStatus.error && (
           <div className="global-error-message" role="alert">
             {formStatus.errorMessage}
           </div>
         )}
-        
-        <button 
-          type="submit" 
-          className="btn" 
-          disabled={formStatus.loading || Object.values(fieldErrors).some(error => error)}
+
+        <button
+          type="submit"
+          className="btn"
+          disabled={formStatus.loading || Object.values(fieldErrors).some(Boolean)}
         >
           {formStatus.loading ? 'Envoi en cours...' : 'Envoyer'}
         </button>
       </form>
-      
+
+      <div className="recaptcha-section">
+        <div className="recaptcha-text">
+          <span className="recaptcha-logo">
+            <img
+              src="https://www.gstatic.com/recaptcha/api2/logo_48.png"
+              alt="reCAPTCHA"
+              width="20"
+              height="20"
+              loading="lazy"
+            />
+          </span>
+          protection par Formspree
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Confidentialité</a>
+          <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Conditions</a>
+        </div>
+      </div>
+
       <div id="success-modal" className="modal-overlay" style={{ display: formStatus.success ? 'flex' : 'none' }}>
         <div className="modal">
           <h3>Votre message a bien été envoyé !</h3>
-          <p>
-            Merci pour votre message.<br /> Je vous répondrai dans les plus brefs
-            délais.
-          </p>
+          <p>Merci pour votre message.<br />Je vous répondrai dans les plus brefs délais.</p>
           <p className="redirect-text">Redirection vers la page dans un instant...</p>
         </div>
       </div>

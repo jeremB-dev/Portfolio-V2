@@ -132,6 +132,104 @@ form button:disabled:hover {
   transform: translateY(0);
 }
 
+/* Style global des messages d'erreur */
+.error-message {
+  color: #ff5252;
+  font-size: 0.85rem;
+  margin-top: -15px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+/* Style du conteneur reCAPTCHA */
+.recaptcha-container {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Message d'erreur du captcha */
+.recaptcha-container .error-message {
+  color: #ff5252;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  display: block;
+}
+
+/* Assurer que le reCAPTCHA est bien positionné */
+.recaptcha-container iframe {
+  margin-bottom: 10px;
+}
+
+/* Style de l'erreur globale du formulaire */
+.global-error-message {
+  background-color: rgba(255, 82, 82, 0.1);
+  border-left: 3px solid #ff5252;
+  color: #ff5252;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border-radius: var(--border-radius-md);
+  font-weight: normal;
+}
+
+/* Zone du badge reCAPTCHA entre le formulaire et le footer */
+.recaptcha-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px auto;
+  padding: 8px 12px;
+  background-color: rgba(83, 186, 95, 0.1); /* Légère teinte verte pour correspondre à votre thème */
+  border-radius: 4px;
+  width: 100%;
+  max-width: 600px; /* Pour correspondre à la largeur de votre formulaire */
+}
+
+/* Style pour le texte de protection reCAPTCHA */
+.recaptcha-text {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: normal;
+  opacity: 0.8;
+}
+
+/* Style pour les liens dans la zone reCAPTCHA */
+.recaptcha-text a {
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-left: 5px;
+  font-size: 0.85rem;
+  transition: opacity 0.3s;
+}
+
+.recaptcha-text a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Style pour l'icône reCAPTCHA */
+.recaptcha-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.recaptcha-logo img {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+/* Masquer le badge flottant reCAPTCHA par défaut */
+.grecaptcha-badge {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
 @media (max-width: 768px) {
   form {
     width: 100%;
@@ -158,7 +256,7 @@ form button:disabled:hover {
   }
   
   /* Ajuster le compteur de caractères */
-  .character-counter, .field-error {
+  .character-counter, .error-message, .field-error {
     font-size: 1rem; /* Agrandir la taille de la police */
   }
   
@@ -182,6 +280,30 @@ form button:disabled:hover {
   .character-counter {
     margin-top: 5px;
   }
+  
+  /* Ajustement du conteneur reCAPTCHA */
+  .recaptcha-container {
+    align-items: center;
+  }
+  
+  /* Ajustement de la zone reCAPTCHA pour tablettes */
+  .recaptcha-section {
+    padding: 8px 10px;
+    margin-top: 20px;
+  }
+  
+  .recaptcha-text {
+    font-size: 0.8rem;
+  }
+  
+  .recaptcha-text a {
+    font-size: 0.8rem;
+  }
+  
+  .recaptcha-logo img {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -193,5 +315,33 @@ form button:disabled:hover {
   
   form label {
     font-size: 1.1rem;
+  }
+  
+  /* Ajustements pour reCAPTCHA sur très petits écrans */
+  .recaptcha-container {
+    align-items: center;
+    width: 100%;
+  }
+  
+  .recaptcha-container .error-message {
+    font-size: 1rem;
+    margin-top: 8px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  /* Ajustement de la zone reCAPTCHA pour smartphones */
+  .recaptcha-section {
+    padding: 6px 8px;
+    margin-top: 0px;
+  }
+  
+  .recaptcha-text {
+    font-size: 0.75rem;
+  }
+  
+  .recaptcha-text a {
+    font-size: 0.75rem;
+    margin-left: 3px;
   }
 }

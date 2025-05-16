@@ -1,21 +1,41 @@
-// src/components/ProjectCard.jsx
 import React, { useState, useEffect } from 'react';
 
 function ProjectCard({ project }) {
   const { title, subtitle, image, description, technologies, github } = project;
   const [isOpen, setIsOpen] = useState(false);
+  const [isImageEnlarged, setIsImageEnlarged] = useState(false);
+  // État pour déterminer si l'utilisateur est sur un smartphone
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
 
-  // Gérer la touche Échap pour fermer la carte
+  // Détecter si l'utilisateur est sur un smartphone
   useEffect(() => {
-    if (!isOpen) return;
+    const checkIfMobile = () => {
+      setIsMobileDevice(window.innerWidth <= 480);
+    };
     
-    // Désactiver le scroll du body quand une carte est ouverte
+    checkIfMobile(); // Vérifier initialement
+    window.addEventListener('resize', checkIfMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  // Gérer la touche Échap pour fermer la carte et l'image agrandie
+  useEffect(() => {
+    if (!isOpen && !isImageEnlarged) return;
+    
+    // Désactiver le scroll du body quand une carte est ouverte ou l'image est agrandie
     document.body.style.overflow = 'hidden';
     
     // Ajouter un gestionnaire pour la touche Échap
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
-        setIsOpen(false);
+        if (isImageEnlarged) {
+          setIsImageEnlarged(false);
+        } else {
+          setIsOpen(false);
+        }
       }
     };
     
@@ -26,7 +46,7 @@ function ProjectCard({ project }) {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [isOpen]);
+  }, [isOpen, isImageEnlarged]);
 
   // Fonction pour convertir les sauts de ligne en éléments <br />
   const formatDescription = (text) => {
@@ -50,6 +70,23 @@ function ProjectCard({ project }) {
     setIsOpen(false);
   };
 
+  // Fonction pour agrandir l'image
+  const handleImageClick = (e) => {
+    // Ne déclencher que si la carte est déjà ouverte et pas sur mobile
+    if (isOpen && !isMobileDevice) {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsImageEnlarged(true);
+    }
+  };
+
+  // Fonction pour fermer l'image agrandie
+  const handleImageClose = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsImageEnlarged(false);
+  };
+
   return (
     <>
       <div 
@@ -70,6 +107,8 @@ function ProjectCard({ project }) {
           className="project-image"
           width="400"
           height="200"
+          onClick={isOpen && !isMobileDevice ? handleImageClick : undefined}
+          style={{ cursor: isOpen && !isMobileDevice ? 'zoom-in' : 'pointer' }}
         />
         <div className="project-info">
           <h3>{title}</h3>
@@ -116,6 +155,26 @@ function ProjectCard({ project }) {
           onClick={handleClose}
           role="presentation"
         ></div>
+      )}
+
+      {/* Modal d'agrandissement d'image */}
+      {isImageEnlarged && !isMobileDevice && (
+        <div className="image-modal-overlay" onClick={handleImageClose} role="presentation">
+          <div className="image-modal">
+            <img
+              src={image}
+              alt={title}
+              className="enlarged-image"
+            />
+            <button 
+              className="close-image-button" 
+              onClick={handleImageClose}
+              aria-label="Fermer l'image agrandie"
+            >
+              ×
+            </button>
+          </div>
+        </div>
       )}
     </>
   );

@@ -215,6 +215,92 @@
  opacity: 1;
 }
 
+/* Styles pour l'agrandissement d'image */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: calc(var(--z-index-modal) + 10); /* Plus élevé que l'overlay du projet */
+  animation: fadeIn 0.3s ease;
+  will-change: opacity;
+}
+
+.image-modal {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  animation: scaleIn 0.3s ease;
+  will-change: transform;
+}
+
+.enlarged-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-modal);
+}
+
+.close-image-button {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all var(--transition-bezier);
+  z-index: calc(var(--z-index-modal) + 11);
+}
+
+.close-image-button:hover {
+  transform: scale(1.1) rotate(90deg);
+  background-color: var(--color-primary-dark, var(--color-primary));
+}
+
+/* Appliquer le style zoom-in uniquement sur les appareils non mobiles */
+@media (min-width: 481px) {
+  .project-card.active .project-image {
+    cursor: zoom-in;
+  }
+  
+  .project-card.active .project-image:hover {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 @media (max-width: 1075px) {
  .tech-icons {
    gap: 12px;
@@ -226,11 +312,30 @@
  }
 }
 
+@media (max-width: 768px) {
+  .image-modal {
+    max-width: 95%;
+  }
+  
+  .close-image-button {
+    top: -15px;
+    right: -15px;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 480px) {
   .tech-icons-btn-container {
     flex-direction: column;  
     align-items: flex-start;
     gap: 15px;
+  }
+
+  .project-card .project-image,
+  .project-card.active .project-image {
+    cursor: default !important; /* Priorité absolue avec !important */
   }
   
   /* Faire en sorte que les icônes utilisent toute la largeur */
@@ -277,6 +382,12 @@
   .project-card.active .project-image {
     height: 200px;
     min-height: 200px;
+    cursor: default; /* Pas de zoom sur mobile */
+  }
+  
+  /* Supprimer l'effet de survol sur l'image en mode mobile */
+  .project-card.active .project-image:hover {
+    transform: none;
   }
   
   /* Repositionner le bouton de fermeture */

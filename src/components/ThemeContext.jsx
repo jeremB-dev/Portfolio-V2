@@ -1,4 +1,3 @@
-// ThemeContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
 
 // Crée le contexte - mais n'est pas exporté directement ici

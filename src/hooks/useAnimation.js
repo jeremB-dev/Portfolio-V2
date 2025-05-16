@@ -1,4 +1,3 @@
-// src/hooks/useAnimation.js
 import { useContext } from "react";
 import { AnimationContext } from "../components/AnimationContext";
 

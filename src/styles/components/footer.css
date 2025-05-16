@@ -18,6 +18,7 @@
  font-weight: bold;
  font-family: "Poppins", sans-serif;
  transition: all var(--transition-bezier);
+ cursor: default;
 }
 
 @media (max-width: 768px) {

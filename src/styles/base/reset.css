@@ -17,6 +17,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
+  cursor: default;
 }
 
 /* Liens et éléments interactifs */
@@ -24,6 +25,13 @@ a {
   text-decoration: none;
   color: inherit;
   transition: color var(--transition-fast);
+}
+
+button, 
+[role="button"],
+.btn,
+.clickable {
+  cursor: pointer;
 }
 
 /* Médias et listes */

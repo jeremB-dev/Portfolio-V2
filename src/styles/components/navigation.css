@@ -26,6 +26,7 @@
 nav a {
  position: relative;
  padding-bottom: 3px;
+ cursor: default;
 }
 
 nav a::before {
@@ -79,6 +80,7 @@ nav a.active::before {
 .toggle-icon {
  font-size: 16px;
  margin: 0 5px;
+ cursor: default;
 }
 
 .switch-wrapper {
@@ -90,6 +92,7 @@ nav a.active::before {
  font-size: 12px;
  margin-left: 8px;
  white-space: nowrap;
+ cursor: default;
 }
 
 .mobile-switches-container {

@@ -1,4 +1,3 @@
-// src/components/About.jsx
 import React from 'react';
 import BackgroundAnimation from './BackgroundAnimation';
 import useAnimation from '../hooks/useAnimation';

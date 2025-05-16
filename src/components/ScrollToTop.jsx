@@ -1,13 +1,16 @@
-// src/components/ScrollToTop.jsx
 import React, { useState, useEffect } from 'react';
+import useWindowSize from '../hooks/useWindowSize';
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { isMobile, isTablet } = useWindowSize();
   
-  // Contrôle l'affichage du bouton en fonction du défilement
+  // Ne montrer le bouton que sur mobile et tablette
+  const shouldShowButton = isMobile || isTablet;
+  
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
+      if (window.pageYOffset > 300 && shouldShowButton) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -15,17 +18,22 @@ function ScrollToTop() {
     };
     
     window.addEventListener('scroll', toggleVisibility);
+    toggleVisibility(); // Vérifie l'état initial
     
     return () => window.removeEventListener('scroll', toggleVisibility);
-  }, []);
+  }, [shouldShowButton]);
   
-  // Fonction pour remonter en haut
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
+  
+  // Si on n'est pas sur mobile ou tablette, ne pas rendre le bouton du tout
+  if (!shouldShowButton) {
+    return null;
+  }
   
   return (
     <button 

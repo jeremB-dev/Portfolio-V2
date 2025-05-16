@@ -12,6 +12,7 @@
  flex: 1;
  margin-right: 20px;
  width: 100%;
+ cursor: default;
 }
 
 .profile-text p {
@@ -19,6 +20,7 @@
  font-size: x-large;
  margin: 0;
  padding: 0;
+ cursor: default;
 }
 
 .profile-photo {
@@ -37,6 +39,7 @@
  font-weight: bold;
  font-size: 2rem;
  margin-bottom: 80px;
+ cursor: default;
 }
 
 .career-container {
@@ -48,6 +51,7 @@
  padding: 15px 20px;
  width: 100%;
  box-sizing: border-box;
+ cursor: default;
 }
 
 .career-section {
@@ -60,6 +64,7 @@
  font-size: medium;
  text-align: left;
  padding: 0 20px;
+ cursor: default;
 }
 
 .career-divider {
@@ -68,6 +73,7 @@
  align-self: stretch;
  background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
  margin: 0 15px;
+ cursor: default;
 }
 
 @media (max-width: 1024px) {

@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAnimation from '../hooks/useAnimation';
@@ -64,6 +63,7 @@ function Header() {
           
           <nav className="header-nav">
             <ul>
+              <li><NavLink to="/" end className={({isActive}) => isActive ? "active" : ""}>Accueil</NavLink></li>
               <li><NavLink to="/technologies" className={({isActive}) => isActive ? "active" : ""}>Technologies</NavLink></li>
               <li><NavLink to="/projects" className={({isActive}) => isActive ? "active" : ""}>Projets</NavLink></li>
               <li><NavLink to="/contact" className={({isActive}) => isActive ? "active" : ""}>Contact</NavLink></li>
