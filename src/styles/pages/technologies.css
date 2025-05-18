@@ -106,6 +106,7 @@
  width: 100%;
 }
 
+/* Media queries */
 @media (max-width: 1024px) {
  #technologies ul {
    gap: 1rem;

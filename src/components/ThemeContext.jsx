@@ -16,7 +16,7 @@ export default function ThemeProvider({ children }) {
     return savedTheme === 'dark' || (savedTheme === null && prefersDarkMode);
   });
 
-  // Mettre à jour le DOM et localStorage quand le thème change
+  // Met à jour le DOM et localStorage quand le thème change
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark-theme');
@@ -36,5 +36,5 @@ export default function ThemeProvider({ children }) {
   );
 }
 
-// Exporter le contexte comme export nommé
+// Exporte le contexte comme export nommé
 export { ThemeContext };

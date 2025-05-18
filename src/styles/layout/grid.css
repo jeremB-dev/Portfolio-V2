@@ -17,6 +17,7 @@
  padding: 0;
 }
 
+/* Media Queries */
 @media (max-width: 1024px) {
  .tech-grid {
    grid-template-columns: repeat(3, 1fr);

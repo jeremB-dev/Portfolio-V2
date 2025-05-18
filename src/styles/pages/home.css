@@ -76,6 +76,7 @@
  cursor: default;
 }
 
+/* Media Queries */
 @media (max-width: 1024px) {
  .profile-photo {
    width: 300px;

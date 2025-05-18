@@ -71,6 +71,7 @@ section {
  }
 }
 
+/* Média queries */
 @media (max-width: 1024px) {
  section {
    padding: 0 20px;

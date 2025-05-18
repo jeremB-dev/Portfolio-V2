@@ -5,7 +5,7 @@
 .projects-page h2 {
  color: var(--color-primary);
  text-align: center;
- margin-bottom: 30px;
+ margin: 120px 50px 0;
  cursor: default;
 }
 

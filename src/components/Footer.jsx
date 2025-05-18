@@ -6,7 +6,7 @@ function Footer() {
   const shareButtonRef = useRef(null);
   const dropdownRef = useRef(null);
   
-  // Fermer le dropdown quand on clique ailleurs
+  // Ferme le dropdown quand on clique ailleurs
   useEffect(() => {
     function handleClickOutside(event) {
       if (
@@ -47,49 +47,52 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Zone gauche - Réseaux sociaux */}
+        {/* Zone gauche - Réseaux sociaux avec séparateur */}
         <div className="social-links">
-          <div className="social-item">
-            <a 
-              href="https://github.com/jeremB-dev" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="GitHub" 
-              className="github"
-              data-tooltip="GitHub"
-            >
-              <FaGithub />
-              <span className="tooltip">GitHub</span>
-            </a>
+          {/* Groupe des réseaux sociaux */}
+          <div className="social-networks">
+            <div className="social-item">
+              <a 
+                href="https://github.com/jeremB-dev" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="GitHub" 
+                className="github"
+              >
+                <FaGithub />
+                <span className="tooltip">GitHub</span>
+              </a>
+            </div>
+            
+            <div className="social-item">
+              <a 
+                href="https://www.linkedin.com/in/jeremy-brunel-1a80b1340/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="LinkedIn" 
+                className="linkedin"
+              >
+                <FaLinkedin />
+                <span className="tooltip">LinkedIn</span>
+              </a>
+            </div>
+            
+            <div className="social-item">
+              <a 
+                href="https://x.com/brunel_jerem" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Twitter" 
+                className="twitter"
+              >
+                <FaTwitter />
+                <span className="tooltip">Twitter</span>
+              </a>
+            </div>
           </div>
           
-          <div className="social-item">
-            <a 
-              href="https://www.linkedin.com/in/jeremy-brunel-1a80b1340/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="LinkedIn" 
-              className="linkedin"
-              data-tooltip="LinkedIn"
-            >
-              <FaLinkedin />
-              <span className="tooltip">LinkedIn</span>
-            </a>
-          </div>
-          
-          <div className="social-item">
-            <a 
-              href="https://x.com/brunel_jerem" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              aria-label="Twitter" 
-              className="twitter"
-              data-tooltip="Twitter"
-            >
-              <FaTwitter />
-              <span className="tooltip">Twitter</span>
-            </a>
-          </div>
+          {/* Séparateur vertical */}
+          <div className="separator"></div>
           
           {/* Bouton de partage */}
           <div className="social-item">
@@ -99,7 +102,6 @@ function Footer() {
                 className="share-button"
                 onClick={toggleShareOptions}
                 aria-label="Partager cette page"
-                data-tooltip="Partager"
               >
                 <FaShare />
                 <span className="tooltip">Partager</span>
@@ -114,7 +116,6 @@ function Footer() {
                     rel="noopener noreferrer"
                     className="share-option twitter"
                     aria-label="Partager sur Twitter"
-                    data-tooltip="Twitter"
                   >
                     <FaTwitter />
                     <span className="tooltip">Twitter</span>
@@ -125,7 +126,6 @@ function Footer() {
                     rel="noopener noreferrer"
                     className="share-option facebook"
                     aria-label="Partager sur Facebook"
-                    data-tooltip="Facebook"
                   >
                     <FaFacebook />
                     <span className="tooltip">Facebook</span>
@@ -136,7 +136,6 @@ function Footer() {
                     rel="noopener noreferrer"
                     className="share-option linkedin"
                     aria-label="Partager sur LinkedIn"
-                    data-tooltip="LinkedIn"
                   >
                     <FaLinkedin />
                     <span className="tooltip">LinkedIn</span>
@@ -145,7 +144,6 @@ function Footer() {
                     href={`mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent('Découvrez cette page: ' + shareUrl)}`}
                     className="share-option email"
                     aria-label="Partager par email"
-                    data-tooltip="Email"
                   >
                     <FaEnvelope />
                     <span className="tooltip">Email</span>
@@ -154,7 +152,6 @@ function Footer() {
                     onClick={copyToClipboard}
                     className="share-option copy"
                     aria-label="Copier le lien"
-                    data-tooltip="Copier"
                   >
                     <FaLink />
                     <span className="tooltip">Copier</span>
@@ -166,7 +163,7 @@ function Footer() {
         </div>
         
         {/* Zone droite - Copyright */}
-        <p className="copyright">&copy; {new Date().getFullYear()} Brunel Jérémy - Tous droits réservés</p>
+        <p className="copyright">&copy; {new Date().getFullYear()} Réaliser par BRUNEL Jérémy - Tous droits réservés</p>
       </div>
     </footer>
   );

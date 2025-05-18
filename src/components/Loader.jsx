@@ -8,8 +8,14 @@ function Loader({ onFinished }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [exploding, setExploding] = useState(false);
   const [ultraExplosion, setUltraExplosion] = useState(false);
+  const [logoIntensify, setLogoIntensify] = useState(false);
+  const [logoDescending, setLogoDescending] = useState(false);
   const containerRef = useRef(null);
   const progressBarRef = useRef(null);
+  
+  // Référence pour éviter le redémarrage du loader
+  const timerRef = useRef(null);
+  const loadingCompleteRef = useRef(false);
 
   const phases = [
     "Initialisation du portfolio...",
@@ -19,7 +25,7 @@ function Loader({ onFinished }) {
     "Finalisation..."
   ];
 
-  // Gérer le mouvement de la souris
+  // Gére le mouvement de la souris
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (containerRef.current) {
@@ -35,16 +41,17 @@ function Loader({ onFinished }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const [logoIntensify, setLogoIntensify] = useState(false);
-  const [logoDescending, setLogoDescending] = useState(false);
-
+  // Effet de chargement principal - exécuté une seule fois
   useEffect(() => {
+    // Si le chargement est déjà terminé, ne pas redémarrer
+    if (loadingCompleteRef.current) return;
+    
     const duration = 3800; // Durée totale en ms
     const interval = 20; // Intervalle de mise à jour en ms
     const steps = duration / interval;
     let currentStep = 0;
 
-    const timer = setInterval(() => {
+    timerRef.current = setInterval(() => {
       currentStep++;
       const newProgress = Math.min(100, Math.floor((currentStep / steps) * 100));
       setProgress(newProgress);
@@ -56,14 +63,16 @@ function Loader({ onFinished }) {
       );
       setActivePhase(phaseIndex);
       
-      // Intensifier l'éclairage du logo à partir de 80%
+      // Intensifie l'éclairage du logo à partir de 80%
       if (newProgress >= 80 && !logoIntensify) {
         setLogoIntensify(true);
       }
 
       // Quand on atteint 100%
       if (newProgress === 100) {
-        clearInterval(timer);
+        clearInterval(timerRef.current);
+        loadingCompleteRef.current = true; // Marquer comme terminé
+        
         setTimeout(() => {
           // Animation de grossissement du logo
           setLogoDescending(true);
@@ -80,15 +89,20 @@ function Loader({ onFinished }) {
                 }, 800);
               }, 400);
             }, 300);
-          }, 200); // Démarrer l'explosion plus tôt
+          }, 200);
         }, 300);
       }
     }, interval);
 
-    return () => clearInterval(timer);
-  }, [onFinished, phases.length]);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onFinished, phases.length]); // Suppression de logoIntensify du tableau de dépendances
 
-  // Générer des éléments flottants et d'explosion
+  // Génére des éléments flottants et d'explosion
   const renderFloatingElements = () => (
     <>
       {[...Array(6)].map((_, i) => (
@@ -159,7 +173,7 @@ function Loader({ onFinished }) {
           <div 
             key={i} 
             className="shockwave"
-            style={{ '--wave-delay': `${i * 0.05}s` }}
+            style={{ '--wave-delay': `${i * 0.05}s`, '--wave-index': i }}
           ></div>
         ))}
       </div>
@@ -201,7 +215,7 @@ function Loader({ onFinished }) {
       
       <div className="loader-content">
         <div className="logo-container">
-          {/* Logo remplaçant les initiales JB */}
+          {/* Logo JB */}
           <div className={`logo-img ${logoDescending ? 'logo-descending' : ''} ${logoIntensify ? 'logo-intensify' : ''}`}>
             <img 
               src="/assets/logo-perso/logo-perso.webp" 

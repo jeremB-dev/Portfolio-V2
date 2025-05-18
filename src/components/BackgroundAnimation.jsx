@@ -13,7 +13,7 @@ const BackgroundAnimation = ({
 }) => {
   const canvasRef = useRef(null);
   
-  // Déplacer ces fonctions en dehors du useEffect et les mémoriser avec useCallback
+  // Déplace ces fonctions en dehors du useEffect et les mémorise avec useCallback
   const adaptiveParticleCount = useCallback(() => {
     if (isMobile) {
       return Math.floor(particleCount * 0.3);
@@ -45,18 +45,18 @@ const BackgroundAnimation = ({
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       
-      // S'assurer que le style suit également
+      // S'assure que le style suit également
       canvas.style.width = '100vw';
       canvas.style.height = '100vh';
     };
     
-    // Initialiser le canvas
+    // Initialise le canvas
     resizeCanvas();
     
-    // Écouter les changements de taille
+    // Écoute les changements de taille
     window.addEventListener('resize', resizeCanvas);
     
-    // Calculer le nombre de particules adapté
+    // Calcule le nombre de particules adapté
     const effectiveParticleCount = adaptiveParticleCount();
     const effectiveParticleSize = adaptiveParticleSize();
     
@@ -81,11 +81,11 @@ const BackgroundAnimation = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       particles.forEach(particle => {
-        // Déplacer la particule
+        // Déplace la particule
         particle.x += particle.speedX;
         particle.y += particle.speedY;
         
-        // Gérer les bords
+        // Gére les bords
         if (movementType === 'bounce') {
           if (particle.x > canvas.width || particle.x < 0) {
             particle.speedX *= -1;
@@ -100,7 +100,7 @@ const BackgroundAnimation = ({
           if (particle.y < 0) particle.y = canvas.height;
         }
         
-        // Dessiner la particule
+        // Dessine la particule
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = color;

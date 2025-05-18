@@ -116,6 +116,7 @@ nav a.active::before {
  font-size: 1.2rem;
 }
 
+/* Média queries */
 @media (max-width: 1300px) {
  .switches-bar {
    top: 100px;
@@ -125,6 +126,10 @@ nav a.active::before {
 @media (max-width: 900px) {
  .switches-bar {
    top: 90px;
+ }
+
+ .header-nav ul li a {
+   font-size: 15px;
  }
 }
 

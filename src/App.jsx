@@ -20,7 +20,7 @@ function NavigationWrapper() {
 }
 
 function AppContent() {
-  // Gérer le défilement vers le haut lors des changements de page
+  // Gére le défilement vers le haut lors des changements de page
   const location = useLocation();
   
   React.useEffect(() => {

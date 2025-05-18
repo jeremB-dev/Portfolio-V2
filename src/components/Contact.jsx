@@ -253,9 +253,9 @@ function Contact() {
               loading="lazy"
             />
           </span>
-          protection par Formspree
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Confidentialité</a>
-          <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Conditions</a>
+          Protection par Formspree
+          <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Confidentialité /</a>
+          <a href="https://formspree.io/legal/terms-of-service" target="_blank" rel="noopener noreferrer">Conditions</a>
         </div>
       </div>
 

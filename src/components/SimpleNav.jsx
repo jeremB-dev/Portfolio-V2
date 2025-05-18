@@ -16,7 +16,7 @@ function SimpleNav() {
     setMobileMenuOpen(false);
   };
   
-  // Empêcher le défilement du body quand le menu mobile est ouvert
+  // Empêche le défilement du body quand le menu mobile est ouvert
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -151,10 +151,8 @@ function SimpleNav() {
           onClick={closeMobileMenu}
           role="presentation"
         ></div>
-      )}
-      
+      )}   
       <div className="switches-bar simple-nav-switchs desktop-only">
-        {/* Contenu masqué par CSS */}
       </div>
     </>
   );

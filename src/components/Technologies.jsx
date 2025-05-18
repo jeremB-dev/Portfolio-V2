@@ -18,13 +18,11 @@ function Technologies() {
           color="#53ba5f" 
           speed="fast"
           particleSize={14}
-          particleCount={120}  // Sera automatiquement réduit à environ 18 sur mobile
+          particleCount={120}
           isMobile={isMobile}
           isTablet={isTablet}
         />
       )}
-
-
       <h2>Technologies apprises</h2>
       <ul>
         <li>

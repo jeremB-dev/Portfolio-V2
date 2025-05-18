@@ -56,6 +56,7 @@ function MobileNav() {
           
           {/* Conteneur pour les switches dans le menu mobile */}
           <div className="mobile-switches-container">
+            
             {/* Switch pour les animations */}
             <div className="toggle-item">
               <span className="toggle-icon">{animationsEnabled ? "✨" : "🚫"}</span>

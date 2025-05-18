@@ -17,7 +17,7 @@ function About() {
             color="#53ba5f" 
             speed="slow"
             particleSize={6}
-            particleCount={120}  // Sera automatiquement réduit à environ 24 sur mobile
+            particleCount={120}
             isMobile={isMobile}
             isTablet={isTablet}
           />

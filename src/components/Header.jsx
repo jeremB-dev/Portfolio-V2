@@ -17,7 +17,7 @@ function Header() {
     setMobileMenuOpen(false);
   };
   
-  // Empêcher le défilement du body quand le menu mobile est ouvert
+  // Empêche le défilement du body quand le menu mobile est ouvert
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -90,7 +90,7 @@ function Header() {
         >
           <div className="mobile-nav-header">
             <div className="mobile-logo">
-              <img src="/assets/logo-perso/logo-perso.webp" alt="Logo JB" width="40" height="40" />
+              <img src="/assets/logo-perso/logo-perso.webp" alt="Logo JB" width="40" height="40" aria-placeholder='Jérémy Brunel' />
               <span>Jérémy Brunel</span>
             </div>
             <button 

@@ -8,13 +8,13 @@ const AnimationContext = createContext({
 
 // Le Provider
 export default function AnimationProvider({ children }) {
-  // Initialiser avec localStorage s'il existe, sinon true
+  // Initialise avec localStorage s'il existe, sinon true
   const [animationsEnabled, setAnimationsEnabled] = useState(() => {
     const saved = localStorage.getItem('animationsEnabled');
     return saved !== null ? JSON.parse(saved) : true;
   });
 
-  // Vérifier les préférences utilisateur pour l'accessibilité
+  // Vérifie les préférences utilisateur pour l'accessibilité
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
@@ -22,7 +22,7 @@ export default function AnimationProvider({ children }) {
     }
   }, []);
   
-  // Sauvegarder dans localStorage quand la valeur change
+  // Sauvegarde dans localStorage quand la valeur change
   useEffect(() => {
     localStorage.setItem('animationsEnabled', JSON.stringify(animationsEnabled));
   }, [animationsEnabled]);
@@ -34,5 +34,4 @@ export default function AnimationProvider({ children }) {
   );
 }
 
-// Exporter le contexte
 export { AnimationContext };

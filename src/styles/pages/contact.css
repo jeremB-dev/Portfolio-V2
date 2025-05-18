@@ -43,6 +43,7 @@
  left: 0;
 }
 
+/* Média queries */
 @media (max-width: 1024px) {
  .contact-section {
    padding: 1rem;
@@ -56,27 +57,26 @@
 @media (max-width: 768px) {
   .contact-page,
   #contact {
-    padding: 20px 10px; /* Réduire le padding latéral pour maximiser l'espace */
+    padding: 20px 10px;
   }
   
   .cv-container {
-    margin: 15px 0; /* Réduire les marges */
+    margin: 15px 0;
   }
   
-  /* Augmenter la taille des titres sur mobile */
+  /* Augmente la taille des titres sur mobile */
   #contact h2 {
     font-size: 1.8rem;
     margin-bottom: 15px;
   }
   
-  /* S'assurer que le formulaire occupe toute la largeur */
+  /* S'assure que le formulaire occupe toute la largeur */
   #contactForm {
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  /* Pour les très petits écrans, réduire encore les marges */
   .contact-page,
   #contact {
     padding: 15px 5px;

@@ -16,7 +16,7 @@
 
 .project-card.active,
 .project-card.active:hover {
- transform: none !important;
+ transform: translateX(-50%) !important;
  box-shadow: var(--shadow-modal) !important;
 }
 
@@ -99,7 +99,7 @@
 .close-button {
  position: absolute;
  top: 15px;
- right: 35px;
+ right: 15px;
  width: 35px;
  height: 35px;
  background-color: var(--color-primary);
@@ -115,9 +115,25 @@
  justify-content: center;
  line-height: 0;
  padding: 0;
- font-size: 24px;
- font-family: Arial, sans-serif;
  z-index: 1001;
+}
+
+.close-button::before,
+.close-button::after {
+ content: '';
+ position: absolute;
+ width: 18px;
+ height: 2px;
+ background-color: white;
+ transform-origin: center;
+}
+
+.close-button::before {
+ transform: rotate(45deg);
+}
+
+.close-button::after {
+ transform: rotate(-45deg);
 }
 
 .close-button:hover {
@@ -129,24 +145,49 @@
  display: none;
 }
 
+/* Correction pour la modale en mode desktop */
 .project-card.active {
- position: fixed;
- top: 5%;
- left: auto;
- width: 90%;
- max-width: 1200px;
- height: 90vh;
- transform: translate(-50%, -50%) scale(1);
- z-index: var(--z-index-modal-content);
+ position: fixed !important;
+ top: 5% !important;
+ left: 50% !important;
+ width: 90% !important;
+ max-width: 1200px !important;
+ height: 90vh !important;
+ transform: translateX(-50%) !important;
+ z-index: var(--z-index-modal-content) !important;
  cursor: default;
  overflow-y: auto;
  display: flex;
  flex-direction: column;
- box-shadow: var(--shadow-modal);
- transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), box-shadow 0.3s ease;
- will-change: transform;
- backface-visibility: hidden;
- -webkit-font-smoothing: subpixel-antialiased;
+ box-shadow: var(--shadow-modal) !important;
+ background-color: var(--color-background) !important; /* Assurer un fond opaque */
+ 
+ /* Désactiver les animations et transformations au survol */
+ transition: none !important;
+ pointer-events: auto !important;
+ transform-style: flat !important; /* Forcer rendu 2D */
+ 
+ /* Bloque toutes les autres propriétés */
+ margin: 0 !important;
+ padding: 0 !important;
+ 
+ will-change: unset !important;
+ backface-visibility: hidden !important;
+ -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+/* Désactiver explicitement les effets de survol sur la modale active */
+.project-card.active:hover {
+ transform: translateX(-50%) !important;
+ box-shadow: var(--shadow-modal) !important;
+ outline: none !important;
+}
+
+.project-card.active:focus,
+.project-card.active:active {
+ transform: translateX(-50%) !important;
+ box-shadow: var(--shadow-modal) !important;
+ outline: none !important;
 }
 
 .project-card.active::-webkit-scrollbar {
@@ -198,91 +239,198 @@
  transform: scale(1) rotate(0deg);
 }
 
+/* Overlay amélioré pour bloquer l'animation en arrière-plan */
 .projects-overlay {
  display: none;
- position: fixed;
- inset: 0;
+ position: fixed !important;
+ inset: 0 !important;
  background-color: rgba(0, 0, 0, 0.8);
  z-index: var(--z-index-modal);
  opacity: 0;
  transition: opacity 0.3s ease;
- pointer-events: auto;
+ pointer-events: auto !important;
  will-change: opacity;
 }
 
 .projects-overlay.active {
- display: block;
- opacity: 1;
+ display: block !important;
+ opacity: 1 !important;
 }
 
-/* Styles pour l'agrandissement d'image */
-.image-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+/* Assurer que l'overlay couvre toute la page pour desktop */
+@media (min-width: 1024px) {
+ .projects-overlay.active {
+   top: 0 !important;
+   left: 0 !important;
+   right: 0 !important;
+   bottom: 0 !important;
+   width: 100% !important;
+   height: 100% !important;
+ }
+}
+
+body.gallery-open {
+ overflow: hidden !important;
+ height: 100% !important;
+ pointer-events: auto !important;
+}
+
+/* Styles pour la galerie d'images */
+.gallery-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: calc(var(--z-index-modal) + 10); /* Plus élevé que l'overlay du projet */
+  z-index: calc(var(--z-index-modal) + 10);
   animation: fadeIn 0.3s ease;
-  will-change: opacity;
+  pointer-events: auto !important;
 }
 
-.image-modal {
+.gallery-modal {
   position: relative;
   max-width: 90%;
-  max-height: 90%;
-  animation: scaleIn 0.3s ease;
-  will-change: transform;
-}
-
-.enlarged-image {
-  max-width: 100%;
   max-height: 90vh;
-  object-fit: contain;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-modal);
-}
-
-.close-image-button {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.gallery-image {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-counter {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+/* Flèches de navigation modifiées pour être toujours visibles */
+.gallery-nav {
+  position: fixed !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 45px;
+  height: 45px;
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 50%;
   cursor: pointer;
-  box-shadow: var(--shadow-lg);
-  transition: all var(--transition-bezier);
-  z-index: calc(var(--z-index-modal) + 11);
+  opacity: 0.9;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: calc(var(--z-index-modal) + 15);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-.close-image-button:hover {
-  transform: scale(1.1) rotate(90deg);
+/* Positions fixes par rapport aux bords pour la visibilité */
+.gallery-nav.prev {
+  left: 120px !important;
+}
+
+.gallery-nav.next {
+  right: 120px !important;
+}
+
+.gallery-nav:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1) !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Flèches plus visibles */
+.gallery-nav.prev::before,
+.gallery-nav.next::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-top: 3px solid white;
+  border-right: 3px solid white;
+  top: 50%;
+  left: 50%;
+}
+
+.gallery-nav.prev::before {
+  transform: translate(-30%, -50%) rotate(-135deg);
+}
+
+.gallery-nav.next::before {
+  transform: translate(-70%, -50%) rotate(45deg);
+}
+
+/* Bouton de fermeture de la galerie */
+.close-gallery-button {
+  position: fixed !important;
+  top: 90px !important;
+  right: 90px !important;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+  z-index: calc(var(--z-index-modal) + 15);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Croix pour le bouton de fermeture de la galerie */
+.close-gallery-button::before,
+.close-gallery-button::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  background-color: white;
+}
+
+.close-gallery-button::before {
+  transform: rotate(45deg);
+}
+
+.close-gallery-button::after {
+  transform: rotate(-45deg);
+}
+
+.close-gallery-button:hover {
   background-color: var(--color-primary-dark, var(--color-primary));
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Appliquer le style zoom-in uniquement sur les appareils non mobiles */
-@media (min-width: 481px) {
-  .project-card.active .project-image {
-    cursor: zoom-in;
-  }
-  
-  .project-card.active .project-image:hover {
-    transform: scale(1.03);
-  }
+/* Classes responsives pour le modal de galerie */
+.gallery-modal-overlay.device-tablet.orientation-landscape .gallery-modal {
+  max-width: 85%;
 }
 
+.gallery-modal-overlay.device-tablet.orientation-landscape .gallery-image {
+  max-height: 70vh;
+}
+
+.gallery-modal-overlay.device-mobile .gallery-nav {
+  width: 36px;
+  height: 36px;
+}
+
+/* Animation pour la galerie */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -301,6 +449,73 @@
   }
 }
 
+/* Media queries */
+/* Pour les grands écrans */
+@media (min-width: 1900px) {
+  .gallery-nav.prev {
+    left: calc(50% - 600px) !important;
+  }
+  
+  .gallery-nav.next {
+    right: calc(50% - 600px) !important;
+  }
+}
+
+/* Pour les écrans moyens */
+@media (min-width: 1400px) and (max-width: 1899px) {
+  .gallery-nav.prev {
+    left: calc(50% - 500px) !important;
+  }
+  
+  .gallery-nav.next {
+    right: calc(50% - 500px) !important;
+  }
+}
+
+/* Ciblage spécifique pour grandes tablettes en mode paysage */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .gallery-nav.prev {
+    left: 30px !important;
+  }
+  
+  .gallery-nav.next {
+    right: 30px !important;
+  }
+  
+  .gallery-nav {
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+  }
+
+  .gallery-nav::before {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Pour tablettes en mode paysage */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .gallery-nav.prev {
+    left: 20px !important;
+  }
+  
+  .gallery-nav.next {
+    right: 20px !important;
+  }
+  
+  .gallery-nav {
+    width: 45px;
+    height: 45px;
+    opacity: 1;
+  }
+  
+  .close-gallery-button {
+    top: 20px !important;
+    right: 20px !important;
+  }
+}
+
 @media (max-width: 1075px) {
  .tech-icons {
    gap: 12px;
@@ -310,19 +525,38 @@
    width: 28px;
    height: 28px;
  }
+
+   .gallery-nav.prev {
+    left: 15px !important;
+  }
+  
+  .gallery-nav.next {
+    right: 15px !important;
+  }
+
 }
 
 @media (max-width: 768px) {
-  .image-modal {
+  .gallery-modal {
     max-width: 95%;
   }
   
-  .close-image-button {
-    top: -15px;
-    right: -15px;
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
+  .gallery-nav.prev {
+    left: 15px !important;
+  }
+  
+  .gallery-nav.next {
+    right: 15px !important;
+  }
+  
+  .close-gallery-button {
+    top: 15px !important;
+    right: 15px !important;
+  }
+  
+  .gallery-counter {
+    bottom: 15px;
+    left: 50%;
   }
 }
 
@@ -335,18 +569,16 @@
 
   .project-card .project-image,
   .project-card.active .project-image {
-    cursor: default !important; /* Priorité absolue avec !important */
+    cursor: default !important;
   }
   
-  /* Faire en sorte que les icônes utilisent toute la largeur */
   .tech-icons {
     width: 100%;
     flex-wrap: wrap;
     justify-content: flex-start;
     margin-bottom: 5px;
   }
-  
-  /* Ajuster la taille des icônes */
+
   .tech-icons img {
     width: 24px;
     height: 24px;
@@ -354,7 +586,6 @@
     margin-bottom: 8px;
   }
   
-  /* Faire en sorte que le bouton prenne toute la largeur */
   .tech-icons-btn-container .btn {
     width: 100%;
     text-align: center;
@@ -362,41 +593,45 @@
     margin-top: 5px;
   }
   
-  /* Amélioration de l'affichage quand la carte est ouverte */
   .project-card.active {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    transform: none;
-    border-radius: 0;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
     overflow-y: auto;
   }
   
-  /* Ajuster le padding dans la carte active pour mieux utiliser l'espace */
   .project-card.active .project-info {
     padding: 20px;
   }
   
-  /* Ajuster la taille de l'image */
   .project-card.active .project-image {
     height: 200px;
     min-height: 200px;
-    cursor: default; /* Pas de zoom sur mobile */
+    cursor: default;
   }
   
-  /* Supprimer l'effet de survol sur l'image en mode mobile */
   .project-card.active .project-image:hover {
     transform: none;
   }
   
-  /* Repositionner le bouton de fermeture */
   .close-button {
     top: 10px;
     right: 10px;
     width: 32px;
     height: 32px;
-    font-size: 20px;
+  }
+  
+  .gallery-nav {
+    width: 36px;
+    height: 36px;
+    opacity: 1;
+  }
+  
+  .gallery-image {
+    max-height: 70vh;
   }
 }
 

@@ -158,7 +158,7 @@ form button:disabled:hover {
   display: block;
 }
 
-/* Assurer que le reCAPTCHA est bien positionné */
+/* Assure que le reCAPTCHA est bien positionné */
 .recaptcha-container iframe {
   margin-bottom: 10px;
 }
@@ -181,10 +181,10 @@ form button:disabled:hover {
   justify-content: center;
   margin: 0px auto;
   padding: 8px 12px;
-  background-color: rgba(83, 186, 95, 0.1); /* Légère teinte verte pour correspondre à votre thème */
+  background-color: rgba(83, 186, 95, 0.1);
   border-radius: 4px;
   width: 100%;
-  max-width: 600px; /* Pour correspondre à la largeur de votre formulaire */
+  max-width: 600px;
 }
 
 /* Style pour le texte de protection reCAPTCHA */
@@ -224,7 +224,7 @@ form button:disabled:hover {
   vertical-align: middle;
 }
 
-/* Masquer le badge flottant reCAPTCHA par défaut */
+/* Masque le badge flottant reCAPTCHA par défaut */
 .grecaptcha-badge {
   visibility: hidden !important;
   opacity: 0 !important;
@@ -234,20 +234,20 @@ form button:disabled:hover {
   form {
     width: 100%;
     padding: 15px;
-    max-width: 100%; /* S'assurer que le formulaire prend toute la largeur disponible */
+    max-width: 100%;
   }
   
   form label {
-    font-size: 1.2rem; /* Augmenter la taille de la police des labels */
+    font-size: 1.2rem;
     margin-bottom: 10px;
   }
   
   form input,
   form textarea {
-    padding: 15px; /* Augmenter le padding pour faciliter la saisie sur tactile */
-    font-size: 1.2rem; /* Augmenter la taille de la police pour meilleure lisibilité */
+    padding: 15px;
+    font-size: 1.2rem;
     margin-bottom: 20px;
-    border-width: 2px; /* Rendre la bordure plus visible */
+    border-width: 2px;
   }
   
   form input::placeholder,
@@ -255,14 +255,14 @@ form button:disabled:hover {
     font-size: 1.1rem;
   }
   
-  /* Ajuster le compteur de caractères */
+  /* Ajuste le compteur de caractères */
   .character-counter, .error-message, .field-error {
-    font-size: 1rem; /* Agrandir la taille de la police */
+    font-size: 1rem;
   }
   
-  /* Agrandir le bouton d'envoi */
+  /* Agrandi le bouton d'envoi */
   form button {
-    width: 100%; /* Prendre toute la largeur */
+    width: 100%;
     padding: 15px;
     font-size: 1.2rem;
     margin-top: 10px;
@@ -271,7 +271,7 @@ form button:disabled:hover {
   /* Style pour le conteneur d'étiquette et compteur */
   .label-container {
     display: flex;
-    flex-direction: column; /* Empiler verticalement sur mobile */
+    flex-direction: column;
     align-items: flex-start;
     margin-bottom: 8px;
   }
@@ -309,8 +309,8 @@ form button:disabled:hover {
 @media (max-width: 480px) {
   form input,
   form textarea {
-    padding: 16px; /* Encore plus grand pour les très petits écrans */
-    font-size: 16px; /* 16px est la taille minimum pour éviter le zoom automatique sur iOS */
+    padding: 16px;
+    font-size: 16px;
   }
   
   form label {
