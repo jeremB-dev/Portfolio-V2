@@ -339,11 +339,11 @@ body.gallery-open {
 
 /* Positions fixes par rapport aux bords pour la visibilité */
 .gallery-nav.prev {
-  left: 120px !important;
+  left: 220px !important;
 }
 
 .gallery-nav.next {
-  right: 120px !important;
+  right: 220px !important;
 }
 
 .gallery-nav:hover {
@@ -453,22 +453,22 @@ body.gallery-open {
 /* Pour les grands écrans */
 @media (min-width: 1900px) {
   .gallery-nav.prev {
-    left: calc(50% - 600px) !important;
+    left: calc(50% - 950px) !important;
   }
   
   .gallery-nav.next {
-    right: calc(50% - 600px) !important;
+    right: calc(50% - 950px) !important;
   }
 }
 
 /* Pour les écrans moyens */
 @media (min-width: 1400px) and (max-width: 1899px) {
   .gallery-nav.prev {
-    left: calc(50% - 500px) !important;
+    left: calc(50% - 825px) !important;
   }
   
   .gallery-nav.next {
-    right: calc(50% - 500px) !important;
+    right: calc(50% - 825px) !important;
   }
 }
 
