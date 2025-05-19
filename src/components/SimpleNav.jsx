@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAnimation from '../hooks/useAnimation';
 import useTheme from '../hooks/useTheme';
@@ -8,13 +8,14 @@ function SimpleNav() {
   const { darkMode, setDarkMode } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
+  // Utilisation de useCallback pour optimiser les performances
+  const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false);
-  };
+  }, []);
+
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen(prev => !prev);
+  }, []);
   
   // Empêche le défilement du body quand le menu mobile est ouvert
   useEffect(() => {
@@ -41,7 +42,98 @@ function SimpleNav() {
     return () => {
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, closeMobileMenu]);
+
+  // Ajout du gestionnaire de scroll pour fermer le menu
+  useEffect(() => {
+    const handleScroll = () => {
+      if (mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    
+    // On attache l'écouteur d'événement uniquement si le menu est ouvert
+    if (mobileMenuOpen) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [mobileMenuOpen, closeMobileMenu]);
+  
+  // Détection de l'interaction tactile (swipe) pour les appareils mobiles
+  useEffect(() => {
+    let touchStartY = 0;
+    let touchEndY = 0;
+    const minSwipeDistance = 50; // Distance minimale pour considérer qu'il y a eu un swipe
+    
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    
+    const handleTouchMove = (e) => {
+      touchEndY = e.touches[0].clientY;
+      
+      // Si l'utilisateur fait un swipe vers le haut ou vers le bas d'une distance significative
+      if (Math.abs(touchEndY - touchStartY) > minSwipeDistance && mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    
+    if (mobileMenuOpen) {
+      document.addEventListener('touchstart', handleTouchStart);
+      document.addEventListener('touchmove', handleTouchMove);
+    }
+    
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [mobileMenuOpen, closeMobileMenu]);
+
+  // Fermer le menu lors d'un changement de taille d'écran (ex: rotation de l'appareil)
+  useEffect(() => {
+    const handleResize = () => {
+      if (mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [mobileMenuOpen, closeMobileMenu]);
+
+  // Fermer le menu si l'utilisateur clique en dehors du menu (même sans l'overlay)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      const menu = document.getElementById('mobile-menu-simple');
+      const hamburger = document.querySelector('.menu-hamburger');
+      
+      if (
+        mobileMenuOpen && 
+        menu && 
+        !menu.contains(e.target) && 
+        hamburger && 
+        !hamburger.contains(e.target)
+      ) {
+        closeMobileMenu();
+      }
+    };
+    
+    if (mobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside, { passive: true });
+    }
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [mobileMenuOpen, closeMobileMenu]);
 
   return (
     <>

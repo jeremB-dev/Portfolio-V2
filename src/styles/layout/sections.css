@@ -15,7 +15,7 @@ section {
 }
 
 .section-navigation a {
- color: #9d9fa1;
+ color: var(--color-secondary-dark);
  font-weight: 500;
  text-decoration: none;
  transition: color var(--transition-medium);

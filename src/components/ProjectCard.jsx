@@ -54,6 +54,22 @@ function ProjectCard({ project }) {
           document.documentElement.style.setProperty('--modal-height', `${modalHeight}px`);
           document.documentElement.style.setProperty('--modal-top', `${topOffset + 10}px`);
         }
+        
+        // NOUVELLE PARTIE: Force la position correcte sur mobile
+        if (isMobile) {
+          const activeCard = document.querySelector('.project-card.active');
+          if (activeCard) {
+            activeCard.style.position = 'fixed';
+            activeCard.style.top = '0';
+            activeCard.style.left = '0';
+            activeCard.style.width = '100%';
+            activeCard.style.height = '100%';
+            activeCard.style.transform = 'none';
+            activeCard.style.borderRadius = '0';
+            activeCard.style.margin = '0';
+            activeCard.style.zIndex = 'var(--z-index-modal-content)';
+          }
+        }
       }
     };
     
@@ -254,6 +270,27 @@ function ProjectCard({ project }) {
   // Ouvre la carte
   const handleCardClick = (e) => {
     if (e) e.stopPropagation();
+    
+    // Cas spécial pour mobile : applique les styles directement à l'élément cliqué
+    if (isMobile) {
+      // Appliquer les styles directement à l'élément cliqué avant de mettre à jour l'état
+      const clickedCard = e.currentTarget;
+      clickedCard.style.position = 'fixed';
+      clickedCard.style.top = '0';
+      clickedCard.style.left = '0';
+      clickedCard.style.width = '100%';
+      clickedCard.style.height = '100%';
+      clickedCard.style.transform = 'none';
+      clickedCard.style.borderRadius = '0';
+      clickedCard.style.margin = '0';
+      clickedCard.style.zIndex = '1000'; // utiliser une valeur numérique directe
+      clickedCard.style.transition = 'none';
+      
+      // Forcer un repaint pour appliquer les styles immédiatement
+      clickedCard.offsetHeight; // trick to force repaint
+    }
+    
+    // Maintenant on peut mettre à jour l'état
     setIsOpen(true);
   };
 
@@ -267,13 +304,29 @@ function ProjectCard({ project }) {
     setIsGalleryOpen(false);
   };
 
-  // Ouvre la galerie
+  // Ouvre la galerie - CORRIGÉ pour mobile
   const handleImageClick = (e) => {
-    if (isOpen) {
+    if (e) {
       e.preventDefault();
       e.stopPropagation();
+    }
+    
+    if (isOpen) {
       setCurrentImageIndex(0);
       setIsGalleryOpen(true);
+      
+      // Forcer un délai pour s'assurer que les événements sont bien séparés
+      setTimeout(() => {
+        const galleryOverlay = document.querySelector('.gallery-modal-overlay');
+        if (galleryOverlay) {
+          galleryOverlay.style.zIndex = '9999';
+          galleryOverlay.style.position = 'fixed';
+          galleryOverlay.style.top = '0';
+          galleryOverlay.style.left = '0';
+          galleryOverlay.style.width = '100%';
+          galleryOverlay.style.height = '100%';
+        }
+      }, 10);
     }
   };
 
@@ -305,6 +358,24 @@ function ProjectCard({ project }) {
   const deviceClass = isDesktop ? ' device-desktop' : isTablet ? ' device-tablet' : ' device-mobile';
   const orientationClass = isLandscape ? ' orientation-landscape' : ' orientation-portrait';
   
+  // Bouton pour ouvrir la galerie sur mobile
+  const renderGalleryButton = () => {
+    if (isOpen) {  // Suppression de la condition mobile
+      return (
+        <button 
+          className="view-gallery-button"
+          onClick={handleImageClick}
+          aria-label="Voir en plein écran"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
+          </svg>
+        </button>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       <div 
@@ -318,7 +389,18 @@ function ProjectCard({ project }) {
             handleCardClick();
           }
         }}
-        style={isOpen ? {pointerEvents: 'auto'} : {}}
+        style={isOpen && isMobile ? {
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          transform: 'none',
+          borderRadius: '0',
+          margin: '0',
+          zIndex: 'var(--z-index-modal-content)',
+          pointerEvents: 'auto'
+        } : isOpen ? {pointerEvents: 'auto'} : {}}
       >
         <img
           src={image}
@@ -327,9 +409,13 @@ function ProjectCard({ project }) {
           width="400"
           height="200"
           onClick={isOpen ? handleImageClick : undefined}
-          style={{ cursor: isOpen ? 'zoom-in' : 'pointer' }}
+          style={{ 
+            cursor: isOpen ? 'zoom-in' : 'pointer',
+            pointerEvents: isOpen ? 'auto' : 'auto' // Assure que l'image est toujours cliquable
+          }}
           loading="lazy"
         />
+        {renderGalleryButton()}
         <div className="project-info">
           <h3>{title}</h3>
           <h4>{subtitle}</h4>
@@ -383,7 +469,15 @@ function ProjectCard({ project }) {
           className={`gallery-modal-overlay${deviceClass}${orientationClass}`} 
           onClick={handleGalleryClose} 
           role="presentation"
-          style={{pointerEvents: 'auto'}}
+          style={{
+            pointerEvents: 'auto',
+            zIndex: 9999, // Force un z-index élevé
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%'
+          }}
         >
           <div 
             className={`gallery-modal${deviceClass}${orientationClass}`} 

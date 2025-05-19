@@ -14,7 +14,7 @@
  color: #53ba5f;
  margin-bottom: 2.5rem;
  font-weight: 600;
-  cursor: default;
+ cursor: default;
 }
 
 #technologies ul {
@@ -28,29 +28,31 @@
  list-style: none;
 }
 
+/* Structure des cartes - CORRIGÉE pour alignement */
 #technologies li {
  background-color: white;
  border-radius: 10px;
- padding: 1.5rem 1rem;
+ padding: 1.5rem 1rem 1rem;
  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
  display: flex;
  flex-direction: column;
  align-items: center;
- justify-content: center;
  transition: transform 0.3s ease, box-shadow 0.3s ease;
  width: 180px;
- height: 180px;
+ height: 200px;
+ position: relative;
 }
 
 #technologies li:hover {
- box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+ box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .tech-logo {
- width: 64px;
- height: 64px;
+ width: 60px;
+ height: 60px;
  margin-bottom: 1rem;
  object-fit: contain;
+ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 #technologies p {
@@ -60,25 +62,71 @@
  cursor: default;
 }
 
-.section-navigation {
- margin-top: 1.5rem;
+/* Styles pour skill content - AMÉLIORÉS */
+.skill-content {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ width: 100%;
+ flex: 1; /* Prend tout l'espace disponible */
+}
+
+/* Styles pour l'indicateur de maîtrise - POSITION FIXE EN BAS */
+.skill-level {
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ margin-top: auto; /* Pousse vers le bas */
+ position: absolute; /* Position absolue */
+ bottom: 15px; /* Distance du bas fixe */
+ left: 0;
+ right: 0;
+}
+
+.skill-bar-container {
+ width: 80%; /* Légèrement réduit pour meilleur aspect */
+ height: 6px;
+ background-color: #e0e0e0;
+ border-radius: 3px;
+ overflow: hidden;
+ position: relative;
+ margin: 0 auto; /* Centré */
+}
+
+.skill-bar {
+ height: 100%;
+ background: linear-gradient(90deg, #53ba5f, #8ee897);
+ border-radius: 3px;
+ transition: width 1s ease-in-out;
+}
+
+.skill-text {
+ font-size: 0.7rem;
+ color: #666;
+ margin-top: 4px;
+ font-weight: 400;
+}
+
+/* Classes de navigation (conservées de l'original) */
+.section-navigation-tech {
  text-align: center;
  font-size: 1.1rem;
 }
 
-.section-navigation p {
+.section-navigation-tech p {
  color: white;
  margin: 1rem 0;
  cursor: default;
 }
 
-.section-navigation a {
+.section-navigation-tech a {
  color: var(--color-secondary-dark);
  text-decoration: dashed;
  transition: color 0.3s;
 }
 
-.section-navigation a:hover {
+.section-navigation-tech a:hover {
  text-decoration: underline;
 }
 
@@ -106,26 +154,55 @@
  width: 100%;
 }
 
-/* Media queries */
+/* Media queries améliorées */
 @media (max-width: 1024px) {
  #technologies ul {
    gap: 1rem;
  }
  
  #technologies li {
+   width: calc(33.33% - 1rem);
+   max-width: 180px;
+   height: 200px;
+ }
+}
+
+@media (max-width: 768px) {
+ #technologies li {
    width: calc(50% - 1rem);
-   max-width: 250px;
+   max-width: 170px;
+   height: 190px;
+ }
+ 
+ .tech-logo {
+   width: 56px;
+   height: 56px;
+ }
+ 
+ .skill-level {
+   bottom: 12px;
  }
 }
 
 @media (max-width: 640px) {
  #technologies h2 {
    font-size: 2rem;
+   margin-bottom: 1.5rem;
  }
  
  #technologies li {
+   padding: 1.2rem 0.8rem 0.8rem;
    width: calc(50% - 0.5rem);
+   height: 180px;
    margin-bottom: 1rem;
+ }
+ 
+ .skill-bar-container {
+   height: 5px;
+ }
+ 
+ .skill-level {
+   bottom: 10px;
  }
 }
 
@@ -136,15 +213,31 @@
  
  #technologies h2 {
    font-size: 1.8rem;
+   margin-bottom: 1.2rem;
+ }
+ 
+ #technologies ul {
+   gap: 0.8rem;
  }
  
  #technologies li {
-   width: 70%;
-   height: 20%;
+   width: calc(50% - 0.4rem);
+   height: 160px;
    max-width: none;
+   padding: 1rem 0.6rem 0.6rem;
  }
  
- .section-navigation {
-   font-size: 1rem;
+ .tech-logo {
+   width: 48px;
+   height: 48px;
+   margin-bottom: 0.6rem;
+ }
+ 
+ .skill-level {
+   bottom: 8px;
+ }
+ 
+ .skill-text {
+   font-size: 0.6rem;
  }
 }
