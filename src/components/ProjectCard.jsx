@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useWindowSize from '../hooks/useWindowSize';
+import ZoomableImage from './ZoomImage';
 
 function ProjectCard({ project }) {
   const { title, subtitle, image, images, description, technologies, github } = project;
   const [isOpen, setIsOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Références pour les éléments DOM
+  const projectCardRef = useRef(null);
   
   // Utilise le hook useWindowSize
   const { isTablet, isDesktop, isMobile, isLandscape } = useWindowSize();
@@ -19,7 +23,7 @@ function ProjectCard({ project }) {
   // Effet pour adapter la hauteur et éviter les scrollbars
   useEffect(() => {
     const adjustContentHeight = () => {
-      if (isOpen) {
+      if (isOpen && projectCardRef.current) {
         // Détection des dimensions de l'interface
         const header = document.querySelector('.header');
         const headerHeight = header ? header.offsetHeight : 0;
@@ -33,41 +37,97 @@ function ProjectCard({ project }) {
         }
         
         const windowHeight = window.innerHeight;
-        const modalHeight = isTablet || isMobile ? 
-                           windowHeight : 
-                           windowHeight - topOffset - 30;
+        const windowWidth = window.innerWidth;
         
-        // Hauteurs et espacements
-        const imageHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--modal-image-height') || '200');
-        const padding = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--modal-padding') || '20');
-        const paddingTotal = padding * 2;
-        const buttonSpace = 50;
+        // Ajustements spécifiques selon l'appareil
+        const activeCard = projectCardRef.current;
         
-        // Calcul de la hauteur maximale du contenu
-        const maxContentHeight = modalHeight - imageHeight - paddingTotal - buttonSpace;
-        
-        // Application des variables CSS
-        document.documentElement.style.setProperty('--modal-content-max-height', `${maxContentHeight}px`);
-        
-        // Ajustement de la modale en mode desktop
-        if (!isTablet && !isMobile) {
-          document.documentElement.style.setProperty('--modal-height', `${modalHeight}px`);
-          document.documentElement.style.setProperty('--modal-top', `${topOffset + 10}px`);
+        if (isMobile) {
+          // Style mobile - plein écran
+          activeCard.style.position = 'fixed';
+          activeCard.style.top = '0';
+          activeCard.style.left = '0';
+          activeCard.style.width = '100%';
+          activeCard.style.height = '100vh';
+          activeCard.style.maxHeight = '100vh';
+          activeCard.style.transform = 'none';
+          activeCard.style.borderRadius = '0';
+          activeCard.style.margin = '0';
+          activeCard.style.zIndex = '9999';
+          activeCard.style.overflowY = 'auto';
+          
+          // Ajuster la section d'information
+          const infoSection = activeCard.querySelector('.project-info');
+          if (infoSection) {
+            infoSection.style.maxHeight = `${windowHeight - 200 - 40}px`;
+            infoSection.style.overflowY = 'auto';
+            infoSection.style.padding = '20px';
+          }
+        } 
+        else if (isTablet) {
+          // Style tablette
+          if (isLandscape) {
+            // Mode paysage
+            activeCard.style.maxHeight = '85vh';
+            activeCard.style.height = 'auto';
+            
+            const infoSection = activeCard.querySelector('.project-info');
+            if (infoSection) {
+              infoSection.style.maxHeight = `${windowHeight * 0.85 - 200 - 60}px`;
+              infoSection.style.overflowY = 'auto';
+            }
+          } else {
+            // Mode portrait
+            activeCard.style.maxHeight = '90vh';
+            activeCard.style.height = 'auto';
+            
+            const infoSection = activeCard.querySelector('.project-info');
+            if (infoSection) {
+              infoSection.style.maxHeight = `${windowHeight * 0.9 - 200 - 60}px`;
+              infoSection.style.overflowY = 'auto';
+            }
+          }
+        }
+        else {
+          // Style desktop
+          const modalHeight = windowHeight - topOffset - 30;
+          activeCard.style.maxHeight = `${modalHeight}px`;
+          
+          // Hauteurs et espacements
+          const imageHeight = 200;
+          const padding = 30;
+          const paddingTotal = padding * 2;
+          const buttonSpace = 50;
+          
+          // Calcul de la hauteur maximale du contenu
+          const maxContentHeight = modalHeight - imageHeight - paddingTotal - buttonSpace;
+          
+          // Ajuster la section d'information
+          const infoSection = activeCard.querySelector('.project-info');
+          if (infoSection) {
+            infoSection.style.maxHeight = `${maxContentHeight}px`;
+            infoSection.style.overflowY = 'auto';
+          }
         }
         
-        // NOUVELLE PARTIE: Force la position correcte sur mobile
-        if (isMobile) {
-          const activeCard = document.querySelector('.project-card.active');
-          if (activeCard) {
-            activeCard.style.position = 'fixed';
-            activeCard.style.top = '0';
-            activeCard.style.left = '0';
-            activeCard.style.width = '100%';
-            activeCard.style.height = '100%';
-            activeCard.style.transform = 'none';
-            activeCard.style.borderRadius = '0';
-            activeCard.style.margin = '0';
-            activeCard.style.zIndex = 'var(--z-index-modal-content)';
+        // Assurer que tous les textes sont correctement formatés
+        const paragraphs = activeCard.querySelectorAll('p');
+        paragraphs.forEach(p => {
+          p.style.maxWidth = '100%';
+          p.style.overflowWrap = 'break-word';
+          p.style.wordWrap = 'break-word';
+        });
+        
+        // S'assurer que les boutons et les icônes s'adaptent
+        const techIconsContainer = activeCard.querySelector('.tech-icons-btn-container');
+        if (techIconsContainer && windowWidth <= 480) {
+          techIconsContainer.style.flexDirection = 'column';
+          techIconsContainer.style.alignItems = 'flex-start';
+          
+          const btn = techIconsContainer.querySelector('.btn');
+          if (btn) {
+            btn.style.width = '100%';
+            btn.style.textAlign = 'center';
           }
         }
       }
@@ -75,13 +135,15 @@ function ProjectCard({ project }) {
     
     // Appliquer les ajustements
     if (isOpen) {
-      adjustContentHeight();
+      // Attendre un court instant pour que le DOM soit prêt
+      setTimeout(() => {
+        adjustContentHeight();
+      }, 50);
       window.addEventListener('resize', adjustContentHeight);
     }
     
     return () => {
       window.removeEventListener('resize', adjustContentHeight);
-      document.documentElement.style.removeProperty('--modal-content-max-height');
     };
   }, [isOpen, isTablet, isMobile, isLandscape]);
 
@@ -283,7 +345,7 @@ function ProjectCard({ project }) {
       clickedCard.style.transform = 'none';
       clickedCard.style.borderRadius = '0';
       clickedCard.style.margin = '0';
-      clickedCard.style.zIndex = '1000'; // utiliser une valeur numérique directe
+      clickedCard.style.zIndex = '1000';
       clickedCard.style.transition = 'none';
       
       // Forcer un repaint pour appliquer les styles immédiatement
@@ -304,7 +366,7 @@ function ProjectCard({ project }) {
     setIsGalleryOpen(false);
   };
 
-  // Ouvre la galerie - CORRIGÉ pour mobile
+  // Ouvre la galerie
   const handleImageClick = (e) => {
     if (e) {
       e.preventDefault();
@@ -360,12 +422,28 @@ function ProjectCard({ project }) {
   
   // Bouton pour ouvrir la galerie sur mobile
   const renderGalleryButton = () => {
-    if (isOpen) {  // Suppression de la condition mobile
+    if (isOpen) {
       return (
         <button 
           className="view-gallery-button"
           onClick={handleImageClick}
           aria-label="Voir en plein écran"
+          style={{
+            position: 'absolute',
+            top: isMobile ? '165px' : '255px',
+            right: '15px',
+            zIndex: '1002',
+            backgroundColor: 'var(--color-primary)',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '36px',
+            height: '36px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path>
@@ -379,6 +457,7 @@ function ProjectCard({ project }) {
   return (
     <>
       <div 
+        ref={projectCardRef}
         className={`project-card ${isOpen ? 'active' : ''} ${isTablet ? 'tablet' : ''} ${isLandscape ? 'landscape' : 'portrait'}`}
         onClick={!isOpen ? handleCardClick : undefined}
         role="button"
@@ -399,23 +478,43 @@ function ProjectCard({ project }) {
           borderRadius: '0',
           margin: '0',
           zIndex: 'var(--z-index-modal-content)',
-          pointerEvents: 'auto'
-        } : isOpen ? {pointerEvents: 'auto'} : {}}
+          pointerEvents: 'auto',
+          overflowY: 'auto',
+          maxHeight: '100vh'
+        } : isOpen ? {
+          pointerEvents: 'auto',
+          overflowY: 'auto',
+          maxHeight: '90vh'
+        } : {}}
       >
-        <img
-          src={image}
-          alt={title}
-          className="project-image"
-          width="400"
-          height="200"
-          onClick={isOpen ? handleImageClick : undefined}
-          style={{ 
-            cursor: isOpen ? 'zoom-in' : 'pointer',
-            pointerEvents: isOpen ? 'auto' : 'auto' // Assure que l'image est toujours cliquable
-          }}
-          loading="lazy"
-        />
-        {renderGalleryButton()}
+        {/* Utilisation de ZoomableImage pour mobile ou image standard pour desktop */}
+        {isOpen && isMobile ? (
+          <ZoomableImage
+            src={image}
+            alt={title}
+            className="project-image"
+            width="400"
+            height="200"
+          />
+        ) : (
+          <img
+            src={image}
+            alt={title}
+            className="project-image"
+            width="400"
+            height="200"
+            onClick={isOpen ? handleImageClick : undefined}
+            style={{ 
+              cursor: isOpen ? 'zoom-in' : 'pointer',
+              pointerEvents: isOpen ? 'auto' : 'auto'
+            }}
+            loading="lazy"
+          />
+        )}
+        
+        {/* N'afficher le bouton de galerie que si nous ne sommes pas en mode mobile ouvert */}
+        {(!isMobile || !isOpen) && renderGalleryButton()}
+        
         <div className="project-info">
           <h3>{title}</h3>
           <h4>{subtitle}</h4>
@@ -463,15 +562,15 @@ function ProjectCard({ project }) {
         ></div>
       )}
 
-      {/* Modal de galerie d'images */}
-      {isOpen && isGalleryOpen && (
+      {/* Gallery modal - uniquement pour desktop ou quand ZoomableImage n'est pas utilisé */}
+      {!(isOpen && isMobile) && isOpen && isGalleryOpen && (
         <div 
           className={`gallery-modal-overlay${deviceClass}${orientationClass}`} 
           onClick={handleGalleryClose} 
           role="presentation"
           style={{
             pointerEvents: 'auto',
-            zIndex: 9999, // Force un z-index élevé
+            zIndex: 9999,
             position: 'fixed',
             top: 0,
             left: 0,
@@ -499,12 +598,26 @@ function ProjectCard({ project }) {
                   className="gallery-nav prev" 
                   onClick={handlePrevImage}
                   aria-label="Image précédente"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0.9,
+                    zIndex: 10000
+                  }}
                 ></button>
                 
                 <button 
                   className="gallery-nav next" 
                   onClick={handleNextImage}
                   aria-label="Image suivante"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0.9,
+                    zIndex: 10000
+                  }}
                 ></button>
               </>
             )}
