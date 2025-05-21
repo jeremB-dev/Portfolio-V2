@@ -145,7 +145,7 @@
  display: none;
 }
 
-/* Correction pour la modale en mode desktop */
+
 .project-card.active {
  position: fixed !important;
  top: 5% !important;
@@ -160,9 +160,9 @@
  display: flex;
  flex-direction: column;
  box-shadow: var(--shadow-modal) !important;
- background-color: var(--color-background) !important; /* Assurer un fond opaque */
+ background-color: var(--color-background) !important;
  
- /* Désactiver les animations et transformations au survol */
+ /* Désactive les animations et transformations au survol */
  transition: none !important;
  pointer-events: auto !important;
  transform-style: flat !important; /* Forcer rendu 2D */
@@ -176,7 +176,7 @@
  -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
-/* Désactiver explicitement les effets de survol sur la modale active */
+/* Désactive explicitement les effets de survol sur la modale active */
 .project-card.active:hover {
  transform: translateX(-50%) !important;
  box-shadow: var(--shadow-modal) !important;
@@ -209,7 +209,7 @@
  min-height: 280px;
  object-fit: contain;
  flex-shrink: 0;
- pointer-events: auto !important; /* Force les événements de pointeur */
+ pointer-events: auto !important;
  position: relative;
  z-index: 1001;
 }
@@ -260,7 +260,7 @@
  opacity: 1 !important;
 }
 
-/* Assurer que l'overlay couvre toute la page pour desktop */
+/* Assure que l'overlay couvre toute la page pour desktop */
 @media (min-width: 1024px) {
  .projects-overlay.active {
    top: 0 !important;
@@ -325,7 +325,6 @@ body.gallery-open {
   font-size: 14px;
 }
 
-/* Flèches de navigation modifiées pour être toujours visibles */
 .gallery-nav {
   position: fixed !important;
   top: 50% !important;
@@ -340,6 +339,35 @@ body.gallery-open {
   transition: opacity 0.3s, transform 0.3s;
   z-index: calc(var(--z-index-modal) + 15);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  
+  /* Centrage du contenu */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styles spécifiques pour les SVG des flèches */
+.gallery-nav svg {
+  position: relative;
+  stroke: white;
+  stroke-width: 3; /* Épaisseur de trait légèrement plus importante */
+  width: 25px;
+  height: 25px;
+  
+  /* Centrage précis */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Léger ajustement pour la flèche précédente (gauche) */
+.gallery-nav.prev svg {
+  transform: translateX(-1px);
+}
+
+/* Léger ajustement pour la flèche suivante (droite) */
+.gallery-nav.next svg {
+  transform: translateX(1px);
 }
 
 /* Positions fixes par rapport aux bords pour la visibilité */
@@ -357,31 +385,11 @@ body.gallery-open {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Flèches plus visibles */
-.gallery-nav.prev::before,
-.gallery-nav.next::before {
-  content: '';
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-top: 3px solid white;
-  border-right: 3px solid white;
-  top: 50%;
-  left: 50%;
-}
-
-.gallery-nav.prev::before {
-  transform: translate(-30%, -50%) rotate(-135deg);
-}
-
-.gallery-nav.next::before {
-  transform: translate(-70%, -50%) rotate(45deg);
-}
 
 /* Bouton de fermeture de la galerie */
 .close-gallery-button {
   position: fixed !important;
-  top: 90px !important;
+  top: 150px !important;
   right: 90px !important;
   width: 36px;
   height: 36px;
@@ -424,7 +432,7 @@ body.gallery-open {
 /* Style pour le bouton de galerie mobile */
 .view-gallery-button {
   position: absolute;
-  top: 225px;
+  top: 230px;
   right: 15px;
   z-index: 1002;
   background-color: var(--color-primary);
@@ -494,11 +502,11 @@ body.gallery-open {
 /* Pour les écrans moyens */
 @media (min-width: 1400px) and (max-width: 1899px) {
   .gallery-nav.prev {
-    left: calc(50% - 700px) !important;
+    left: calc(50% - 825px) !important;
   }
   
   .gallery-nav.next {
-    right: calc(50% - 700px) !important;
+    right: calc(50% - 825px) !important;
   }
 }
 
@@ -607,11 +615,6 @@ body.gallery-open {
     width: 32px;
     height: 32px;
   }
-
-  .view-gallery-button {
-    top: 153px;
-    right: 10px;
-  }
   
   .gallery-nav {
     width: 36px;
@@ -686,6 +689,11 @@ body.gallery-open {
     right: 10px;
     width: 32px;
     height: 32px;
+  }
+
+  .view-gallery-button {
+    top: 150px;
+    right: 10px;
   }
   
   .gallery-nav {
