@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// Mise à jour de Header.jsx avec gestion complète de fermeture
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import useAnimation from '../hooks/useAnimation';
 import useTheme from '../hooks/useTheme';
@@ -8,14 +10,16 @@ function Header() {
   const { darkMode, setDarkMode } = useTheme();
   
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef(null);
+  const hamburgerRef = useRef(null);
   
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
-  
-  const closeMobileMenu = () => {
+  const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false);
-  };
+  }, []);
+  
+  const toggleMobileMenu = useCallback(() => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  }, [mobileMenuOpen]);
   
   // Empêche le défilement du body quand le menu mobile est ouvert
   useEffect(() => {
@@ -30,7 +34,7 @@ function Header() {
     };
   }, [mobileMenuOpen]);
   
-  // Ajout d'un gestionnaire pour la touche Échap
+  // Gestionnaire pour la touche Échap
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape' && mobileMenuOpen) {
@@ -42,7 +46,98 @@ function Header() {
     return () => {
       window.removeEventListener('keydown', handleEscape);
     };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, closeMobileMenu]);
+
+  // Gestionnaire de clic en dehors du menu
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        mobileMenuOpen &&
+        mobileMenuRef.current &&
+        hamburgerRef.current &&
+        !mobileMenuRef.current.contains(event.target) &&
+        !hamburgerRef.current.contains(event.target)
+      ) {
+        closeMobileMenu();
+      }
+    };
+
+    if (mobileMenuOpen) {
+      // Petite temporisation pour éviter la fermeture immédiate lors de l'ouverture
+      const timeoutId = setTimeout(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside, { passive: true });
+      }, 100);
+
+      return () => {
+        clearTimeout(timeoutId);
+        document.removeEventListener('mousedown', handleClickOutside);
+        document.removeEventListener('touchstart', handleClickOutside);
+      };
+    }
+  }, [mobileMenuOpen, closeMobileMenu]);
+
+  // Gestionnaire de swipe pour fermer
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    let startX = 0;
+    let startY = 0;
+    const minSwipeDistance = 50;
+
+    const handleTouchStart = (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e) => {
+      if (!startX || !startY) return;
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      
+      const diffX = startX - currentX;
+      const diffY = startY - currentY;
+
+      // Swipe vers la droite (pour fermer le menu qui vient de la droite)
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < -minSwipeDistance) {
+          closeMobileMenu();
+        }
+      }
+      // Swipe vertical (scroll)
+      else if (Math.abs(diffY) > minSwipeDistance) {
+        closeMobileMenu();
+      }
+    };
+
+    const handleTouchEnd = () => {
+      startX = 0;
+      startY = 0;
+    };
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [mobileMenuOpen, closeMobileMenu]);
+
+  // Fermer lors du redimensionnement (rotation d'écran)
+  useEffect(() => {
+    const handleResize = () => {
+      if (mobileMenuOpen && window.innerWidth >= 768) {
+        closeMobileMenu();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [mobileMenuOpen, closeMobileMenu]);
   
   return (
     <>
@@ -71,6 +166,7 @@ function Header() {
           </nav>
           
           <button 
+            ref={hamburgerRef}
             className={`menu-hamburger ${mobileMenuOpen ? 'active' : ''}`} 
             onClick={toggleMobileMenu}
             aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
@@ -84,6 +180,7 @@ function Header() {
         </div>
         
         <div 
+          ref={mobileMenuRef}
           id="mobile-menu"
           className={`mobile-nav ${mobileMenuOpen ? 'mobile-nav-open' : ''}`}
           aria-hidden={!mobileMenuOpen}
@@ -144,11 +241,14 @@ function Header() {
         </div>
       </header>
       
+      {/* Overlay amélioré avec gestion du clic */}
       {mobileMenuOpen && (
         <div 
           className="mobile-nav-overlay" 
           onClick={closeMobileMenu}
+          onTouchStart={closeMobileMenu}
           role="presentation"
+          aria-label="Fermer le menu"
         ></div>
       )}
       

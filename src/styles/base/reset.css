@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 
-/* Correction pour débordement horizontal - AJOUTÉ */
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
@@ -18,7 +17,6 @@ body {
   color: #fff;
   line-height: 1.6;
   padding-top: 120px;
-  /* Propriétés ajoutées pour éviter le débordement */
   width: 100%;
   position: relative;
 }
@@ -46,7 +44,7 @@ button,
 
 /* Médias et listes */
 img {
-  max-width: 100%; /* Déjà présent - bien */
+  max-width: 100%;
   height: auto;
 }
 
@@ -63,25 +61,46 @@ textarea {
   outline: none;
 }
 
-/* Conteneur de contenu - Modification pour éviter le débordement */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
 .content-container {
   opacity: 0;
   transition: opacity var(--transition-slow);
   height: 100%;
   width: 100%;
-  max-width: 100vw; /* AJOUTÉ */
-  overflow-x: hidden; /* AJOUTÉ */
+  max-width: 100vw;
+  overflow-x: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-container.visible {
   opacity: 1;
 }
 
-/* Ajout de règles pour les conteneurs principaux - NOUVEAU */
-#root, 
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .app,
-main,
-.main-content,
 section,
 .container,
 .projects-page,
@@ -92,26 +111,23 @@ section,
   box-sizing: border-box;
 }
 
-/* Correction pour les cartes de projet - NOUVEAU */
 .project-card {
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Correction pour les animations et canvas - NOUVEAU */
 canvas,
 .particle-container {
   max-width: 100vw;
   overflow: hidden;
 }
 
-/* Media query */
+/* Media queries */
 @media (max-width: 1024px) {
   body {
     padding-top: 0;
   }
   
-  /* Ajout de correctifs pour les tablettes - NOUVEAU */
   section, 
   .container {
     padding-left: 1rem !important;
@@ -119,14 +135,12 @@ canvas,
   }
 }
 
-/* Spécifique pour iPad - NOUVEAU */
 @media (min-width: 768px) and (max-width: 1024px) {
   body {
     width: 100vw;
     overflow-x: hidden;
   }
   
-  /* S'assurer que les conteneurs principaux ne dépassent pas */
   .content-container,
   #root,
   .app,

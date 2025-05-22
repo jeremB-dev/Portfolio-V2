@@ -1,8 +1,7 @@
 .scroll-to-top {
   position: fixed;
   bottom: 115px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 20px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -14,76 +13,25 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   z-index: 999;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  transform: translateX(-50%) translateY(20px);
+  transform: translateY(20px);
 }
 
 .scroll-to-top.visible {
   opacity: 1;
-  display: flex !important;
-  transform: translateX(-50%) translateY(0);
-  animation: fadeInUp 0.5s ease-out, floatUpDown 1.5s ease-in-out infinite;
+  transform: translateY(0);
+  animation: floatUpDown 1.5s ease-in-out infinite;
 }
 
 .scroll-to-top:hover {
   background-color: #449d4f;
-  animation-play-state: paused;
-  transform: translateX(-50%) translateY(-5px);
-}
-
-/* Repositionnement en mode paysage */
-.scroll-to-top.landscape {
-  left: auto;
-  right: 30px;
-  transform: translateY(20px);
-}
-
-.scroll-to-top.landscape.visible {
-  transform: translateY(0);
-  animation: fadeInUpLandscape 0.5s ease-out, floatUpDownLandscape 1.5s ease-in-out infinite;
-}
-
-/* Ajustement de l'animation hover en mode paysage */
-.scroll-to-top.landscape:hover {
   transform: translateY(-5px);
   animation-play-state: paused;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
 @keyframes floatUpDown {
-  0%, 100% { 
-    transform: translateX(-50%) translateY(0); 
-  }
-  50% { 
-    transform: translateX(-50%) translateY(-8px); 
-  }
-}
-
-@keyframes fadeInUpLandscape {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes floatUpDownLandscape {
   0%, 100% { 
     transform: translateY(0); 
   }
@@ -92,37 +40,39 @@
   }
 }
 
-/* Media Queries */
-/* Style spécifique pour desktop */
-@media (min-width: 1024px) {
+/* Mobile */
+@media (max-width: 480px) {
   .scroll-to-top {
-    display: none !important;
+    bottom: 130px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
   }
 }
 
-/* Style spécifique pour tablettes */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .scroll-to-top {
-    bottom: 85px;
-    width: 55px;
-    height: 55px;
-  }
-}
-
-/* Style spécifique pour smartphones */
-@media (max-width: 767px) {
+/* Mobile large */
+@media (min-width: 481px) and (max-width: 767px) {
   .scroll-to-top {
     bottom: 135px;
+    right: 15px;
     width: 50px;
     height: 50px;
   }
 }
 
-/* Style spécifique pour les très petits écrans */
-@media (max-width: 480px) {
+/* Tablettes (iPad, iPad Pro, etc.) */
+@media (min-width: 768px) and (max-width: 1439px) {
   .scroll-to-top {
-    bottom: 130px;
-    width: 45px;
-    height: 45px;
+    bottom: 150px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Desktop UNIQUEMENT */
+@media (min-width: 1440px) {
+  .scroll-to-top {
+    display: none !important;
   }
 }

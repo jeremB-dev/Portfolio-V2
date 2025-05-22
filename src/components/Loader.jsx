@@ -25,7 +25,32 @@ function Loader({ onFinished }) {
     "Finalisation..."
   ];
 
-  // Gére le mouvement de la souris
+  // Bloque le scroll au montage du composant
+  useEffect(() => {
+    // Sauvegarde les styles originaux
+    const originalStyle = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      width: document.body.style.width,
+      height: document.body.style.height
+    };
+
+    // Bloque le scroll
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100vh';
+
+    // Nettoye au démontage
+    return () => {
+      document.body.style.overflow = originalStyle.overflow;
+      document.body.style.position = originalStyle.position;
+      document.body.style.width = originalStyle.width;
+      document.body.style.height = originalStyle.height;
+    };
+  }, []);
+
+  // Gère le mouvement de la souris
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (containerRef.current) {
@@ -41,13 +66,13 @@ function Loader({ onFinished }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Effet de chargement principal - exécuté une seule fois
+  // Effet de chargement principal
   useEffect(() => {
     // Si le chargement est déjà terminé, ne pas redémarrer
     if (loadingCompleteRef.current) return;
     
-    const duration = 3800; // Durée totale en ms
-    const interval = 20; // Intervalle de mise à jour en ms
+    const duration = 2800;
+    const interval = 16;
     const steps = duration / interval;
     let currentStep = 0;
 
@@ -71,13 +96,13 @@ function Loader({ onFinished }) {
       // Quand on atteint 100%
       if (newProgress === 100) {
         clearInterval(timerRef.current);
-        loadingCompleteRef.current = true; // Marquer comme terminé
+        loadingCompleteRef.current = true;
         
         setTimeout(() => {
           // Animation de grossissement du logo
           setLogoDescending(true);
           
-          // Début de l'explosion pendant le grossissement du logo
+          // Début de l'explosion
           setTimeout(() => {
             setExploding(true);
             setTimeout(() => {
@@ -85,12 +110,18 @@ function Loader({ onFinished }) {
               setTimeout(() => {
                 setFadeOut(true);
                 setTimeout(() => {
+                  // Restaurer le scroll avant de finir
+                  document.body.style.overflow = '';
+                  document.body.style.position = '';
+                  document.body.style.width = '';
+                  document.body.style.height = '';
+                  
                   if (onFinished) onFinished();
-                }, 800);
-              }, 400);
-            }, 300);
-          }, 200);
-        }, 300);
+                }, 600);
+              }, 300);
+            }, 200);
+          }, 150);
+        }, 200);
       }
     }, interval);
 
@@ -100,12 +131,12 @@ function Loader({ onFinished }) {
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onFinished, phases.length]); // Suppression de logoIntensify du tableau de dépendances
+  }, [onFinished, phases.length]); // Suppression de logoIntensify pour éviter le redémarrage
 
-  // Génére des éléments flottants et d'explosion
+  // Génère des éléments flottants optimisés
   const renderFloatingElements = () => (
     <>
-      {[...Array(6)].map((_, i) => (
+      {[...Array(4)].map((_, i) => (
         <div 
           key={i}
           className="floating-circle"
@@ -116,7 +147,7 @@ function Loader({ onFinished }) {
             '--circle-opacity': `${Math.random() * 0.15 + 0.05}`,
             '--circle-drift-x': `${Math.random() * 40 - 20}px`,
             '--circle-drift-y': `${Math.random() * 40 - 20}px`,
-            '--circle-duration': `${Math.random() * 10 + 15}s`
+            '--circle-duration': `${Math.random() * 8 + 12}s`,
           }}
         ></div>
       ))}
@@ -125,7 +156,7 @@ function Loader({ onFinished }) {
 
   const renderCodeLines = () => (
     <>
-      {[...Array(10)].map((_, i) => (
+      {[...Array(6)].map((_, i) => (
         <div 
           key={i}
           className="code-line"
@@ -134,8 +165,8 @@ function Loader({ onFinished }) {
             '--line-left': `${Math.random() * 80 + 10}%`,
             '--line-top': `${Math.random() * 80 + 10}%`,
             '--line-opacity': `${Math.random() * 0.15 + 0.05}`,
-            '--line-duration': `${Math.random() * 5 + 5}s`,
-            '--line-delay': `${Math.random() * 5}s`,
+            '--line-duration': `${Math.random() * 4 + 4}s`,
+            '--line-delay': `${Math.random() * 4}s`,
             '--line-rotate': `${Math.random() * 360}deg`
           }}
         ></div>
@@ -169,18 +200,18 @@ function Loader({ onFinished }) {
       
       {/* Vagues d'explosion */}
       <div className="shockwaves-container">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
           <div 
             key={i} 
             className="shockwave"
-            style={{ '--wave-delay': `${i * 0.05}s`, '--wave-index': i }}
+            style={{ '--wave-delay': `${i * 0.04}s`, '--wave-index': i }}
           ></div>
         ))}
       </div>
       
       {/* Particules d'explosion */}
       <div className="particles-container">
-        {[...Array(250)].map((_, i) => (
+        {[...Array(150)].map((_, i) => (
           <div 
             key={i} 
             className="explosion-particle"
@@ -188,8 +219,8 @@ function Loader({ onFinished }) {
               '--angle': `${Math.random() * 360}deg`,
               '--distance': `${Math.random() * 100 + 50}vh`,
               '--size': `${Math.random() * 30 + 5}px`,
-              '--delay': `${Math.random() * 0.3}s`,
-              '--duration': `${Math.random() * 1 + 0.7}s`,
+              '--delay': `${Math.random() * 0.2}s`,
+              '--duration': `${Math.random() * 0.8 + 0.5}s`,
               '--rotation': `${Math.random() * 1080 - 540}deg`
             }}
           ></div>
@@ -198,13 +229,13 @@ function Loader({ onFinished }) {
       
       {/* Rayons lumineux */}
       <div className="rays-container">
-        {[...Array(36)].map((_, i) => (
+        {[...Array(24)].map((_, i) => (
           <div 
             key={i}
             className="explosion-ray"
             style={{
-              '--ray-angle': `${i * 10}deg`,
-              '--ray-delay': `${Math.random() * 0.2}s`,
+              '--ray-angle': `${i * 15}deg`,
+              '--ray-delay': `${Math.random() * 0.15}s`,
               '--ray-opacity': `${Math.random() * 0.5 + 0.5}`,
               '--ray-width': `${Math.random() * 20 + 5}px`,
               '--ray-glow': `${Math.random() * 30 + 20}px`

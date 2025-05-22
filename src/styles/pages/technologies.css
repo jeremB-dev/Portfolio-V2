@@ -28,7 +28,7 @@
  list-style: none;
 }
 
-/* Structure des cartes - CORRIGÉE pour alignement */
+/* Structure des cartes */
 #technologies li {
  background-color: white;
  border-radius: 10px;
@@ -62,36 +62,36 @@
  cursor: default;
 }
 
-/* Styles pour skill content - AMÉLIORÉS */
+/* Styles pour skill content */
 .skill-content {
  display: flex;
  flex-direction: column;
  align-items: center;
  width: 100%;
- flex: 1; /* Prend tout l'espace disponible */
+ flex: 1;
 }
 
-/* Styles pour l'indicateur de maîtrise - POSITION FIXE EN BAS */
+/* Styles pour l'indicateur de maîtrise */
 .skill-level {
  width: 100%;
  display: flex;
  flex-direction: column;
  align-items: center;
- margin-top: auto; /* Pousse vers le bas */
- position: absolute; /* Position absolue */
- bottom: 15px; /* Distance du bas fixe */
+ margin-top: auto;
+ position: absolute;
+ bottom: 15px;
  left: 0;
  right: 0;
 }
 
 .skill-bar-container {
- width: 80%; /* Légèrement réduit pour meilleur aspect */
+ width: 80%;
  height: 6px;
  background-color: #e0e0e0;
  border-radius: 3px;
  overflow: hidden;
  position: relative;
- margin: 0 auto; /* Centré */
+ margin: 0 auto;
 }
 
 .skill-bar {
@@ -102,32 +102,11 @@
 }
 
 .skill-text {
- font-size: 0.7rem;
+ font-size: 0.65rem;
  color: #666;
  margin-top: 4px;
- font-weight: 400;
-}
-
-/* Classes de navigation (conservées de l'original) */
-.section-navigation-tech {
+ font-weight: 500;
  text-align: center;
- font-size: 1.1rem;
-}
-
-.section-navigation-tech p {
- color: white;
- margin: 1rem 0;
- cursor: default;
-}
-
-.section-navigation-tech a {
- color: var(--color-secondary-dark);
- text-decoration: dashed;
- transition: color 0.3s;
-}
-
-.section-navigation-tech a:hover {
- text-decoration: underline;
 }
 
 .link-nav {
@@ -154,7 +133,59 @@
  width: 100%;
 }
 
-/* Media queries améliorées */
+/* Animation désactivée pour les barres quand animations OFF */
+.animations-disabled .skill-bar {
+  transition: none !important;
+}
+
+/* Animation désactivée pour les cartes quand animations OFF */
+.animations-disabled #technologies li {
+  transition: none !important;
+}
+
+.animations-disabled #technologies li:hover {
+  transform: none !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Légende en bas de page */
+.technologies-legend {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 2rem auto 0;
+}
+
+.technologies-legend h4 {
+  color: #53ba5f;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.legend-colors {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  font-size: 0.8rem;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.legend-very-solid { background: var(--gradient-skill-very-solid); }
+.legend-solid { background: var(--gradient-skill-solid); }
+.legend-competent { background: var(--gradient-skill-competent); }
+.legend-learning { background: var(--gradient-skill-learning); }
+.legend-beginner { background: var(--gradient-skill-beginner); }
+.legend-discovery { background: var(--gradient-skill-discovery); }
+
+/* Media queries */
 @media (max-width: 1024px) {
  #technologies ul {
    gap: 1rem;
@@ -239,5 +270,19 @@
  
  .skill-text {
    font-size: 0.6rem;
+ }
+
+ .technologies-legend {
+   padding: 0.8rem;
+   margin: 1.5rem auto 0;
+ }
+ 
+ .legend-colors {
+   gap: 0.5rem;
+ }
+ 
+ .legend-item {
+   font-size: 0.7rem;
+   padding: 0.1rem 0.3rem;
  }
 }

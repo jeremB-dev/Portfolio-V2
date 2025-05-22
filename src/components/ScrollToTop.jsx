@@ -3,41 +3,32 @@ import useWindowSize from '../hooks/useWindowSize';
 
 function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const { isMobile, isTablet, isDesktop, isLandscape } = useWindowSize();
+  const { isDesktop } = useWindowSize();
   
-  // On utilise directement les valeurs du hook useWindowSize
-  // isDesktop est défini comme width >= 1024 dans le hook
-  // Le bouton est visible UNIQUEMENT sur mobile ou tablette, jamais sur desktop
-  const shouldShowButton = !isDesktop && (isMobile || isTablet);
+  const shouldShowButton = !isDesktop;
   
   useEffect(() => {
-    if (!shouldShowButton) {
-      return;
-    }
+    if (!shouldShowButton) return;
+    
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.pageYOffset > 300);
     };
     
     window.addEventListener('scroll', toggleVisibility);
-    toggleVisibility(); // Vérifie l'état initial
+    toggleVisibility();
     
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, [shouldShowButton]);
   
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  
+  if (!shouldShowButton) return null;
   
   return (
     <button 
-      className={`scroll-to-top ${isVisible ? 'visible' : ''} ${isLandscape ? 'landscape' : ''}`}
+      className={`scroll-to-top ${isVisible ? 'visible' : ''}`}
       onClick={scrollToTop}
       aria-label="Retour en haut de page"
     >

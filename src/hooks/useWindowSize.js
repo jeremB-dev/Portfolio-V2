@@ -5,8 +5,8 @@ function useWindowSize() {
     width: window.innerWidth,
     height: window.innerHeight,
     isMobile: window.innerWidth < 768,
-    isTablet: window.innerWidth >= 768 && window.innerWidth < 1024,
-    isDesktop: window.innerWidth >= 1024,
+    isTablet: window.innerWidth >= 768 && window.innerWidth < 1440,
+    isDesktop: window.innerWidth >= 1440,
     isLandscape: window.innerWidth > window.innerHeight,
     isPortrait: window.innerWidth <= window.innerHeight,
   });
@@ -21,17 +21,15 @@ function useWindowSize() {
         width,
         height,
         isMobile: width < 768,
-        isTablet: width >= 768 && width < 1024,
-        isDesktop: width >= 1024,
+        isTablet: width >= 768 && width < 1440,
+        isDesktop: width >= 1440,
         isLandscape,
         isPortrait: !isLandscape,
       });
     }
 
-    // S'assure que les valeurs sont correctes au premier rendu
     handleResize();
 
-    // Écoute les changements de taille et d'orientation
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
 

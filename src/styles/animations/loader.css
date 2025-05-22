@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.6s ease; /* Accéléré de 0.8s à 0.6s */
   overflow: hidden;
   --mouse-x: 50%;
   --mouse-y: 50%;
@@ -19,16 +19,16 @@
 
 .gradient-background {
   position: absolute;
-  inset: 0; /* Optimisé */
+  inset: 0;
   background: radial-gradient(
     circle at var(--mouse-x) var(--mouse-y),
     rgba(83, 186, 95, 0.15) 0%,
     rgba(44, 62, 80, 0) 70%
   );
-  transition: background 0.3s ease;
+  transition: background 0.2s ease; /* Accéléré de 0.3s à 0.2s */
 }
 
-/** Eléments flottants */
+/** Eléments flottants - animations accélérées */
 .floating-elements,
 .code-lines {
   position: absolute;
@@ -82,7 +82,7 @@
   z-index: 150;
 }
 
-/* Styles pour le logo */
+/* Styles pour le logo - animations accélérées */
 .logo-img {
   display: flex;
   justify-content: center;
@@ -90,20 +90,20 @@
 }
 
 .logo-img img {
-  animation: logo-pulse-img 3s infinite alternate ease-in-out;
+  animation: logo-pulse-img 2s infinite alternate ease-in-out; /* Accéléré de 3s à 2s */
   box-shadow: 0 0 15px rgba(83, 186, 95, 0.7);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease; /* Accéléré de 0.3s à 0.2s */
   max-width: 100%;
   height: auto;
 }
 
 .logo-intensify img {
-  animation: logo-pulse-intense-img 0.6s infinite ease-in-out;
+  animation: logo-pulse-intense-img 0.4s infinite ease-in-out; /* Accéléré de 0.6s à 0.4s */
   box-shadow: 0 0 30px rgba(83, 255, 107, 1), 0 0 50px rgba(83, 186, 95, 0.6);
 }
 
 .logo-descending {
-  animation: logo-grow-and-fade 0.6s forwards ease-in-out;
+  animation: logo-grow-and-fade 0.4s forwards ease-in-out; /* Accéléré de 0.6s à 0.4s */
   z-index: 3;
 }
 
@@ -121,7 +121,7 @@
   font-weight: bold;
   color: white;
   text-shadow: 0 0 15px rgba(83, 186, 95, 0.7);
-  animation: pulse-logo 3s infinite alternate ease-in-out;
+  animation: pulse-logo 2s infinite alternate ease-in-out; /* Accéléré de 3s à 2s */
 }
 
 .loader-text {
@@ -142,7 +142,7 @@
   color: #53ba5f;
   min-height: 36px;
   text-shadow: 0 0 8px rgba(83, 186, 95, 0.4);
-  animation: fade-message 0.5s ease-in-out;
+  animation: fade-message 0.3s ease-in-out; /* Accéléré de 0.5s à 0.3s */
 }
 
 /** Barre de progression */
@@ -161,7 +161,7 @@
   height: 100%;
   background: linear-gradient(90deg, #53ba5f, #79d984);
   width: 0;
-  transition: width 0.1s ease;
+  transition: width 0.08s ease; /* Accéléré de 0.1s à 0.08s */
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(83, 186, 95, 0.8);
@@ -193,7 +193,7 @@
     rgba(255, 255, 255, 0.8) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  animation: glow-slide 2s linear infinite;
+  animation: glow-slide 1.5s linear infinite; /* Accéléré de 2s à 1.5s */
 }
 
 /** Effets d'explosion */
@@ -281,9 +281,10 @@
   transform: translate(-50%, 0) rotate(var(--ray-angle)) scaleY(0);
   opacity: 0;
   box-shadow: 0 0 var(--ray-glow) rgba(83, 255, 107, calc(var(--ray-opacity) * 0.8));
+  z-index: 60;
 }
 
-/** Animations */
+/** Animations accélérées */
 /* Animation des éléments flottants */
 @keyframes float-circle {
   0% { transform: translate(-50%, -50%); }
@@ -310,7 +311,7 @@
   }
 }
 
-/* Animation du logo */
+/* Animation du logo accélérée */
 @keyframes pulse-logo {
   0% {
     text-shadow: 0 0 15px rgba(83, 186, 95, 0.7);
@@ -383,7 +384,7 @@
   100% { transform: translateX(1000%); }
 }
 
-/* Animation des effets d'explosion */
+/* Animation des effets d'explosion accélérées */
 @keyframes mega-flash {
   0% {
     background-color: transparent;
@@ -432,7 +433,7 @@
   }
 }
 
-/* Animation pour textes et éléments */
+/* Animation pour textes et éléments accélérées */
 @keyframes logo-mega-explosion {
   0% {
     transform: scale(1);
@@ -469,7 +470,7 @@
   }
 }
 
-/* Animation pour la barre de progression */
+/* Animation pour la barre de progression accélérée */
 @keyframes progress-container-explode {
   0% {
     transform: scale(1);
@@ -515,7 +516,7 @@
   }
 }
 
-/* Animation pour les ondes de choc */
+/* Animation pour les ondes de choc accélérées */
 @keyframes shockwave-expand {
   0% {
     width: 0;
@@ -548,7 +549,7 @@
   }
 }
 
-/* Animation pour les particules */
+/* Animation pour les particules accélérées */
 @keyframes particle-explode {
   0% {
     transform: translate(-50%, -50%) rotate(var(--angle)) scale(0);
@@ -587,7 +588,7 @@
   }
 }
 
-/* Animation pour les rayons */
+/* Animation pour les rayons accélérées */
 @keyframes ray-shoot {
   0% {
     height: 0;
@@ -626,19 +627,19 @@
   }
 }
 
-/** Déclechement des explosions et des rayons */
-/* Animations standards */
-.custom-loader.exploding .explosion-flash { animation: mega-flash 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
-.custom-loader.exploding .explosion-core { animation: core-explosion 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+/** Déclenchement des explosions et des rayons - animations accélérées */
+/* Animations standards accélérées */
+.custom-loader.exploding .explosion-flash { animation: mega-flash 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 1s */
+.custom-loader.exploding .explosion-core { animation: core-explosion 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 1.2s */
 .custom-loader.exploding .logo-text,
-.custom-loader.exploding .logo-img img { animation: logo-mega-explosion 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .logo-img img { animation: logo-mega-explosion 0.6s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.8s */
 .custom-loader.exploding .loader-text h1,
-.custom-loader.exploding .loader-text p { animation: text-mega-explosion 0.7s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
-.custom-loader.exploding .progress-container { animation: progress-container-explode 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
-.custom-loader.exploding .progress-bar { animation: progress-explode 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
-.custom-loader.exploding .progress-percentage { animation: percentage-explode 0.8s cubic-bezier(0.2, 0.4, 0.9, 1) forwards; }
+.custom-loader.exploding .loader-text p { animation: text-mega-explosion 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.7s */
+.custom-loader.exploding .progress-container { animation: progress-container-explode 0.4s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.5s */
+.custom-loader.exploding .progress-bar { animation: progress-explode 0.4s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.5s */
+.custom-loader.exploding .progress-percentage { animation: percentage-explode 0.6s cubic-bezier(0.2, 0.4, 0.9, 1) forwards; } /* Accéléré de 0.8s */
 .custom-loader.exploding .shockwave { 
-  animation: shockwave-expand 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards;
+  animation: shockwave-expand 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1.2s */
   animation-delay: var(--wave-delay);
 }
 .custom-loader.exploding .explosion-particle {
@@ -646,13 +647,13 @@
   animation-delay: var(--delay);
 }
 .custom-loader.exploding .explosion-ray {
-  animation: ray-shoot 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards;
+  animation: ray-shoot 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1.2s */
   animation-delay: var(--ray-delay);
 }
 
-/* Animations ultra */
+/* Animations ultra accélérées */
 .custom-loader.ultra-explosion .shockwave {
-  animation: shockwave-expand-ultra 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
+  animation: shockwave-expand-ultra 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1s */
   animation-delay: calc(var(--wave-delay) * 0.5);
 }
 .custom-loader.ultra-explosion .explosion-particle {
@@ -660,7 +661,7 @@
   animation-delay: calc(var(--delay) * 0.5);
 }
 .custom-loader.ultra-explosion .explosion-ray {
-  animation: ray-shoot-ultra 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
+  animation: ray-shoot-ultra 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1s */
   animation-delay: calc(var(--ray-delay) * 0.5);
 }
 
@@ -693,82 +694,4 @@
 .custom-loader.exploding .rays-container {
   visibility: visible !important;
   opacity: 1 !important;
-}
-
-.explosion-ray {
-  position: absolute;
-  width: 2px;
-  height: 0;
-  background: rgba(83, 255, 107, var(--ray-opacity));
-  top: calc(50% + 75px);
-  left: 50%;
-  transform-origin: center bottom;
-  transform: translate(-50%, 0) rotate(var(--ray-angle)) scaleY(0);
-  opacity: 0;
-  box-shadow: 0 0 var(--ray-glow) rgba(83, 255, 107, calc(var(--ray-opacity) * 0.8));
-  z-index: 60; /* Assurer que les rayons sont au-dessus des autres éléments */
-}
-
-/* Animation pour les rayons */
-@keyframes ray-shoot {
-  0% {
-    height: 0;
-    width: 2px;
-    opacity: 0;
-    transform: translate(-50%, 0) rotate(var(--ray-angle)) scaleY(0);
-  }
-  15% {
-    opacity: var(--ray-opacity);
-    width: var(--ray-width);
-  }
-  100% {
-    height: 200vh;
-    width: var(--ray-width);
-    opacity: 0;
-    transform: translate(-50%, 0) rotate(var(--ray-angle)) scaleY(1);
-  }
-}
-
-@keyframes ray-shoot-ultra {
-  0% {
-    height: 0;
-    width: 4px;
-    opacity: 0;
-    transform: translate(-50%, 0) rotate(var(--ray-angle)) scaleY(0);
-  }
-  20% {
-    opacity: 1;
-    width: calc(var(--ray-width) * 3);
-  }
-  100% {
-    height: 300vh;
-    width: calc(var(--ray-width) * 3);
-    opacity: 0;
-    transform: translate(-50%, 0) rotate(var(--ray-angle)) scaleY(1.5);
-  }
-}
-
-/* S'assure que les animations sont correctement appliquées */
-.custom-loader.exploding .explosion-ray {
-  animation: ray-shoot 1.2s cubic-bezier(0.1, 0, 0.9, 1) forwards !important;
-  animation-delay: var(--ray-delay) !important;
-  display: block !important;
-}
-
-.custom-loader.ultra-explosion .explosion-ray {
-  animation: ray-shoot-ultra 1s cubic-bezier(0.1, 0, 0.9, 1) forwards !important;
-  animation-delay: calc(var(--ray-delay) * 0.5) !important;
-  display: block !important;
-}
-
-/* Assure que les conteneurs sont positionnés correctement */
-.rays-container {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  visibility: hidden;
-  opacity: 0;
-  z-index: 60;
-  display: block !important;
-  overflow: visible !important;
 }

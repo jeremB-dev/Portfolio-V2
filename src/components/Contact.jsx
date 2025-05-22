@@ -154,7 +154,7 @@ function Contact() {
 
       <h2>Obtenez mon CV</h2>
       <div className="cv-container">
-        <a href="assets/CV/Brunel_Jérémy_cv.pdf" download="CV-Jeremy-Brunel.pdf" className="btn">
+        <a href="assets/CV/Brunel_Jérémy.pdf" download="CV-Jeremy-Brunel.pdf" className="btn">
           Cliquer pour télécharger
         </a>
       </div>

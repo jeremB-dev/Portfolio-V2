@@ -6,9 +6,8 @@ const AnimationContext = createContext({
   setAnimationsEnabled: () => {}
 });
 
-// Le Provider
+// Crée le provider
 export default function AnimationProvider({ children }) {
-  // Initialise avec localStorage s'il existe, sinon true
   const [animationsEnabled, setAnimationsEnabled] = useState(() => {
     const saved = localStorage.getItem('animationsEnabled');
     return saved !== null ? JSON.parse(saved) : true;
@@ -22,9 +21,22 @@ export default function AnimationProvider({ children }) {
     }
   }, []);
   
-  // Sauvegarde dans localStorage quand la valeur change
+  // Sauvegarde dans localStorage
   useEffect(() => {
     localStorage.setItem('animationsEnabled', JSON.stringify(animationsEnabled));
+  }, [animationsEnabled]);
+
+  // Gestion simple de la classe : pause/reprise seulement
+  useEffect(() => {
+    if (animationsEnabled) {
+      document.body.classList.remove('animations-disabled');
+    } else {
+      document.body.classList.add('animations-disabled');
+    }
+    
+    return () => {
+      document.body.classList.remove('animations-disabled');
+    };
   }, [animationsEnabled]);
 
   return (

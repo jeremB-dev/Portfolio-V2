@@ -1,16 +1,14 @@
 .footer {
   padding: var(--spacing-m) var(--spacing-l);
-  margin-top: var(--spacing-xxl);
+  margin-top: 0;
   background-color: var(--color-background-alt);
   border-top: 1px solid var(--color-border);
   width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 10;
   box-sizing: border-box;
   height: auto;
+  flex-shrink: 0;
 }
 
 .footer-container {
@@ -93,12 +91,12 @@
   border-color: var(--color-primary);
 }
 
-/* Styles pour le dropdown de partage - MODIFIÉ */
+/* Styles pour le dropdown de partage */
 .share-dropdown {
   position: absolute;
   top: -75px;
-  right: 0; /* Aligné à droite au lieu de centré */
-  transform: translateX(0); /* Pas de transformation horizontale */
+  right: 0;
+  transform: translateX(0);
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -108,16 +106,16 @@
   padding: 10px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
   z-index: 1000;
-  animation: fadeInRight 0.2s ease-out; /* Animation modifiée */
+  animation: fadeInRight 0.2s ease-out;
 }
 
-/* Petit triangle pointant vers le bouton - MODIFIÉ */
+/* Petit triangle pointant vers le bouton */
 .share-dropdown::after {
   content: '';
   position: absolute;
   bottom: -8px;
-  right: 15px; /* Aligné avec le bouton de partage */
-  transform: translateX(0); /* Pas de transformation horizontale */
+  right: 15px;
+  transform: translateX(0);
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
@@ -181,7 +179,7 @@
   display: inline-block;
 }
 
-/* Style pour les tooltips - MODIFIÉ */
+/* Style pour les tooltips */
 .tooltip {
   position: absolute;
   top: -30px;
@@ -223,7 +221,7 @@
   visibility: visible;
 }
 
-/* Pour les options de partage dans le dropdown - MODIFIÉ */
+/* Pour les options de partage dans le dropdown */
 .share-dropdown .tooltip {
   top: -25px;
   left: 50%;
@@ -242,7 +240,7 @@
   }
 }
 
-/* Media Queries - regroupées à la fin */
+/* Media Queries */
 @media (max-width: 768px) {
   .footer {
     padding: var(--spacing-s) var(--spacing-s);
