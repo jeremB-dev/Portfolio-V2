@@ -161,13 +161,9 @@
  flex-direction: column;
  box-shadow: var(--shadow-modal) !important;
  background-color: var(--color-background) !important;
- 
- /* Désactive les animations et transformations au survol */
  transition: none !important;
  pointer-events: auto !important;
- transform-style: flat !important; /* Forcer rendu 2D */
- 
- /* Bloque toutes les autres propriétés */
+ transform-style: flat !important;
  margin: 0 !important;
  padding: 0 !important;
  
@@ -242,7 +238,7 @@
  transform: scale(1) rotate(0deg);
 }
 
-/* Overlay amélioré pour bloquer l'animation en arrière-plan */
+/* Overlay pour bloquer l'animation en arrière-plan */
 .projects-overlay {
  display: none;
  position: fixed !important;
@@ -350,27 +346,22 @@ body.gallery-open {
 .gallery-nav svg {
   position: relative;
   stroke: white;
-  stroke-width: 3; /* Épaisseur de trait légèrement plus importante */
+  stroke-width: 3;
   width: 25px;
   height: 25px;
-  
-  /* Centrage précis */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Léger ajustement pour la flèche précédente (gauche) */
 .gallery-nav.prev svg {
   transform: translateX(-1px);
 }
 
-/* Léger ajustement pour la flèche suivante (droite) */
 .gallery-nav.next svg {
   transform: translateX(1px);
 }
 
-/* Positions fixes par rapport aux bords pour la visibilité */
 .gallery-nav.prev {
   left: 220px !important;
 }
@@ -389,7 +380,7 @@ body.gallery-open {
 /* Bouton de fermeture de la galerie */
 .close-gallery-button {
   position: fixed !important;
-  top: 150px !important;
+  top: 60px !important;
   right: 90px !important;
   width: 36px;
   height: 36px;
@@ -502,11 +493,11 @@ body.gallery-open {
 /* Pour les écrans moyens */
 @media (min-width: 1400px) and (max-width: 1899px) {
   .gallery-nav.prev {
-    left: calc(50% - 825px) !important;
+    left: calc(50% - 700px) !important;
   }
   
   .gallery-nav.next {
-    right: calc(50% - 825px) !important;
+    right: calc(50% - 700px) !important;
   }
 }
 
@@ -529,6 +520,24 @@ body.gallery-open {
   .gallery-nav::before {
     width: 16px;
     height: 16px;
+  }
+}
+
+/* Pour les écrans 15" */
+@media screen and (min-width: 1360px) and (max-width: 1370px) {
+  .gallery-nav.prev {
+    left: 40px !important;
+  }
+  
+  .gallery-nav.next {
+    right: 40px !important;
+  }
+  
+  .gallery-nav {
+    z-index: 10001 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: fixed !important;
   }
 }
 
@@ -706,7 +715,6 @@ body.gallery-open {
     max-height: 70vh;
   }
   
-  /* Corrections pour la galerie en mode mobile */
   .gallery-nav.prev {
     left: 10px !important;
     width: 34px !important;
