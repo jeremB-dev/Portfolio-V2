@@ -1,3 +1,13 @@
+/* Base pour toutes les sections */
+#contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .contact-page {
  flex: 1;
  display: flex;
@@ -21,10 +31,186 @@
  display: flex;
  justify-content: center;
  align-items: center;
- margin-top: 20px;
- margin-bottom: 20px;
  width: 100%;
- max-width: 1200px;
+}
+
+/* 🆕 STYLES POUR LA SECTION CV */
+.cv-section {
+  text-align: center;
+  margin: 40px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(83, 186, 95, 0.2);
+  backdrop-filter: blur(5px);
+  max-width: 800px;
+  width: 85%;
+}
+
+.cv-section h3 {
+  color: var(--color-primary, #53ba5f);
+  margin-bottom: 15px;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.cv-section p {
+  margin-bottom: 30px;
+  opacity: 0.9;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--color-primary, #53ba5f);
+  border: 2px solid var(--color-primary, #53ba5f);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cv-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary, #53ba5f);
+  transition: left 0.3s ease;
+  z-index: -1;
+  border-radius: 6px;
+}
+
+.cv-btn:hover {
+  color: white;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+.cv-btn:hover::before {
+  left: 0;
+}
+
+/* Style uniforme pour le bouton du formulaire */
+#contactForm .btn,
+button[type="submit"].btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--color-primary, #53ba5f);
+  border: 2px solid var(--color-primary, #53ba5f);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  text-decoration: none;
+}
+
+#contactForm .btn::before,
+button[type="submit"].btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary, #53ba5f);
+  transition: left 0.3s ease;
+  z-index: -1;
+  border-radius: 6px;
+}
+
+#contactForm .btn:hover,
+button[type="submit"].btn:hover {
+  color: white;
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+#contactForm .btn:hover::before,
+button[type="submit"].btn:hover::before {
+  left: 0;
+}
+
+#contactForm .btn:disabled,
+button[type="submit"].btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#contactForm .btn:disabled::before,
+button[type="submit"].btn:disabled::before {
+  transform: translateX(-100%);
+}
+
+.cv-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.share-toggle-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.share-toggle-btn svg {
+  position: relative;
+  z-index: 1;
+}
+
+.cv-icon {
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* 🆕 STYLES POUR LA SECTION FORMULAIRE */
+.form-section {
+  text-align: center;
+  margin: 40px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(83, 186, 95, 0.2);
+  backdrop-filter: blur(5px);
+  max-width: 900px;
+  width: 85%;
+}
+
+.form-section h3 {
+  color: var(--color-primary, #53ba5f);
+  margin-bottom: 15px;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.form-section p {
+  margin-bottom: 30px;
+  opacity: 0.9;
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 
 .contact-content {
@@ -43,6 +229,293 @@
  left: 0;
 }
 
+/* 🆕 STYLES POUR LES RÉSEAUX SOCIAUX */
+.social-section {
+  text-align: center;
+  margin: 40px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(83, 186, 95, 0.2);
+  backdrop-filter: blur(5px);
+  max-width: 800px;
+  width: 85%;
+}
+
+.social-section h3 {
+  color: var(--color-primary, #53ba5f);
+  margin-bottom: 15px;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.social-section p {
+  margin-bottom: 30px;
+  opacity: 0.9;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.social-item {
+  position: relative;
+  display: inline-block;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  color: var(--color-primary);
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.social-links a:hover {
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(83, 186, 95, 0.3);
+}
+
+/* Couleurs spécifiques pour chaque réseau au survol */
+.social-links a.github:hover {
+  background-color: #333;
+  border-color: #333;
+  box-shadow: 0 8px 20px rgba(51, 51, 51, 0.3);
+}
+
+.social-links a.linkedin:hover {
+  background-color: #0077B5;
+  border-color: #0077B5;
+  box-shadow: 0 8px 20px rgba(0, 119, 181, 0.3);
+}
+
+.social-links a.twitter:hover {
+  background-color: #1DA1F2;
+  border-color: #1DA1F2;
+  box-shadow: 0 8px 20px rgba(29, 161, 242, 0.3);
+}
+
+/* Style pour les tooltips */
+.tooltip {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000;
+  color: white;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 100;
+  pointer-events: none;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Triangle pointant vers l'icône */
+.tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0 5px;
+  border-style: solid;
+  border-color: #000000 transparent transparent transparent;
+}
+
+/* Affichage du tooltip au survol */
+.social-item a:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 🆕 STYLES POUR LE PARTAGE */
+.share-section {
+  text-align: center;
+  margin: 40px auto;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(83, 186, 95, 0.2);
+  backdrop-filter: blur(5px);
+  max-width: 800px;
+  width: 85%;
+}
+
+.share-section h3 {
+  color: var(--color-primary, #53ba5f);
+  margin-bottom: 15px;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.share-section p {
+  margin-bottom: 30px;
+  opacity: 0.9;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.share-container {
+  position: relative;
+  display: inline-block;
+}
+
+.share-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--color-primary, #53ba5f);
+  border: 2px solid var(--color-primary, #53ba5f);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.share-toggle-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-primary, #53ba5f);
+  transition: left 0.3s ease;
+  z-index: -1;
+  border-radius: 6px;
+}
+
+.share-toggle-btn:hover {
+  color: white;
+  transform: scale(1.05);
+}
+
+.share-toggle-btn:hover::before {
+  left: 0;
+}
+
+.share-options {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+.share-options::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+.share-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.share-option:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.share-option svg {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.share-option span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Couleurs spécifiques pour chaque plateforme */
+.share-option.twitter:hover {
+  color: #1DA1F2;
+}
+
+.share-option.facebook:hover {
+  color: #4267B2;
+}
+
+.share-option.linkedin:hover {
+  color: #0077B5;
+}
+
+.share-option.email:hover {
+  color: #DB4437;
+}
+
+.share-option.copy:hover {
+  color: #333333;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 /* Média queries */
 @media (max-width: 1024px) {
  .contact-section {
@@ -52,9 +525,22 @@
  .cv-container {
    flex-direction: column;
  }
+
+ .cv-section,
+ .social-section,
+ .share-section,
+ .form-section {
+   margin: 35px auto;
+   padding: 35px;
+   width: 90%;
+ }
 }
 
 @media (max-width: 768px) {
+  #contact {
+    padding: 1rem;
+  }
+
   .contact-page,
   #contact {
     padding: 20px 10px;
@@ -64,21 +550,143 @@
     margin: 15px 0;
   }
   
-  /* Augmente la taille des titres sur mobile */
-  #contact h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-  }
-  
   /* S'assure que le formulaire occupe toute la largeur */
   #contactForm {
     width: 100%;
+    text-align: left;
+  }
+
+  .cv-section,
+  .social-section,
+  .share-section,
+  .form-section {
+    margin: 30px auto;
+    padding: 30px;
+    max-width: 100%;
+    width: 90%;
+  }
+
+  .cv-section h3,
+  .social-section h3,
+  .share-section h3,
+  .form-section h3 {
+    font-size: 1.5rem;
+  }
+
+  .social-links {
+    gap: 15px;
+  }
+
+  .social-links a {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  .share-options {
+    top: -60px;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .share-option {
+    min-width: 50px;
+    padding: 8px;
+  }
+
+  .share-option svg {
+    font-size: 1rem;
+  }
+
+  .share-option span {
+    font-size: 0.7rem;
+  }
+
+  .tooltip {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
+  #contact {
+    padding: 0.5rem;
+  }
+
   .contact-page,
   #contact {
     padding: 15px 5px;
+  }
+
+  .cv-section,
+  .social-section,
+  .share-section,
+  .form-section {
+    margin: 25px auto;
+    padding: 20px;
+    width: 95%;
+  }
+
+  .cv-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .cv-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .share-toggle-btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  #contactForm .btn,
+  button[type="submit"].btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .cv-icon {
+    font-size: 1rem;
+  }
+
+  .share-toggle-btn svg {
+    font-size: 1rem;
+  }
+
+  .cv-section h3,
+  .social-section h3,
+  .share-section h3,
+  .form-section h3 {
+    font-size: 1.3rem;
+  }
+
+  .social-links {
+    gap: 12px;
+  }
+
+  .social-links a {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+
+  .share-toggle-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .share-options {
+    flex-wrap: wrap;
+    max-width: 280px;
+  }
+
+  .share-option {
+    min-width: 45px;
+    padding: 6px;
   }
 }

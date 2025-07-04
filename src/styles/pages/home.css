@@ -76,6 +76,67 @@
  cursor: default;
 }
 
+.qualities-title {
+ font-weight: bold;
+ font-size: 1.7rem;
+ margin: 50px 0 50px;
+ text-align: center;
+ cursor: default;
+}
+
+.qualities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  padding: 0 20px;
+  max-width: 1110px;
+  margin: 0 0 50px;
+}
+
+.quality-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(83, 186, 95, 0.2);
+  border-radius: 15px;
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  cursor: default;
+}
+
+.quality-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  display: block;
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.quality-card:hover .quality-icon {
+  transform: scale(1.5);
+}
+
+.quality-title {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: var(--color-primary, #53ba5f);
+  position: relative;
+  z-index: 1;
+}
+
+.quality-description {
+  line-height: 1.6;
+  font-size: medium;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
 /* Media Queries */
 @media (max-width: 1024px) {
  .profile-photo {
@@ -89,6 +150,15 @@
    align-items: center;
    margin: 15px 0;
    padding: 10px 20px;
+ }
+
+ .qualities-grid {
+   grid-template-columns: repeat(2, 1fr);
+   gap: 20px;
+ }
+ 
+ .quality-card {
+   padding: 25px 15px;
  }
 }
 
@@ -140,6 +210,25 @@
    margin: 15px 0 50px 0;
    background: linear-gradient(to right, transparent, var(--color-primary), transparent);
  }
+
+ .qualities-grid {
+   grid-template-columns: 1fr;
+   gap: 20px;
+   padding: 0 15px;
+   max-width: 400px;
+ }
+ 
+ .quality-card {
+   padding: 25px 20px;
+ }
+ 
+ .quality-title {
+   font-size: 1.2rem;
+ }
+ 
+ .quality-description {
+   font-size: small;
+ }
 }
 
 @media (max-width: 480px) {
@@ -159,5 +248,23 @@
  
  .career-divider {
    width: 100%;
+ }
+
+ .qualities-grid {
+   padding: 0 10px;
+ }
+ 
+ .quality-card {
+   padding: 20px 15px;
+ }
+ 
+ .quality-icon {
+   font-size: 2rem;
+   margin-bottom: 12px;
+ }
+ 
+ .quality-title {
+   font-size: 1.1rem;
+   margin-bottom: 12px;
  }
 }

@@ -8,6 +8,29 @@ function About() {
   const { animationsEnabled } = useAnimation();
   const { isMobile, isTablet } = useWindowSize();
 
+  const qualities = [
+    {
+      icon: "🚀",
+      title: "Motivation",
+      description: "Passionné par l'intégration web, je suis constamment à la recherche de nouveaux défis pour améliorer mes compétences."
+    },
+    {
+      icon: "⚡",
+      title: "Agilité", 
+      description: "Je m'adapte rapidement aux nouvelles technologies et aux exigences des projets, assurant une intégration fluide dans n'importe quel environnement de travail."
+    },
+    {
+      icon: "🤝",
+      title: "Esprit d'équipe",
+      description: "Mon expérience professionnelle m'a permis de développer une aptitude marquée pour le travail en collaboration, favorisant ainsi le succès des projets communs."
+    },
+    {
+      icon: "🎯",
+      title: "Engagement et Persévérance",
+      description: "Je m'investis pleinement dans chaque projet, avec une détermination à atteindre les objectifs fixés et à dépasser les attentes."
+    }
+  ];
+
   return (
     <section id="about">
       {animationsEnabled && (
@@ -27,9 +50,8 @@ function About() {
         <div className="profile-text">
           <h2 className="about-title">À propos de moi</h2>
           <p>
-            Je suis diplômé de la formation <br />"Intégrateur développeur web"
-            d'Openclassrooms.<br />
-            Armé de nouvelles compétences et d'une motivation sans faille, je
+            Diplomé en développement web <br /> 
+            et armé de nouvelles compétences et d'une motivation sans faille, je
             suis prêt à contribuer au succès d'une entreprise dynamique et
             innovante.<br />
             Mon parcours atypique et ma passion pour les technologies web me
@@ -80,30 +102,17 @@ function About() {
         </div>
       </div>
       <br />
-      <h3>Pourquoi moi ?</h3>
+      <h3 className='qualities-title'>Pourquoi moi ?</h3>
       <br />
-      <ul>
-        <li className="career-text">
-          <strong>Motivation :</strong> Passionné par l'intégration web, je suis
-          constamment à la recherche de nouveaux défis pour améliorer mes
-          compétences.
-        </li>
-        <li className="career-text">
-          <strong>Agilité :</strong> Je m'adapte rapidement aux nouvelles
-          technologies et aux exigences des projets, assurant une intégration
-          fluide dans n'importe quel environnement de travail.
-        </li>
-        <li className="career-text">
-          <strong>Esprit d'équipe :</strong> Mon expérience professionnelle m'a
-          permis de développer une aptitude marquée pour le travail en
-          collaboration, favorisant ainsi le succès des projets communs.
-        </li>
-        <li className="career-text">
-          <strong>Engagement et Persévérance :</strong> Je m'investis pleinement
-          dans chaque projet, avec une détermination à atteindre les objectifs
-          fixés et à dépasser les attentes.
-        </li>
-      </ul>
+      <div className="qualities-grid">
+        {qualities.map((quality, index) => (
+          <div key={index} className="quality-card">
+            <div className="quality-icon">{quality.icon}</div>
+            <h4 className="quality-title">{quality.title}</h4>
+            <p className="quality-description">{quality.description}</p>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

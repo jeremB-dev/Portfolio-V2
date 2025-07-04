@@ -13,300 +13,42 @@
 
 .footer-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   max-width: var(--container-max-width);
   margin: 0 auto;
   width: 100%;
 }
 
-/* Style pour les icônes sociales */
-.social-links {
-  display: flex;
-  gap: 15px;
-  position: relative;
-  align-items: center;
-}
-
-/* Conteneur pour les liens réseaux sociaux */
-.social-networks {
-  display: flex;
-  gap: 15px;
-}
-
-/* Ajout d'un séparateur vertical entre les réseaux sociaux et le bouton de partage */
-.separator {
-  height: 25px;
-  width: 1px;
-  background-color: var(--color-primary);
-  margin: 0 15px;
-  display: inline-block;
-  vertical-align: middle;
-  opacity: 0.9;
-}
-
-.social-links a, 
-.share-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--color-background);
-  color: var(--color-primary);
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  border: 1px solid var(--color-primary);
-  cursor: pointer;
-  text-decoration: none;
-  padding: 0;
-}
-
-.social-links a:hover, 
-.share-button:hover {
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(83, 186, 95, 0.3);
-}
-
-/* Couleurs spécifiques pour chaque réseau au survol */
-.social-links a.github:hover {
-  background-color: #333;
-  border-color: #333;
-}
-
-.social-links a.linkedin:hover {
-  background-color: #0077B5;
-  border-color: #0077B5;
-}
-
-.social-links a.twitter:hover {
-  background-color: #1DA1F2;
-  border-color: #1DA1F2;
-}
-
-.share-button:hover {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-/* Styles pour le dropdown de partage */
-.share-dropdown {
-  position: absolute;
-  top: -75px;
-  right: 0;
-  transform: translateX(0);
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  background-color: white;
-  border-radius: 8px;
-  border: #000000 solid 1px;
-  padding: 10px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-  z-index: 1000;
-  animation: fadeInRight 0.2s ease-out;
-}
-
-/* Petit triangle pointant vers le bouton */
-.share-dropdown::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  right: 15px;
-  transform: translateX(0);
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid white;
-}
-
-/* Style de base pour toutes les options de partage */
-.share-option {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: white;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  background-color: var(--color-primary);
-}
-
-/* Effet de survol général */
-.share-option:hover {
-  transform: scale(1.1);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Couleurs spécifiques pour chaque réseau au survol */
-.share-option.twitter:hover {
-  background-color: #1DA1F2;
-}
-
-.share-option.facebook:hover {
-  background-color: #4267B2;
-}
-
-.share-option.linkedin:hover {
-  background-color: #0077B5;
-}
-
-.share-option.email:hover {
-  background-color: #DB4437;
-}
-
-.share-option.copy:hover {
-  background-color: #333333;
-}
-
 .copyright {
   font-size: 0.9rem;
   color: var(--color-text-light);
   margin: 0;
-}
-
-/* Wrapper pour chaque icône sociale */
-.social-item {
-  position: relative;
-  display: inline-block;
-}
-
-/* Style pour les tooltips */
-.tooltip {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #000000;
-  color: white;
-  font-size: 12px;
-  padding: 5px 10px;
-  border-radius: 4px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-  z-index: 100;
-  pointer-events: none;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-/* Triangle pointant vers l'icône */
-.tooltip::before {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px 5px 0 5px;
-  border-style: solid;
-  border-color: #000000 transparent transparent transparent;
-}
-
-/* Affichage du tooltip au survol */
-.social-item a:hover .tooltip,
-.social-item button:hover .tooltip,
-.share-option:hover .tooltip {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Pour les options de partage dans le dropdown */
-.share-dropdown .tooltip {
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Animations */
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  text-align: center;
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
   .footer {
     padding: var(--spacing-s) var(--spacing-s);
-    position: relative;
   }
 
   .footer-container {
-    flex-direction: column;
-    align-items: center;
     padding: 15px 10px;
   }
-  
-  .social-links {
-    order: 2;
-    margin-top: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .separator {
-    height: 20px;
-    margin: 0 10px;
-  }
-  
+
   .copyright {
-    order: 1;
-    text-align: center;
-    width: 100%;
-  }
-  
-  .share-dropdown {
-    top: -55px;
-    min-width: 200px;
-    justify-content: center;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-  }
-
-  .share-dropdown::after {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-  }
-
-  .tooltip {
-    display: none;
-  }
-  
-  .social-links a, 
-  .share-button,
-  .share-option {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .social-links {
-    gap: 10px;
+  .footer {
+    padding: var(--spacing-xs) var(--spacing-xs);
   }
   
-  .separator {
-    height: 18px;
-    width: 1px;
-    margin: 0 8px;
+  .copyright {
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 }

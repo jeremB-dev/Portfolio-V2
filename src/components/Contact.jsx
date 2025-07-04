@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaGithub, FaLinkedin, FaTwitter, FaShare, FaFacebook, FaEnvelope, FaLink } from 'react-icons/fa';
 import BackgroundAnimation from './BackgroundAnimation';
 import useAnimation from '../hooks/useAnimation';
 import useWindowSize from '../hooks/useWindowSize';
@@ -26,6 +27,9 @@ function Contact() {
     error: false,
     errorMessage: ''
   });
+
+  // État pour les boutons de partage
+  const [showShareOptions, setShowShareOptions] = useState(false);
 
   const validateField = (name, value) => {
     let error = '';
@@ -72,6 +76,25 @@ function Contact() {
     return `${count}/${MESSAGE_MIN_LENGTH} caractères minimum`;
   };
 
+  // Fonctions de partage
+  const shareUrl = window.location.href;
+  const shareTitle = "Portfolio de Jérémy Brunel - Développeur Web";
+  
+  const toggleShareOptions = () => {
+    setShowShareOptions(!showShareOptions);
+  };
+  
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl)
+      .then(() => {
+        setShowShareOptions(false);
+        alert('Lien copié dans le presse-papier!');
+      })
+      .catch(err => {
+        console.error('Impossible de copier le lien: ', err);
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -88,31 +111,29 @@ function Contact() {
     setFormStatus({ loading: true, success: false, error: false, errorMessage: '' });
 
     try {
-      // ➕ Ajoute l'heure locale au moment de l'envoi
-        const localTime = new Date().toLocaleString('fr-FR', {
-          timeZone: 'Europe/Paris',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        });
+      const localTime = new Date().toLocaleString('fr-FR', {
+        timeZone: 'Europe/Paris',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
 
-        const payload = {
-          ...formData,
-          heure_locale: localTime
-        };
+      const payload = {
+        ...formData,
+        heure_locale: localTime
+      };
 
-        const response = await fetch("https://formspree.io/f/xdkgbgpo", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
+      const response = await fetch("https://formspree.io/f/xdkgbgpo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
 
       if (!response.ok) {
         throw new Error("Erreur lors de l'envoi du formulaire");
@@ -152,15 +173,136 @@ function Contact() {
         />
       )}
 
-      <h2>Obtenez mon CV</h2>
-      <div className="cv-container">
-        <a href="assets/CV/Brunel_Jérémy.pdf" download="CV-Jeremy-Brunel.pdf" className="btn">
-          Cliquer pour télécharger
-        </a>
+      {/* Section CV */}
+      <div className="cv-section">
+        <h3>Obtenez mon CV</h3>
+        <p>Téléchargez mon curriculum vitae au format PDF</p>
+        <div className="cv-container">
+          <a href="assets/CV/Brunel_Jérémy.pdf" download="CV-Jeremy-Brunel.pdf" className="btn btn-with-icon">
+            <span className="cv-icon">📄</span>
+            <span>Télécharger mon CV</span>
+          </a>
+        </div>
       </div>
 
-      <h2>Contactez-moi</h2>
-      <form id="contactForm" onSubmit={handleSubmit} noValidate>
+      {/* Section Réseaux Sociaux */}
+      <div className="social-section">
+        <h3>Mes réseaux sociaux</h3>
+        <p>Retrouvez-moi sur mes différentes plateformes</p>
+        <div className="social-links">
+          <div className="social-item">
+            <a 
+              href="https://github.com/jeremB-dev" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="GitHub" 
+              className="github"
+            >
+              <FaGithub />
+              <span className="tooltip">GitHub</span>
+            </a>
+          </div>
+          
+          <div className="social-item">
+            <a 
+              href="https://www.linkedin.com/in/jeremy-brunel-1a80b1340/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="LinkedIn" 
+              className="linkedin"
+            >
+              <FaLinkedin />
+              <span className="tooltip">LinkedIn</span>
+            </a>
+          </div>
+          
+          <div className="social-item">
+            <a 
+              href="https://x.com/brunel_jerem" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Twitter" 
+              className="twitter"
+            >
+              <FaTwitter />
+              <span className="tooltip">Twitter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Section Partage */}
+      <div className="share-section">
+        <h3>Partager ce portfolio</h3>
+        <p>Ce portfolio vous plaît ? Partagez-le !</p>
+        <div className="share-container">
+          <button 
+            className="btn btn-with-icon"
+            onClick={toggleShareOptions}
+            aria-label="Afficher les options de partage"
+          >
+            <FaShare />
+            <span>Partager</span>
+          </button>
+          
+          {showShareOptions && (
+            <div className="share-options">
+              <a 
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="share-option twitter"
+                aria-label="Partager sur Twitter"
+              >
+                <FaTwitter />
+                <span>Twitter</span>
+              </a>
+              <a 
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="share-option facebook"
+                aria-label="Partager sur Facebook"
+              >
+                <FaFacebook />
+                <span>Facebook</span>
+              </a>
+              <a 
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="share-option linkedin"
+                aria-label="Partager sur LinkedIn"
+              >
+                <FaLinkedin />
+                <span>LinkedIn</span>
+              </a>
+              <a 
+                href={`mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent('Découvrez ce portfolio: ' + shareUrl)}`}
+                className="share-option email"
+                aria-label="Partager par email"
+              >
+                <FaEnvelope />
+                <span>Email</span>
+              </a>
+              <button 
+                onClick={copyToClipboard}
+                className="share-option copy"
+                aria-label="Copier le lien"
+              >
+                <FaLink />
+                <span>Copier</span>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Section Formulaire */}
+      <div className="form-section">
+        <h3>Contactez-moi</h3>
+        <p>Envoyez-moi un message, je vous répondrai rapidement</p>
+        <form id="contactForm" onSubmit={handleSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="name">NOM Prénom :</label>
           <input
@@ -235,12 +377,13 @@ function Contact() {
 
         <button
           type="submit"
-          className="btn"
+          className="btn btn-with-icon"
           disabled={formStatus.loading || Object.values(fieldErrors).some(Boolean)}
         >
           {formStatus.loading ? 'Envoi en cours...' : 'Envoyer'}
         </button>
-      </form>
+              </form>
+      </div>
 
       <div className="recaptcha-section">
         <div className="recaptcha-text">

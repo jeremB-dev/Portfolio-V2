@@ -146,11 +146,11 @@ function Header() {
           <div className="left-section">
             <div className="logo-perso">
               <img 
-                src="/assets/logo-perso/logo-perso.webp" 
+                src='/assets/logo-perso/logo-perso.webp'
                 alt="Logo JB" 
                 className="logo-perso" 
-                width="80" 
-                height="80" 
+                width="100" 
+                height="100" 
               />
             </div>
             <h1>Jérémy Brunel</h1>
@@ -186,10 +186,6 @@ function Header() {
           aria-hidden={!mobileMenuOpen}
         >
           <div className="mobile-nav-header">
-            <div className="mobile-logo">
-              <img src="/assets/logo-perso/logo-perso.webp" alt="Logo JB" width="40" height="40" aria-placeholder='Jérémy Brunel' />
-              <span>Jérémy Brunel</span>
-            </div>
             <button 
               className="mobile-close" 
               onClick={closeMobileMenu}
@@ -241,7 +237,6 @@ function Header() {
         </div>
       </header>
       
-      {/* Overlay amélioré avec gestion du clic */}
       {mobileMenuOpen && (
         <div 
           className="mobile-nav-overlay" 
