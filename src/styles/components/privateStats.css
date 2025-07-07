@@ -1,0 +1,117 @@
+/* styles/components/PrivateStats.css */
+.private-stats-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  color: white;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.private-stats-header {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.private-stats-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.private-stats-number {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #4caf50;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.private-stats-label {
+  text-align: center;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.private-stats-owner-status {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.private-stats-owner-status.active {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid #4caf50;
+}
+
+.private-stats-owner-status.inactive {
+  background: rgba(244, 67, 54, 0.2);
+  border: 1px solid #f44336;
+}
+
+.private-stats-toggle {
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.private-stats-toggle.owner-mode {
+  background: #4caf50;
+}
+
+.private-stats-toggle.visitor-mode {
+  background: #f44336;
+}
+
+.private-stats-toggle:hover {
+  opacity: 0.8;
+}
+
+.private-stats-refresh-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.private-stats-refresh-btn:hover {
+  background: #45a049;
+}
+
+.private-stats-info {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 20px;
+}
+
+.private-stats-loading {
+  text-align: center;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}

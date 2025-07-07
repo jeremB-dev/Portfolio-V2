@@ -1,12 +1,12 @@
 .custom-loader {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #2c3e50 0%, #395878 100%);
+  background: var(--gradient-background);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
-  transition: opacity 0.6s ease; /* Accéléré de 0.8s à 0.6s */
+  z-index: var(--z-index-loader);
+  transition: opacity 0.6s ease;
   overflow: hidden;
   --mouse-x: 50%;
   --mouse-y: 50%;
@@ -22,13 +22,13 @@
   inset: 0;
   background: radial-gradient(
     circle at var(--mouse-x) var(--mouse-y),
-    rgba(83, 186, 95, 0.15) 0%,
+    rgba(76, 175, 80, 0.15) 0%,
     rgba(44, 62, 80, 0) 70%
   );
-  transition: background 0.2s ease; /* Accéléré de 0.3s à 0.2s */
+  transition: background var(--transition-fast);
 }
 
-/** Eléments flottants - animations accélérées */
+/* Éléments flottants */
 .floating-elements,
 .code-lines {
   position: absolute;
@@ -41,8 +41,8 @@
   position: absolute;
   width: var(--circle-size);
   height: var(--circle-size);
-  border-radius: 50%;
-  background-color: rgba(83, 186, 95, var(--circle-opacity));
+  border-radius: var(--border-radius-circle);
+  background-color: rgba(76, 175, 80, var(--circle-opacity));
   left: var(--circle-x);
   top: var(--circle-y);
   transform: translate(-50%, -50%);
@@ -54,7 +54,7 @@
   position: absolute;
   height: 1px;
   width: var(--line-width);
-  background-color: rgba(83, 186, 95, var(--line-opacity));
+  background-color: rgba(76, 175, 80, var(--line-opacity));
   left: var(--line-left);
   top: var(--line-top);
   transform: translateY(-50%) rotate(var(--line-rotate));
@@ -63,7 +63,7 @@
   filter: blur(1px);
 }
 
-/** Contenu du loader */
+/* Contenu du loader */
 .loader-content {
   position: relative;
   display: flex;
@@ -72,38 +72,51 @@
   justify-content: center;
   width: 100%;
   max-width: 700px;
-  padding: 40px;
+  padding: var(--spacing-xxl);
   z-index: 2;
 }
 
 .logo-container {
-  margin-bottom: 40px;
+  margin-bottom: var(--spacing-xxl);
   position: relative;
   z-index: 150;
 }
 
-/* Styles pour le logo - animations accélérées */
 .logo-img {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--border-radius-circle);
+  background: rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(76, 175, 80, 0.5);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-fast);
 }
 
 .logo-img img {
-  animation: logo-pulse-img 2s infinite alternate ease-in-out; /* Accéléré de 3s à 2s */
-  box-shadow: 0 0 15px rgba(83, 186, 95, 0.7);
-  transition: all 0.2s ease; /* Accéléré de 0.3s à 0.2s */
+  animation: logo-pulse-img 2s infinite alternate ease-in-out;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+  transition: all var(--transition-fast);
   max-width: 100%;
   height: auto;
+  border-radius: var(--border-radius-circle);
+}
+
+.logo-intensify {
+  border-color: rgba(76, 175, 80, 0.8) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 30px rgba(76, 175, 80, 0.6);
 }
 
 .logo-intensify img {
-  animation: logo-pulse-intense-img 0.4s infinite ease-in-out; /* Accéléré de 0.6s à 0.4s */
-  box-shadow: 0 0 30px rgba(83, 255, 107, 1), 0 0 50px rgba(83, 186, 95, 0.6);
+  animation: logo-pulse-intense-img 0.4s infinite ease-in-out;
+  box-shadow: 0 0 30px rgba(76, 175, 80, 1), 0 0 50px rgba(76, 175, 80, 0.6);
 }
 
 .logo-descending {
-  animation: logo-grow-and-fade 0.4s forwards ease-in-out; /* Accéléré de 0.6s à 0.4s */
+  animation: logo-grow-and-fade 0.4s forwards ease-in-out;
   z-index: 3;
 }
 
@@ -120,51 +133,51 @@
   font-size: 5rem;
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 15px rgba(83, 186, 95, 0.7);
-  animation: pulse-logo 2s infinite alternate ease-in-out; /* Accéléré de 3s à 2s */
+  text-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+  animation: pulse-logo 2s infinite alternate ease-in-out;
 }
 
 .loader-text {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: var(--spacing-xxl);
 }
 
 .loader-text h1 {
   font-size: 3rem;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-l);
   font-weight: 600;
-  text-shadow: 0 0 10px rgba(83, 186, 95, 0.5);
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
 }
 
 .loader-text p {
   font-size: 1.6rem;
-  color: #53ba5f;
+  color: var(--color-primary);
   min-height: 36px;
-  text-shadow: 0 0 8px rgba(83, 186, 95, 0.4);
-  animation: fade-message 0.3s ease-in-out; /* Accéléré de 0.5s à 0.3s */
+  text-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+  animation: fade-message var(--transition-fast);
 }
 
-/** Barre de progression */
+/* Barre de progression */
 .progress-container {
   width: 100%;
   height: 16px;
   background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
+  border-radius: var(--border-radius-sm);
   overflow: visible;
   position: relative;
-  margin-bottom: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: var(--spacing-m);
+  box-shadow: var(--shadow-md);
 }
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #53ba5f, #79d984);
+  background: var(--gradient-primary);
   width: 0;
-  transition: width 0.08s ease; /* Accéléré de 0.1s à 0.08s */
+  transition: width 0.08s ease;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 0 15px rgba(83, 186, 95, 0.8);
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
 }
 
 .progress-bar-text {
@@ -193,11 +206,10 @@
     rgba(255, 255, 255, 0.8) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  animation: glow-slide 1.5s linear infinite; /* Accéléré de 2s à 1.5s */
+  animation: glow-slide 1.5s linear infinite;
 }
 
-/** Effets d'explosion */
-/* Conteneurs d'effets d'explosion */
+/* Effets d'explosion */
 .explosion-flash,
 .explosion-core,
 .shockwaves-container,
@@ -232,7 +244,6 @@
 .particles-container { z-index: 70; }
 .rays-container { z-index: 60; }
 
-/* Affichage des éléments d'explosion */
 .custom-loader.exploding .explosion-flash,
 .custom-loader.exploding .explosion-core,
 .custom-loader.exploding .shockwaves-container,
@@ -241,7 +252,6 @@
   visibility: visible;
 }
 
-/* Elements spécifiques d'explosion */
 .shockwave {
   position: absolute;
   width: 0;
@@ -284,8 +294,7 @@
   z-index: 60;
 }
 
-/** Animations accélérées */
-/* Animation des éléments flottants */
+/* Animations */
 @keyframes float-circle {
   0% { transform: translate(-50%, -50%); }
   100% { 
@@ -311,14 +320,13 @@
   }
 }
 
-/* Animation du logo accélérée */
 @keyframes pulse-logo {
   0% {
-    text-shadow: 0 0 15px rgba(83, 186, 95, 0.7);
+    text-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
     transform: scale(1);
   }
   100% {
-    text-shadow: 0 0 25px rgba(83, 186, 95, 0.9), 0 0 40px rgba(83, 186, 95, 0.4);
+    text-shadow: 0 0 25px rgba(76, 175, 80, 0.9), 0 0 40px rgba(76, 175, 80, 0.4);
     transform: scale(1.05);
   }
 }
@@ -384,7 +392,6 @@
   100% { transform: translateX(1000%); }
 }
 
-/* Animation des effets d'explosion accélérées */
 @keyframes mega-flash {
   0% {
     background-color: transparent;
@@ -433,7 +440,6 @@
   }
 }
 
-/* Animation pour textes et éléments accélérées */
 @keyframes logo-mega-explosion {
   0% {
     transform: scale(1);
@@ -470,7 +476,6 @@
   }
 }
 
-/* Animation pour la barre de progression accélérée */
 @keyframes progress-container-explode {
   0% {
     transform: scale(1);
@@ -516,7 +521,6 @@
   }
 }
 
-/* Animation pour les ondes de choc accélérées */
 @keyframes shockwave-expand {
   0% {
     width: 0;
@@ -549,7 +553,6 @@
   }
 }
 
-/* Animation pour les particules accélérées */
 @keyframes particle-explode {
   0% {
     transform: translate(-50%, -50%) rotate(var(--angle)) scale(0);
@@ -588,7 +591,6 @@
   }
 }
 
-/* Animation pour les rayons accélérées */
 @keyframes ray-shoot {
   0% {
     height: 0;
@@ -627,19 +629,18 @@
   }
 }
 
-/** Déclenchement des explosions et des rayons - animations accélérées */
-/* Animations standards accélérées */
-.custom-loader.exploding .explosion-flash { animation: mega-flash 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 1s */
-.custom-loader.exploding .explosion-core { animation: core-explosion 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 1.2s */
+/* Déclenchement des explosions */
+.custom-loader.exploding .explosion-flash { animation: mega-flash 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .explosion-core { animation: core-explosion 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
 .custom-loader.exploding .logo-text,
-.custom-loader.exploding .logo-img img { animation: logo-mega-explosion 0.6s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.8s */
+.custom-loader.exploding .logo-img img { animation: logo-mega-explosion 0.6s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
 .custom-loader.exploding .loader-text h1,
-.custom-loader.exploding .loader-text p { animation: text-mega-explosion 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.7s */
-.custom-loader.exploding .progress-container { animation: progress-container-explode 0.4s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.5s */
-.custom-loader.exploding .progress-bar { animation: progress-explode 0.4s cubic-bezier(0.1, 0, 0.9, 1) forwards; } /* Accéléré de 0.5s */
-.custom-loader.exploding .progress-percentage { animation: percentage-explode 0.6s cubic-bezier(0.2, 0.4, 0.9, 1) forwards; } /* Accéléré de 0.8s */
+.custom-loader.exploding .loader-text p { animation: text-mega-explosion 0.5s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .progress-container { animation: progress-container-explode 0.4s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .progress-bar { animation: progress-explode 0.4s cubic-bezier(0.1, 0, 0.9, 1) forwards; }
+.custom-loader.exploding .progress-percentage { animation: percentage-explode 0.6s cubic-bezier(0.2, 0.4, 0.9, 1) forwards; }
 .custom-loader.exploding .shockwave { 
-  animation: shockwave-expand 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1.2s */
+  animation: shockwave-expand 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: var(--wave-delay);
 }
 .custom-loader.exploding .explosion-particle {
@@ -647,13 +648,12 @@
   animation-delay: var(--delay);
 }
 .custom-loader.exploding .explosion-ray {
-  animation: ray-shoot 1s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1.2s */
+  animation: ray-shoot 1s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: var(--ray-delay);
 }
 
-/* Animations ultra accélérées */
 .custom-loader.ultra-explosion .shockwave {
-  animation: shockwave-expand-ultra 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1s */
+  animation: shockwave-expand-ultra 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: calc(var(--wave-delay) * 0.5);
 }
 .custom-loader.ultra-explosion .explosion-particle {
@@ -661,16 +661,23 @@
   animation-delay: calc(var(--delay) * 0.5);
 }
 .custom-loader.ultra-explosion .explosion-ray {
-  animation: ray-shoot-ultra 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards; /* Accéléré de 1s */
+  animation: ray-shoot-ultra 0.8s cubic-bezier(0.1, 0, 0.9, 1) forwards;
   animation-delay: calc(var(--ray-delay) * 0.5);
 }
 
-/** MEDIA QUERIES */
+/* Media Queries */
 @media (max-width: 768px) {
   .loader-text h1 { font-size: 2.2rem; }
   .loader-text p { font-size: 1.3rem; }
   .logo-text { font-size: 4rem; }
-  .logo-img img { width: 65px; height: 65px; }
+  .logo-img { 
+    width: 150px; 
+    height: 150px; 
+  }
+  .logo-img img { 
+    width: 120px; 
+    height: 120px; 
+  }
 }
 
 @media (max-width: 480px) {
@@ -681,12 +688,18 @@
   .loader-text p { font-size: 1.1rem; }
   .logo-text { font-size: 3.5rem; }
   .progress-container { height: 12px; }
-  .logo-img img { width: 55px; height: 55px; }
-  .logo-img { margin-bottom: 20px; }
+  .logo-img { 
+    width: 120px; 
+    height: 120px; 
+    margin-bottom: 20px; 
+  }
+  .logo-img img { 
+    width: 90px; 
+    height: 90px; 
+  }
   .loader-content { padding: 20px; }
 }
 
-/* S'assure que les conteneurs d'effets d'explosion sont visibles quand nécessaire */
 .custom-loader.exploding .explosion-flash,
 .custom-loader.exploding .explosion-core,
 .custom-loader.exploding .shockwaves-container,

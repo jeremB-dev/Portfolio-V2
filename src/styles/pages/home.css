@@ -1,3 +1,16 @@
+/* Section About - Centrage général */
+#about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
 .profile {
  display: flex;
  align-items: center;
@@ -44,27 +57,34 @@
 
 .career-container {
  display: flex;
- justify-content: space-between;
+ justify-content: center;
  align-items: stretch;
- gap: 25px;
- margin: 20px 0;
+ gap: 0;
+ margin: 20px auto;
  padding: 15px 20px;
  width: 100%;
+ max-width: 1000px;
  box-sizing: border-box;
  cursor: default;
 }
 
 .career-section {
  flex: 1;
- max-width: 600px;
+ max-width: none;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ text-align: center;
 }
 
 .career-text {
  line-height: 1.6;
  font-size: medium;
  text-align: left;
- padding: 0 20px;
+ padding: 0 15px;
  cursor: default;
+ max-width: 400px;
+ margin: 0 auto;
 }
 
 .career-divider {
@@ -72,58 +92,108 @@
  height: auto;
  align-self: stretch;
  background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
- margin: 0 15px;
+ margin: 0 30px;
  cursor: default;
+ flex-shrink: 0;
 }
 
-.qualities-title {
- font-weight: bold;
- font-size: 1.7rem;
- margin: 50px 0 50px;
- text-align: center;
- cursor: default;
+/* Section "Pourquoi moi ?" - Centrage optimal */
+.why-me-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: var(--spacing-xxl) auto;
+  padding: 0 var(--spacing-l);
+  box-sizing: border-box;
 }
 
+.why-me-section h3 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Titre "Pourquoi moi ?" standalone */
+#about > h3 {
+  text-align: center;
+  margin: var(--spacing-xxl) auto;
+  font-size: 2rem;
+  font-weight: bold;
+  width: 100%;
+}
+
+/* Cards modernes pour "Pourquoi moi ?" */
 .qualities-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
-  padding: 0 20px;
-  max-width: 1110px;
-  margin: 0 0 50px;
+  gap: var(--spacing-xl);
+  padding: 0;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  justify-items: center;
 }
 
 .quality-card {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(83, 186, 95, 0.2);
-  border-radius: 15px;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-radius: var(--border-radius-lg);
   padding: 30px 20px;
   text-align: center;
+  transition: all var(--transition-fast);
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(5px);
   cursor: default;
+  width: 100%;
+  max-width: 450px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.quality-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(76, 175, 80, 0.1) 0%, 
+    rgba(76, 175, 80, 0.05) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.quality-card:hover::before {
+  opacity: 1;
 }
 
 .quality-icon {
   font-size: 2.5rem;
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-m);
   display: block;
   transform: scale(1);
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-fast);
   position: relative;
   z-index: 1;
 }
 
 .quality-card:hover .quality-icon {
-  transform: scale(1.5);
+  transform: scale(1.1);
 }
 
 .quality-title {
   font-size: 1.3rem;
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-m);
   font-weight: 600;
-  color: var(--color-primary, #53ba5f);
+  color: var(--color-primary);
   position: relative;
   z-index: 1;
 }
@@ -155,6 +225,8 @@
  .qualities-grid {
    grid-template-columns: repeat(2, 1fr);
    gap: 20px;
+   max-width: 800px;
+   padding: 0 10px;
  }
  
  .quality-card {
@@ -163,6 +235,10 @@
 }
 
 @media (max-width: 768px) {
+ #about {
+   padding: 1rem;
+ }
+
  .profile {
    flex-direction: column-reverse;
    gap: 30px;
@@ -215,7 +291,8 @@
    grid-template-columns: 1fr;
    gap: 20px;
    padding: 0 15px;
-   max-width: 400px;
+   max-width: 450px;
+   justify-items: center;
  }
  
  .quality-card {
@@ -232,6 +309,10 @@
 }
 
 @media (max-width: 480px) {
+ #about {
+   padding: 0.5rem;
+ }
+
  .profile-text p {
    font-size: medium;
  }
@@ -252,6 +333,8 @@
 
  .qualities-grid {
    padding: 0 10px;
+   max-width: 380px;
+   justify-items: center;
  }
  
  .quality-card {
