@@ -1,6 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../styles/animations/loader.css';
 
+// Phases en dehors du composant pour éviter les re-renders
+const LOADING_PHASES = [
+  "Initialisation du portfolio...",
+  "Chargement des compétences...",
+  "Préparation des projets...",
+  "Mise en place du formulaire...",
+  "Finalisation..."
+];
+
 function Loader({ onFinished }) {
   const [fadeOut, setFadeOut] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -10,24 +19,29 @@ function Loader({ onFinished }) {
   const [ultraExplosion, setUltraExplosion] = useState(false);
   const [logoIntensify, setLogoIntensify] = useState(false);
   const [logoDescending, setLogoDescending] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
   const containerRef = useRef(null);
   const progressBarRef = useRef(null);
   
-  // Référence pour éviter le redémarrage du loader
+  // Références pour contrôler l'état du loader
   const timerRef = useRef(null);
-  const loadingCompleteRef = useRef(false);
+  const onFinishedRef = useRef(onFinished);
 
-  const phases = [
-    "Initialisation du portfolio...",
-    "Chargement des compétences...",
-    "Préparation des projets...",
-    "Mise en place du formulaire...",
-    "Finalisation..."
-  ];
-
-  // Bloque le scroll au montage du composant
+  // Met à jour la référence quand onFinished change
   useEffect(() => {
-    // Sauvegarde les styles originaux
+    onFinishedRef.current = onFinished;
+  }, [onFinished]);
+
+  // Préchargement du logo
+  useEffect(() => {
+    const preloadImage = new Image();
+    preloadImage.onload = () => setLogoLoaded(true);
+    preloadImage.onerror = () => setLogoLoaded(true);
+    preloadImage.src = "/assets/logo-perso/logo-perso.webp";
+  }, []);
+
+  // Bloque le scroll au montage
+  useEffect(() => {
     const originalStyle = {
       overflow: document.body.style.overflow,
       position: document.body.style.position,
@@ -35,13 +49,11 @@ function Loader({ onFinished }) {
       height: document.body.style.height
     };
 
-    // Bloque le scroll
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
     document.body.style.width = '100%';
     document.body.style.height = '100vh';
 
-    // Nettoye au démontage
     return () => {
       document.body.style.overflow = originalStyle.overflow;
       document.body.style.position = originalStyle.position;
@@ -66,11 +78,8 @@ function Loader({ onFinished }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Effet de chargement principal
+  // Démarre le chargement immédiatement
   useEffect(() => {
-    // Si le chargement est déjà terminé, ne pas redémarrer
-    if (loadingCompleteRef.current) return;
-    
     const duration = 2800;
     const interval = 16;
     const steps = duration / interval;
@@ -81,28 +90,25 @@ function Loader({ onFinished }) {
       const newProgress = Math.min(100, Math.floor((currentStep / steps) * 100));
       setProgress(newProgress);
       
-      // Mise à jour de la phase active
       const phaseIndex = Math.min(
-        phases.length - 1, 
-        Math.floor((newProgress / 100) * phases.length)
+        LOADING_PHASES.length - 1, 
+        Math.floor((newProgress / 100) * LOADING_PHASES.length)
       );
       setActivePhase(phaseIndex);
       
-      // Intensifie l'éclairage du logo à partir de 80%
-      if (newProgress >= 80 && !logoIntensify) {
+      // Intensification du logo à 80%
+      if (newProgress >= 80) {
         setLogoIntensify(true);
       }
 
-      // Quand on atteint 100%
+      // Fin du chargement
       if (newProgress === 100) {
         clearInterval(timerRef.current);
-        loadingCompleteRef.current = true;
         
+        // Séquence d'explosion
         setTimeout(() => {
-          // Animation de grossissement du logo
           setLogoDescending(true);
           
-          // Début de l'explosion
           setTimeout(() => {
             setExploding(true);
             setTimeout(() => {
@@ -110,13 +116,13 @@ function Loader({ onFinished }) {
               setTimeout(() => {
                 setFadeOut(true);
                 setTimeout(() => {
-                  // Restaurer le scroll avant de finir
+                  // Restaure le scroll
                   document.body.style.overflow = '';
                   document.body.style.position = '';
                   document.body.style.width = '';
                   document.body.style.height = '';
                   
-                  if (onFinished) onFinished();
+                  if (onFinishedRef.current) onFinishedRef.current();
                 }, 600);
               }, 300);
             }, 200);
@@ -130,8 +136,7 @@ function Loader({ onFinished }) {
         clearInterval(timerRef.current);
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onFinished, phases.length]); // Suppression de logoIntensify pour éviter le redémarrage
+  }, []); // Démarre une seule fois au montage
 
   // Génère des éléments flottants optimisés
   const renderFloatingElements = () => (
@@ -149,7 +154,7 @@ function Loader({ onFinished }) {
             '--circle-drift-y': `${Math.random() * 40 - 20}px`,
             '--circle-duration': `${Math.random() * 8 + 12}s`,
           }}
-        ></div>
+        />
       ))}
     </>
   );
@@ -169,7 +174,7 @@ function Loader({ onFinished }) {
             '--line-delay': `${Math.random() * 4}s`,
             '--line-rotate': `${Math.random() * 360}deg`
           }}
-        ></div>
+        />
       ))}
     </>
   );
@@ -183,7 +188,7 @@ function Loader({ onFinished }) {
         '--mouse-y': `${mousePosition.y}%`
       }}
     >
-      <div className="gradient-background"></div>
+      <div className="gradient-background" />
       
       {/* Éléments flottants */}
       <div className="floating-elements">
@@ -195,8 +200,8 @@ function Loader({ onFinished }) {
       </div>
       
       {/* Éléments d'explosion */}
-      <div className="explosion-flash"></div>
-      <div className="explosion-core"></div>
+      <div className="explosion-flash" />
+      <div className="explosion-core" />
       
       {/* Vagues d'explosion */}
       <div className="shockwaves-container">
@@ -205,7 +210,7 @@ function Loader({ onFinished }) {
             key={i} 
             className="shockwave"
             style={{ '--wave-delay': `${i * 0.04}s`, '--wave-index': i }}
-          ></div>
+          />
         ))}
       </div>
       
@@ -223,7 +228,7 @@ function Loader({ onFinished }) {
               '--duration': `${Math.random() * 0.8 + 0.5}s`,
               '--rotation': `${Math.random() * 1080 - 540}deg`
             }}
-          ></div>
+          />
         ))}
       </div>
       
@@ -240,26 +245,31 @@ function Loader({ onFinished }) {
               '--ray-width': `${Math.random() * 20 + 5}px`,
               '--ray-glow': `${Math.random() * 30 + 20}px`
             }}
-          ></div>
+          />
         ))}
       </div>
       
       <div className="loader-content">
         <div className="logo-container">
-          {/* Logo JB */}
-          <div className={`logo-img ${logoDescending ? 'logo-descending' : ''} ${logoIntensify ? 'logo-intensify' : ''}`}>
-            <img 
-              src="/assets/logo-perso/logo-perso.webp" 
-              alt="Logo JB" 
-              width="180" 
-              height="180"
-            />
+          <div className={`logo-img ${logoDescending ? 'logo-descending' : ''} ${logoIntensify ? 'logo-intensify' : ''} ${logoLoaded ? 'logo-loaded' : 'logo-loading'}`}>
+            {logoLoaded ? (
+              <img 
+                src="/assets/logo-perso/logo-perso.webp" 
+                alt="Logo JB" 
+                width="180" 
+                height="180"
+              />
+            ) : (
+              <div className="logo-placeholder">
+                <div className="logo-skeleton" />
+              </div>
+            )}
           </div>
         </div>
         
         <div className="loader-text">
           <h1>Bienvenue sur mon Portfolio</h1>
-          <p>{phases[activePhase]}</p>
+          <p>{LOADING_PHASES[activePhase]}</p>
         </div>
         
         <div className="progress-container" ref={progressBarRef}>
@@ -267,7 +277,7 @@ function Loader({ onFinished }) {
             className="progress-bar" 
             style={{ width: `${progress}%` }}
           >
-            <div className="progress-glow"></div>
+            <div className="progress-glow" />
           </div>
           <div className="progress-bar-text">{progress}%</div>
         </div>

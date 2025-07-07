@@ -137,6 +137,60 @@
   animation: pulse-logo 2s infinite alternate ease-in-out;
 }
 
+.logo-placeholder {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo-skeleton {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: 50%;
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.logo-img.logo-loading {
+  opacity: 0.7;
+  filter: blur(1px);
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+.logo-img.logo-loaded {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+/* Animation d'apparition plus fluide pour le logo */
+.logo-img img {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: transform, opacity;
+}
+
 .loader-text {
   text-align: center;
   margin-bottom: var(--spacing-xxl);
