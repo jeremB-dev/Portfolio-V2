@@ -56,4 +56,4 @@ Système de tracking des visites intégré :
 **Jérémy Brunel**
 - 🌐 Website: [jeremy-brunel.fr](https://jeremy-brunel.fr)
 - 💼 LinkedIn: [jeremy-brunel](https://linkedin.com/in/jeremy-brunel)
-- 📧 Email: contact@jeremy-brunel.fr
+- 📧 Email: jeremybrunel.dev@gmail.com
