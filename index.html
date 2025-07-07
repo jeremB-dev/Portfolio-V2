@@ -40,7 +40,8 @@
 
     <!-- Métadonnées supplémentaires -->
     <meta name="robots" content="index, follow" >
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://formspree.io https://www.gstatic.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://www.gstatic.com data:; connect-src 'self' https://formspree.io; frame-src https://formspree.io;">
+    <!-- CSP mise à jour pour supporter Simple Analytics -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://formspree.io https://www.gstatic.com https://scripts.simpleanalyticscdn.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://www.gstatic.com https://queue.simpleanalyticscdn.com data:; connect-src 'self' https://formspree.io https://queue.simpleanalyticscdn.com; frame-src https://formspree.io;">
     <link rel="canonical" href="https://jeremy-brunel.fr/"  >
 
     <title>Portfolio de Jérémy Brunel - Intégrateur Web Junior</title>
@@ -69,8 +70,11 @@
         },
         "skills": ["Intégration web", "Développement frontend", "Optimisation SEO", "Design responsive"]
       }
-    </script>  
-    <script type="module" crossorigin src="/assets/index-AFthAU-R.js"></script>
+    </script>
+
+    <!-- Simple Analytics - Privacy-friendly & GDPR compliant -->
+    <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+    <script type="module" crossorigin src="/assets/index-C6LpltEH.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-IukYWXzt.css">
   </head>
   <body>
