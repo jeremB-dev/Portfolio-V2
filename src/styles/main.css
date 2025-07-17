@@ -13,6 +13,7 @@
 @import './components/navigation.css';
 @import './components/scrollToTop.css';
 @import './components/privateStats.css';
+@import './components/aiassistant.css';
 
 /* Layout */
 @import './layout/grid.css';
