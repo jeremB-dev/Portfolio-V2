@@ -46,14 +46,24 @@ src/
 ## 📊 Analytics
 
 Système de tracking des visites intégré :
+
 - Comptage automatique des visiteurs uniques
 - Mode propriétaire pour exclure mes propres visites
 - Dashboard privé accessible via console
 - Respect RGPD - Aucune donnée personnelle collectée
 
+## 🤖 chat ia
+
+Un assistant interactif intégré pour faciliter l'accès aux informations du portfolio grâce à une interface conversationnelle.
+
+- Base de connaissances riche, avec correspondance floue pour une compréhension flexible des questions.
+- Interface utilisateur interactive pour poser des questions et recevoir des réponses instantanément.
+- Réponses contextuelles basées sur un historique de conversation.
+
 ## 📧 Contact
 
 **Jérémy Brunel**
+
 - 🌐 Website: [jeremy-brunel.fr](https://jeremy-brunel.fr)
 - 💼 LinkedIn: [jeremy-brunel](https://linkedin.com/in/jeremy-brunel)
 - 📧 Email: jeremybrunel.dev@gmail.com
