@@ -1,6 +1,16 @@
-// src/components/AIAssistant.jsx - Version corrigée sans erreurs de syntaxe
+// src/components/AIAssistant.jsx - Version finale avec icône History et fix React
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { FaRobot, FaTimes, FaPaperPlane, FaTrash } from "react-icons/fa";
+import { FaComments, FaTimes, FaPaperPlane, FaHistory } from "react-icons/fa";
+import {
+  SiReact,
+  SiJavascript,
+  SiGithub,
+  SiHtml5,
+  SiCss3,
+  SiSass,
+  SiRedux,
+} from "react-icons/si";
+import { HiAcademicCap } from "react-icons/hi2";
 import useTheme from "../hooks/useTheme";
 import useWindowSize from "../hooks/useWindowSize";
 
@@ -60,7 +70,7 @@ const KNOWLEDGE_BASE = {
   },
   github: {
     content:
-      '📊 Repositories GitHub de Jérémy : Portfolio-V2 (React/Vite), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), ArgentBank (React/Redux).<br /><br />🔗 Profil : <a href="https://github.com/jeremB-dev" target="_blank" rel="noopener noreferrer"><strong>github.com/jeremB-dev</strong></a>',
+      '📊 Repositories GitHub de Jérémy : Portfolio-V2 (React/Vite), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), ArgentBank (React/Redux) et bien d\'autres.<br /><br />🔗 Profil : <a href="https://github.com/jeremB-dev" target="_blank" rel="noopener noreferrer"><strong>github.com/jeremB-dev</strong></a>',
     keywords: [
       "github",
       "git",
@@ -77,7 +87,7 @@ const KNOWLEDGE_BASE = {
   },
   competences: {
     content:
-      '🛠️ Tu peux découvrir toutes les technologies utilisées par Jérémy dans la <a href="/technologies" target="_blank" rel="noopener noreferrer"><strong>page Technologies</strong></a> de son portfolio.',
+      "🛠️ Jérémy travaille principalement avec React, JavaScript ES6+, HTML/CSS, SASS et continue à se former sur ces technologies. Il applique ses connaissances à travers plusieurs projets concrets.",
     keywords: [
       "compétence",
       "compétences",
@@ -93,9 +103,6 @@ const KNOWLEDGE_BASE = {
       "maîtrise",
       "expertise",
       "technique",
-      "react",
-      "javascript",
-      "css",
     ],
     priority: 7,
   },
@@ -231,7 +238,7 @@ const AIAssistant = () => {
     {
       role: "assistant",
       content:
-        "👋 Salut ! Je suis l'assistant IA de Jérémy !<br /><br />🔍 Je peux te parler de ses projets, compétences, ou recherche d'alternance.",
+        "👋 Salut ! Je suis l'assistant intélligent de Jérémy !<br /><br />🔍 Je peux te parler de ses projets, compétences, ou recherche d'alternance.",
       timestamp: Date.now(),
     },
   ]);
@@ -239,10 +246,85 @@ const AIAssistant = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [lastReadMessageCount, setLastReadMessageCount] = useState(1);
   const [lastTopic, setLastTopic] = useState("");
+  const [mainContext, setMainContext] = useState("");
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const { darkMode } = useTheme();
   const { isMobile, isTablet } = useWindowSize();
+
+  // Fonction pour définir les groupes de contexte
+  const getContextGroup = (topic) => {
+    const contextGroups = {
+      // Groupe alternance
+      alternance: ["alternance", "age", "RQTH", "lieu", "reconversion"],
+      age: ["alternance", "age", "RQTH", "lieu", "reconversion"],
+      RQTH: ["alternance", "age", "RQTH", "lieu", "reconversion"],
+      lieu: ["alternance", "age", "RQTH", "lieu", "reconversion"],
+      reconversion: ["alternance", "age", "RQTH", "lieu", "reconversion"],
+
+      // Groupe projets
+      projets: [
+        "projets",
+        "portfolio",
+        "ohmyfood",
+        "sophie-bluel",
+        "nina-carducci",
+        "argentbank",
+      ],
+      portfolio: [
+        "projets",
+        "portfolio",
+        "ohmyfood",
+        "sophie-bluel",
+        "nina-carducci",
+        "argentbank",
+      ],
+      ohmyfood: [
+        "projets",
+        "portfolio",
+        "ohmyfood",
+        "sophie-bluel",
+        "nina-carducci",
+        "argentbank",
+      ],
+      "sophie-bluel": [
+        "projets",
+        "portfolio",
+        "ohmyfood",
+        "sophie-bluel",
+        "nina-carducci",
+        "argentbank",
+      ],
+      "nina-carducci": [
+        "projets",
+        "portfolio",
+        "ohmyfood",
+        "sophie-bluel",
+        "nina-carducci",
+        "argentbank",
+      ],
+      argentbank: [
+        "projets",
+        "portfolio",
+        "ohmyfood",
+        "sophie-bluel",
+        "nina-carducci",
+        "argentbank",
+      ],
+
+      // Groupe technique
+      competences: ["competences", "github", "formation"],
+      github: ["competences", "github", "formation"],
+      formation: ["competences", "github", "formation"],
+    };
+
+    for (const [context, topics] of Object.entries(contextGroups)) {
+      if (topics.includes(topic)) {
+        return context;
+      }
+    }
+    return topic;
+  };
 
   // Fonction de normalisation du texte
   const normalizeText = useCallback((text) => {
@@ -303,7 +385,7 @@ const AIAssistant = () => {
     );
   }, []);
 
-  // Fonction de correspondance améliorée mais simplifiée
+  // Fonction de correspondance améliorée
   const findBestMatch = useCallback(
     (input) => {
       try {
@@ -352,8 +434,6 @@ const AIAssistant = () => {
             "skills",
             "technologie",
             "stack",
-            "react",
-            "js",
           ],
           alternance: [
             "alternance",
@@ -443,16 +523,40 @@ const AIAssistant = () => {
       try {
         const normalizedMsg = normalizeText(userMessage);
 
-        // Debug console pour voir ce qui se passe
         console.log("🔍 Message original:", userMessage);
         console.log("🔍 Message normalisé:", normalizedMsg);
+
+        if (normalizedMsg.includes("react")) {
+          console.log("✅ Réponse spécifique: react");
+          setLastTopic("competences");
+          setMainContext("competences");
+          return "⚛️ Jérémy utilise React 18 dans plusieurs projets et continue à se former, notamment ce portfolio et ArgentBank (avec Redux).";
+        }
+
+        if (
+          normalizedMsg.includes("javascript") ||
+          normalizedMsg.includes("js")
+        ) {
+          console.log("✅ Réponse spécifique: javascript");
+          setLastTopic("competences");
+          setMainContext("competences");
+          return "📜 Jérémy utilise JavaScript ES6+ dans plusieurs projets et continue à se former, notamment Sophie Bluel (manipulation DOM) et ArgentBank (React).";
+        }
 
         const match = findBestMatch(userMessage);
         console.log("🔍 Match trouvé:", match);
 
         if (match && match.score > 8) {
           console.log("✅ Match valide, score:", match.score);
-          setLastTopic(match.key);
+          const newTopic = match.key;
+          setLastTopic(newTopic);
+
+          // Gérer le contexte principal
+          const newContext = getContextGroup(newTopic);
+          if (newContext !== newTopic) {
+            setMainContext(newContext);
+          }
+
           return match.data.content;
         }
 
@@ -474,33 +578,19 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: qui est jeremy");
           setLastTopic("");
-          return "👨‍💻 Jérémy est développeur web diplômé, reconverti de la logistique par passion.<br />Il a 4 projets concrets et cherche une alternance développeur web et IA.";
-        }
-
-        if (normalizedMsg.includes("react")) {
-          console.log("✅ Réponse spécifique: react");
-          setLastTopic("competences");
-          return "⚛️ Jérémy utilise React 18 pour construire ce portfolio. Il a aussi travaillé sur un projet complexe avec Redux (ArgentBank).";
-        }
-
-        if (
-          normalizedMsg.includes("javascript") ||
-          normalizedMsg.includes("js")
-        ) {
-          console.log("✅ Réponse spécifique: javascript");
-          setLastTopic("competences");
-          return "📜 Jérémy maîtrise JavaScript ES6+ et l'utilise dans plusieurs projets, notamment Sophie Bluel (manipulation DOM) et ArgentBank (React).";
+          return "👨‍💻 Jérémy est développeur intégrateur web diplômé, reconverti de la logistique par passion.<br />Il a 4 projets concrets et cherche une alternance développeur web et IA.";
         }
 
         if (
           lastTopic === "competences" &&
           (normalizedMsg.startsWith("et ") ||
             normalizedMsg.includes("niveau") ||
-            normalizedMsg.includes("react"))
+            normalizedMsg.includes("niveau de compétence"))
         ) {
           console.log("✅ Réponse spécifique: niveau React");
           setLastTopic("competences");
-          return '⚛️ Pour en savoir plus sur les technologies de Jérémy, rends-toi sur la <a href="/technologies" target="_blank" rel="noopener noreferrer">page dédiée</a>.';
+          setMainContext("competences");
+          return "⚛️ Jérémy continue d'approfondir React en travaillant sur des projets de plus en plus complexes, du portfolio simple aux applications avec Redux.";
         }
 
         if (
@@ -510,6 +600,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: projets");
           setLastTopic("projets");
+          setMainContext("projets");
           return "💼 Jérémy a développé 5 projets principaux : ce portfolio (React/IA), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />Une belle progression du HTML vers React ! Quel projet t'intéresse ?";
         }
 
@@ -521,7 +612,8 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: portfolio");
           setLastTopic("portfolio");
-          return "🚀 <strong>Portfolio V2</strong> - Le site que tu consultes actuellement !<br /><br />🔧 <strong>Technologies :</strong> React 18, Vite, JavaScript ES6+<br />✨ <strong>Fonctionnalités :</strong> Système de thèmes, animations, analytics, et cet assistant IA<br />🎯 <strong>Objectif :</strong> Démontrer les compétences modernes et l'innovation";
+          setMainContext("projets");
+          return "🚀 <strong>Portfolio</strong> - Le site que tu consultes actuellement !<br /><br />🔧 <strong>Technologies :</strong> React 18, Vite, JavaScript ES6+<br />✨ <strong>Fonctionnalités :</strong> Système de thèmes, animations, analytics, et cet assistant IA<br />🎯 <strong>Objectif :</strong> Démontrer les compétences modernes et l'innovation";
         }
 
         if (
@@ -530,6 +622,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: ohmyfood");
           setLastTopic("ohmyfood");
+          setMainContext("projets");
           return "🍽️ <strong>Ohmyfood</strong> - Site de réservation gastronomique<br /><br />🔧 <strong>Technologies :</strong> HTML5, Sass, CSS3, animations<br />📱 <strong>Features :</strong> Design responsive, animations CSS créatives, interface mobile-first<br />🎯 <strong>Challenge :</strong> Intégration fidèle des maquettes Figma avec animations fluides";
         }
 
@@ -540,6 +633,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: sophie bluel");
           setLastTopic("sophie-bluel");
+          setMainContext("projets");
           return "🏠 <strong>Sophie Bluel - Architecte</strong> - Portfolio d'architecte interactif<br /><br />🔧 <strong>Technologies :</strong> JavaScript vanilla, API REST, manipulation DOM<br />🔐 <strong>Features :</strong> Système d'authentification, gestion de galerie, CRUD complet<br />🎯 <strong>Challenge :</strong> Interface d'administration dynamique sans framework";
         }
 
@@ -550,6 +644,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: nina carducci");
           setLastTopic("nina-carducci");
+          setMainContext("projets");
           return "📸 <strong>Nina Carducci</strong> - Optimisation SEO d'un site de photographe<br /><br />🔧 <strong>Technologies :</strong> Lighthouse, SEO, optimisation performance<br />📊 <strong>Résultats :</strong> Score Lighthouse 95+, amélioration vitesse de chargement<br />🎯 <strong>Challenge :</strong> Optimisation complète pour le référencement et les performances";
         }
 
@@ -560,6 +655,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: argentbank");
           setLastTopic("argentbank");
+          setMainContext("projets");
           return "🏦 <strong>ArgentBank</strong> - Application bancaire sécurisée<br /><br />🔧 <strong>Technologies :</strong> React, Redux, JWT, API REST<br />🔐 <strong>Features :</strong> Authentification sécurisée, gestion de profil, tableau de bord<br />🎯 <strong>Challenge :</strong> Architecture Redux complexe avec gestion d'état globale";
         }
 
@@ -570,6 +666,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: alternance");
           setLastTopic("alternance");
+          setMainContext("alternance");
           return "🔍 Jérémy cherche une alternance développeur web et IA dès octobre 2025.<br />12-24 mois, région Bordeaux, avec un focus sur l'innovation et l'apprentissage.";
         }
 
@@ -590,6 +687,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: formation");
           setLastTopic("formation");
+          setMainContext("competences");
           return "🎓 Jérémy a un diplôme d'intégrateur web et suit actuellement une formation développeur web et IA en alternance.<br />Il combine théorie et pratique pour maîtriser les technologies modernes.";
         }
 
@@ -600,7 +698,8 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: github");
           setLastTopic("github");
-          return '📊 Repositories GitHub de Jérémy : Portfolio-V2 (React/Vite), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), ArgentBank (React/Redux).<br /><br />🔗 Profil : <a href="https://github.com/jeremB-dev" target="_blank" rel="noopener noreferrer"><strong>github.com/jeremB-dev</strong></a>';
+          setMainContext("competences");
+          return '📊 Repositories GitHub de Jérémy : Portfolio-V2 (React/Vite), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), ArgentBank (React/Redux) et bien d\'autres.<br /><br />🔗 Profil : <a href="https://github.com/jeremB-dev" target="_blank" rel="noopener noreferrer"><strong>github.com/jeremB-dev</strong></a>';
         }
 
         if (
@@ -609,8 +708,9 @@ const AIAssistant = () => {
           normalizedMsg.includes("précédent travail") ||
           normalizedMsg.includes("travaillait avant")
         ) {
-          console.log("✅ Réponse spécifique: ancien emploi");
-          setLastTopic("ancien_emploi");
+          console.log("✅ Réponse spécifique: reconversion");
+          setLastTopic("reconversion");
+          setMainContext("alternance");
           return "🏢 Avant de se reconvertir dans le développement web, Jérémy travaillait dans le domaine de la logistique. Cette expérience lui a apporté une grande rigueur et une capacité d'organisation qui sont des atouts majeurs dans son nouveau parcours professionnel.";
         }
 
@@ -622,6 +722,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: age");
           setLastTopic("age");
+          setMainContext("alternance");
           return "🎂 Jérémy a 43 ans et assume pleinement sa reconversion.<br />Sa RQTH lui permet de faire une alternance sans limite d'âge - un vrai atout !";
         }
 
@@ -635,6 +736,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: RQTH");
           setLastTopic("RQTH");
+          setMainContext("alternance");
           return "🔍 Jérémy bénéficie d'une RQTH (Reconnaissance de la Qualité de Travailleur Handicapé). Cela ne limite en rien ses capacités mais lui permet de bénéficier d'opportunités d'alternance sans limite d'âge, renforçant ainsi sa perspective unique dans son travail.";
         }
 
@@ -646,6 +748,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: localisation");
           setLastTopic("lieu");
+          setMainContext("alternance");
           return "🌍 Jérémy habite dans la région de Bordeaux et cherche une alternance localement.<br />Il est ouvert au télétravail selon l'organisation de l'entreprise.";
         }
 
@@ -675,199 +778,238 @@ const AIAssistant = () => {
         console.error("❌ Message qui a causé l'erreur:", userMessage);
         return "🤔 Je peux te parler de ses projets, compétences, ou recherche d'alternance. Que veux-tu savoir ?";
       }
-      // (Unreachable fallback removed)
     },
     [normalizeText, findBestMatch, lastTopic]
   );
 
   const getDynamicSuggestions = () => {
-    console.log("📋 Suggestions pour le topic:", lastTopic);
+    const currentContext = mainContext || getContextGroup(lastTopic);
+    console.log(
+      "📋 Suggestions pour topic:",
+      lastTopic,
+      "contexte:",
+      currentContext
+    );
 
+    // Suggestions par contexte principal
+    const contextSuggestions = {
+      alternance: [
+        { text: "👤 Âge", query: "Quel âge a Jérémy ?" },
+        { text: "🏢 RQTH", query: "RQTH ?" },
+        { text: "📍 Où ?", query: "Où habite jeremy ?" },
+        { text: "🔄 Reconversion", query: "Sa reconversion" },
+        { text: "💼 Projets", query: "Ses projets" },
+      ],
+
+      projets: [
+        { text: "🏦 ArgentBank", query: "Projet ArgentBank" },
+        { text: "🍽️ Ohmyfood", query: "Ohmyfood" },
+        { text: "🏠 Sophie Bluel", query: "Sophie Bluel" },
+        { text: "📸 Nina Carducci", query: "Nina Carducci" },
+        { text: "🚀 Portfolio", query: "Ce portfolio" },
+      ],
+
+      competences: [
+        {
+          text: (
+            <>
+              <SiReact className="tech-icon react" /> React
+            </>
+          ),
+          query: "React",
+        },
+        {
+          text: (
+            <>
+              <SiJavascript className="tech-icon js" /> JavaScript
+            </>
+          ),
+          query: "JavaScript",
+        },
+        {
+          text: (
+            <>
+              <SiGithub className="tech-icon github" /> GitHub
+            </>
+          ),
+          query: "GitHub",
+        },
+        {
+          text: (
+            <>
+              <HiAcademicCap className="tech-icon formation" /> Formation
+            </>
+          ),
+          query: "Sa formation",
+        },
+        {
+          text: "💼 Projets",
+          query: "Ses projets",
+        },
+      ],
+    };
+
+    // Suggestions spécifiques par topic
     switch (lastTopic) {
-      case "projets":
-        return [
-          { text: "ArgentBank", query: "Projet ArgentBank" },
-          { text: "Ohmyfood", query: "Ohmyfood" },
-          { text: "Sophie Bluel", query: "Sophie Bluel" },
-          { text: "Nina Carducci", query: "Nina Carducci" },
-          { text: "Portfolio", query: "Ce portfolio" },
-        ];
+      case "age":
+      case "RQTH":
+      case "lieu":
+      case "reconversion":
+        return contextSuggestions.alternance;
 
       case "portfolio":
-        return [
-          { text: "Technologies", query: "Ses compétences" },
-          { text: "Autres projets", query: "Ses projets" },
-          { text: "GitHub", query: "GitHub" },
-        ];
-
       case "ohmyfood":
-        return [
-          { text: "ArgentBank", query: "Projet ArgentBank" },
-          { text: "Technologies", query: "Ses compétences" },
-          { text: "Autres projets", query: "Ses projets" },
-        ];
-
       case "sophie-bluel":
-        return [
-          { text: "Nina Carducci", query: "Nina Carducci" },
-          { text: "Technologies", query: "Ses compétences" },
-          { text: "Autres projets", query: "Ses projets" },
-        ];
-
       case "nina-carducci":
-        return [
-          { text: "Portfolio", query: "Ce portfolio" },
-          { text: "SEO", query: "Ses compétences" },
-          { text: "Autres projets", query: "Ses projets" },
-        ];
-
       case "argentbank":
-        return [
-          { text: "React/Redux", query: "Ses compétences" },
-          { text: "Portfolio", query: "Ce portfolio" },
-          { text: "Autres projets", query: "Ses projets" },
-        ];
-
-      case "competences":
-        return [
-          { text: "Projets", query: "Ses projets" },
-          { text: "Formation", query: "Sa formation" },
-        ];
-
-      case "alternance":
-        return [
-          { text: "Localisation", query: "Où habite jeremy ?" },
-          { text: "Projets", query: "Ses projets" },
-          { text: "Reconversion", query: "Sa reconversion" },
-          { text: "âge", query: "Quel âge a Jérémy ?" },
-          { text: "RQTH", query: "rqth ?" },
-        ];
+        return contextSuggestions.projets;
 
       case "github":
-        return [
-          { text: "ArgentBank", query: "Projet ArgentBank" },
-          { text: "Ohmyfood", query: "Ohmyfood" },
-          { text: "Portfolio", query: "Ce portfolio" },
-        ];
+      case "formation":
+        return contextSuggestions.competences;
+
+      case "alternance":
+        return contextSuggestions.alternance;
+
+      case "projets":
+        return contextSuggestions.projets;
+
+      case "competences":
+        return contextSuggestions.competences;
 
       default:
         return [
-          { text: "Projets", query: "Ses projets" },
-          { text: "Compétences", query: "Ses compétences" },
-          { text: "Alternance", query: "Sa recherche" },
-          { text: "Contact", query: "Le contacter" },
+          { text: "💼 Projets", query: "Ses projets" },
+          { text: "🛠️ Compétences", query: "Ses compétences" },
+          { text: "🔍 Alternance", query: "Sa recherche" },
+          { text: "📩 Contact", query: "Le contacter" },
         ];
     }
   };
 
   const fillSuggestion = (query) => {
     if (isTyping) return;
-    setInput(query);
+    console.log("🎯 Suggestion cliquée:", query);
+    handleSend(query);
   };
 
-  const handleSend = useCallback(() => {
-    if (!input.trim() || isTyping) return;
-
-    console.log("🚀 Envoi du message:", input.trim());
-
-    const userMessage = {
-      role: "user",
-      content: input.trim(),
-      timestamp: Date.now(),
-    };
-    setMessages((prev) => [...prev, userMessage]);
-    const currentInput = input;
+  const resetContext = () => {
+    console.log("🔄 Reset du contexte");
+    setLastTopic("");
+    setMainContext("");
     setInput("");
-    setIsTyping(true);
+  };
 
-    trackAIInteraction("message_sent", {
-      message: currentInput,
-      topic: lastTopic,
-      message_length: currentInput.length,
-    });
+  const handleSend = useCallback(
+    (customMessage = null) => {
+      const messageToSend = customMessage || input.trim();
+      if (!messageToSend || isTyping) return;
 
-    // Délai plus court et fixe pour éviter les problèmes
-    const delay = 800; // Délai fixe de 800ms
+      console.log("🚀 Envoi du message:", messageToSend);
 
-    // Une seule exécution avec un flag de protection
-    let responseProcessed = false;
+      const userMessage = {
+        role: "user",
+        content: messageToSend,
+        timestamp: Date.now(),
+      };
 
-    setTimeout(() => {
-      // Protection contre la double exécution
-      if (responseProcessed) {
-        console.log("⚠️ Double exécution évitée");
-        return;
+      setMessages((prev) => [...prev, userMessage]);
+
+      // Vider l'input seulement pour les messages manuels
+      if (!customMessage) {
+        setInput("");
       }
-      responseProcessed = true;
 
-      try {
-        console.log("🔄 Génération de la réponse...");
-        const aiResponse = getAIResponse(currentInput);
-        console.log("✅ Réponse générée:", aiResponse);
+      setIsTyping(true);
 
-        if (!aiResponse || aiResponse.trim() === "") {
-          throw new Error("Réponse vide générée");
+      trackAIInteraction("message_sent", {
+        message: messageToSend,
+        topic: lastTopic,
+        message_length: messageToSend.length,
+      });
+
+      const delay = 800;
+      let responseProcessed = false;
+
+      setTimeout(() => {
+        if (responseProcessed) {
+          console.log("⚠️ Double exécution évitée");
+          return;
         }
+        responseProcessed = true;
 
-        const assistantMessage = {
-          role: "assistant",
-          content: aiResponse,
-          timestamp: Date.now(),
-        };
+        try {
+          console.log("🔄 Génération de la réponse...");
+          const aiResponse = getAIResponse(messageToSend);
+          console.log("✅ Réponse générée:", aiResponse);
 
-        setMessages((prev) => {
-          // Vérifier si le dernier message n'est pas identique (éviter les doublons)
-          const lastMessage = prev[prev.length - 1];
-          if (
-            lastMessage &&
-            lastMessage.content === assistantMessage.content &&
-            lastMessage.role === "assistant"
-          ) {
-            console.log("⚠️ Message identique détecté, évitation du doublon");
-            return prev;
+          if (!aiResponse || aiResponse.trim() === "") {
+            throw new Error("Réponse vide générée");
           }
-          return [...prev, assistantMessage];
-        });
-        setIsTyping(false);
 
-        trackAIInteraction("response_generated", {
-          response_length: aiResponse.length,
-          topic: lastTopic,
-        });
+          const assistantMessage = {
+            role: "assistant",
+            content: aiResponse,
+            timestamp: Date.now(),
+          };
 
-        console.log("✅ Message ajouté avec succès");
-      } catch (error) {
-        console.error("❌ Erreur dans handleSend:", error);
+          setMessages((prev) => {
+            const lastMessage = prev[prev.length - 1];
+            if (
+              lastMessage &&
+              lastMessage.content === assistantMessage.content &&
+              lastMessage.role === "assistant"
+            ) {
+              console.log("⚠️ Message identique détecté, évitation du doublon");
+              return prev;
+            }
+            return [...prev, assistantMessage];
+          });
 
-        // Réponse de fallback garantie
-        const fallbackMessage = {
-          role: "assistant",
-          content:
-            "🤔 Je peux te parler des projets de Jérémy, ses compétences, ou sa recherche d'alternance. Que veux-tu savoir ?",
-          timestamp: Date.now(),
-        };
+          setIsTyping(false);
 
-        setMessages((prev) => {
-          // Vérifier si le dernier message n'est pas identique (éviter les doublons)
-          const lastMessage = prev[prev.length - 1];
-          if (
-            lastMessage &&
-            lastMessage.content === fallbackMessage.content &&
-            lastMessage.role === "assistant"
-          ) {
-            console.log(
-              "⚠️ Message de fallback identique détecté, évitation du doublon"
-            );
-            return prev;
-          }
-          return [...prev, fallbackMessage];
-        });
-        setIsTyping(false);
+          trackAIInteraction("response_generated", {
+            response_length: aiResponse.length,
+            topic: lastTopic,
+          });
 
-        console.log("🔄 Réponse de fallback utilisée");
-      }
-    }, delay);
-  }, [input, isTyping, getAIResponse, lastTopic, trackAIInteraction]);
+          console.log("✅ Message ajouté avec succès");
+        } catch (error) {
+          console.error("❌ Erreur dans handleSend:", error);
+
+          const fallbackMessage = {
+            role: "assistant",
+            content:
+              "🤔 Je peux te parler des projets de Jérémy, ses compétences, ou sa recherche d'alternance. Que veux-tu savoir ?",
+            timestamp: Date.now(),
+          };
+
+          setMessages((prev) => {
+            const lastMessage = prev[prev.length - 1];
+            if (
+              lastMessage &&
+              lastMessage.content === fallbackMessage.content &&
+              lastMessage.role === "assistant"
+            ) {
+              return prev;
+            }
+            return [...prev, fallbackMessage];
+          });
+
+          setIsTyping(false);
+          console.log("🔄 Réponse de fallback utilisée");
+        }
+      }, delay);
+    },
+    [input, isTyping, getAIResponse, lastTopic, trackAIInteraction]
+  );
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
@@ -895,18 +1037,12 @@ const AIAssistant = () => {
         setMessages(newMessages);
         setLastReadMessageCount(newMessages.length);
         setLastTopic("");
-        setIsTyping(false); // S'assurer que l'assistant n'est pas bloqué
+        setMainContext("");
+        setIsTyping(false);
         console.log("✅ Chat nettoyé avec succès");
       }
     } catch (error) {
       console.error("❌ Erreur lors du nettoyage:", error);
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
     }
   };
 
@@ -989,7 +1125,7 @@ const AIAssistant = () => {
         {
           role: "assistant",
           content:
-            "👋 Salut ! Je suis l'assistant IA de Jérémy !<br /><br />🔍 Je peux te parler de ses projets, compétences, ou recherche d'alternance.",
+            "👋 Salut ! Je suis l'assistant intélligent de Jérémy !<br /><br />🔍 Je peux te parler de ses projets, compétences, ou recherche d'alternance.",
           timestamp: Date.now(),
         },
       ]);
@@ -1030,7 +1166,6 @@ const AIAssistant = () => {
       console.log('🔄 Test de duplication avec "Ses projets"');
       console.log("Messages avant:", messages.length);
 
-      // Simuler l'envoi d'un message
       setInput("Ses projets");
       setTimeout(() => {
         console.log('📤 Envoi simulé de "Ses projets"');
@@ -1055,6 +1190,29 @@ const AIAssistant = () => {
     messages.length,
   ]);
 
+  useEffect(() => {
+    const inputEl = inputRef.current;
+    const widgetEl = document.querySelector(".ai-assistant-widget");
+    const messagesEl = document.querySelector(".ai-assistant-messages");
+
+    const handleFocus = () => {
+      widgetEl?.classList.add("keyboard-visible");
+      messagesEl?.classList.add("keyboard-visible");
+    };
+    const handleBlur = () => {
+      widgetEl?.classList.remove("keyboard-visible");
+      messagesEl?.classList.remove("keyboard-visible");
+    };
+
+    inputEl?.addEventListener("focus", handleFocus);
+    inputEl?.addEventListener("blur", handleBlur);
+
+    return () => {
+      inputEl?.removeEventListener("focus", handleFocus);
+      inputEl?.removeEventListener("blur", handleBlur);
+    };
+  }, []);
+
   const unreadMessages = Math.max(0, messages.length - lastReadMessageCount);
   const hasUnreadMessages = unreadMessages > 0 && !isOpen;
 
@@ -1065,12 +1223,18 @@ const AIAssistant = () => {
         className={`ai-assistant-fab ${isOpen ? "active" : ""} ${
           isTyping ? "thinking" : ""
         } ${isMobile ? "mobile" : ""}`}
-        aria-label={isOpen ? "Fermer l'assistant IA" : "Ouvrir l'assistant IA"}
+        aria-label={
+          isOpen
+            ? "Fermer l'assistant intélligent"
+            : "Ouvrir l'assistant intélligent"
+        }
         title={
-          isOpen ? "Fermer l'assistant" : "Assistant IA - Posez vos questions !"
+          isOpen
+            ? "Fermer l'assistant"
+            : "Assistant intélligent - Posez vos questions !"
         }
       >
-        {isOpen ? <FaTimes /> : <FaRobot />}
+        {isOpen ? <FaTimes /> : <FaComments />}
         {hasUnreadMessages && (
           <span className="ai-message-badge">{unreadMessages}</span>
         )}
@@ -1084,9 +1248,9 @@ const AIAssistant = () => {
         >
           <div className="ai-assistant-header">
             <div className="ai-assistant-title">
-              <FaRobot className="ai-icon" />
+              <FaComments className="ai-icon" />
               <div className="ai-title-text">
-                <h3>Assistant IA</h3>
+                <h3>Assistant Intélligent</h3>
                 <p>
                   {isTyping
                     ? "En train d'écrire..."
@@ -1101,7 +1265,7 @@ const AIAssistant = () => {
                 aria-label="Effacer l'historique"
                 title="Effacer l'historique"
               >
-                <FaTrash />
+                <FaHistory />
               </button>
             </div>
           </div>
@@ -1173,13 +1337,10 @@ const AIAssistant = () => {
                 </button>
               ))}
             </div>
-            {lastTopic && (
+            {(lastTopic || mainContext) && (
               <div className="ai-suggestions-reset">
                 <button
-                  onClick={() => {
-                    setLastTopic("");
-                    setInput("");
-                  }}
+                  onClick={resetContext}
                   className="ai-reset-suggestions"
                   disabled={isTyping}
                 >

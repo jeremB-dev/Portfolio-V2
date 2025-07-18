@@ -1,73 +1,104 @@
 :root {
-    /* Couleurs de base */
-    --color-primary: #4caf50;
-    --color-primary-dark: #45a049;
-    --color-secondary: #4286f4;
-    --color-secondary-dark: #373b44;
-    --color-text: #333;
-    --color-text-light: #666;
-    --color-background: #fff;
-    --color-background-alt: #f5f5f5;
-    --color-border: #ddd;
-    
-    /* Palette de compétences (progression bleu → vert) */
-    --skill-color-1: #7986cb;
-    --skill-color-2: #90caf9;
-    --skill-color-3: #5c6bc0;
-    --skill-color-4: #42a5f5;
-    --skill-color-5: #4286f4;
-    --skill-color-6: #66bb6a;
-    --skill-color-7: #4caf50;
-    --skill-color-8: #bbdefb;
-    
-    /* Dégradés de base */
-    --gradient-primary: linear-gradient(45deg, var(--color-primary), var(--color-primary-dark));
-    --gradient-background: linear-gradient(135deg, var(--color-secondary-dark) 0%, var(--color-secondary) 100%);
-    
-    /* Dégradés de compétences */
-    --gradient-skill-discovery: linear-gradient(90deg, var(--skill-color-2), var(--skill-color-8));
-    --gradient-skill-beginner: linear-gradient(90deg, var(--skill-color-1), var(--skill-color-2));
-    --gradient-skill-learning: linear-gradient(90deg, var(--skill-color-3), var(--skill-color-4));
-    --gradient-skill-competent: linear-gradient(90deg, var(--skill-color-5), var(--skill-color-6));
-    --gradient-skill-solid: linear-gradient(90deg, var(--skill-color-4), var(--skill-color-7));
-    
-    /* Espacements */
-    --spacing-xs: 5px;
-    --spacing-s: 10px;
-    --spacing-m: 15px;
-    --spacing-l: 20px;
-    --spacing-xl: 25px;
-    --spacing-xxl: 40px;
-    
-    /* Bordures */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    --border-radius-circle: 50%;
-    
-    /* Ombres */
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 5px 15px rgba(76, 175, 80, 0.1);
-    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
-    --shadow-card: 0 6px 12px rgba(0, 0, 0, 0.1);
-    --shadow-modal: 0 40px 80px rgba(0, 0, 0, 0.2);
-    
-    /* Transitions */
-    --transition-fast: 0.3s ease;
-    --transition-medium: 0.5s ease;
-    --transition-slow: 0.8s ease;
-    --transition-bezier: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    
-    /* Z-index */
-    --z-index-background: -1;
-    --z-index-normal: 1;
-    --z-index-header: 998;
-    --z-index-modal: 999;
-    --z-index-modal-content: 1000;
-    --z-index-loader: 9999;
-    
-    /* Dimensions */
-    --header-height: 80px;
-    --footer-height: 80px;
-    --container-max-width: 1200px;
+  /* Couleurs de base */
+  --color-primary: #4caf50;
+  --color-primary-dark: #45a049;
+  --color-secondary: #4286f4;
+  --color-secondary-dark: #373b44;
+  --color-text: #333;
+  --color-text-light: #666;
+  --color-background: #fff;
+  --color-background-alt: #f5f5f5;
+  --color-border: #ddd;
+  --color-assistant-border: rgba(255, 255, 255, 0.1);
+  --color-assistant-suggestion-title: rgba(255, 255, 255, 0.7);
+
+  /* Palette de compétences (progression bleu → vert) */
+  --skill-color-1: #7986cb;
+  --skill-color-2: #90caf9;
+  --skill-color-3: #5c6bc0;
+  --skill-color-4: #42a5f5;
+  --skill-color-5: #4286f4;
+  --skill-color-6: #66bb6a;
+  --skill-color-7: #4caf50;
+  --skill-color-8: #bbdefb;
+
+  /* Dégradés de base */
+  --gradient-primary: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  --gradient-background: linear-gradient(
+    135deg,
+    var(--color-secondary-dark) 0%,
+    var(--color-secondary) 100%
+  );
+  --gradient-primary: linear-gradient(270deg, #4286f4, #4caf50);
+
+  /* Dégradés de compétences */
+  --gradient-skill-discovery: linear-gradient(
+    90deg,
+    var(--skill-color-2),
+    var(--skill-color-8)
+  );
+  --gradient-skill-beginner: linear-gradient(
+    90deg,
+    var(--skill-color-1),
+    var(--skill-color-2)
+  );
+  --gradient-skill-learning: linear-gradient(
+    90deg,
+    var(--skill-color-3),
+    var(--skill-color-4)
+  );
+  --gradient-skill-competent: linear-gradient(
+    90deg,
+    var(--skill-color-5),
+    var(--skill-color-6)
+  );
+  --gradient-skill-solid: linear-gradient(
+    90deg,
+    var(--skill-color-4),
+    var(--skill-color-7)
+  );
+
+  /* Espacements */
+  --spacing-xs: 5px;
+  --spacing-s: 10px;
+  --spacing-m: 15px;
+  --spacing-l: 20px;
+  --spacing-xl: 25px;
+  --spacing-xxl: 40px;
+
+  /* Bordures */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-circle: 50%;
+
+  /* Ombres */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 5px 15px rgba(76, 175, 80, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 6px 12px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 40px 80px rgba(0, 0, 0, 0.2);
+
+  /* Transitions */
+  --transition-fast: 0.3s ease;
+  --transition-medium: 0.5s ease;
+  --transition-slow: 0.8s ease;
+  --transition-bezier: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-index */
+  --z-index-background: -1;
+  --z-index-normal: 1;
+  --z-index-header: 998;
+  --z-index-modal: 999;
+  --z-index-modal-content: 1000;
+  --z-index-loader: 9999;
+
+  /* Dimensions */
+  --header-height: 80px;
+  --footer-height: 80px;
+  --container-max-width: 1200px;
 }
