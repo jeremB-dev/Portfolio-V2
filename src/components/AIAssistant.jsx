@@ -601,7 +601,7 @@ const AIAssistant = () => {
           console.log("✅ Réponse spécifique: projets");
           setLastTopic("projets");
           setMainContext("projets");
-          return "💼 Au cours de ma formation, j’ai réalisé plusieurs projets. Parmi eux, 5 projets clés ainsi que ce portfolio illustrent parfaitement mon évolution : ce portfolio (React avec Assistant Intelligent), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />On y voit bien la progression, du HTML jusqu’à React !<br /><br /> Quel projet t’intéresse ?";
+          return "💼 Au cours de sa formation, jérémy a réalisé plusieurs projets. Parmi eux, 5 projets clés ainsi que ce portfolio illustrent parfaitement mon évolution : ce portfolio (React avec Assistant Intelligent), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />On y voit bien la progression, du HTML jusqu’à React !<br /><br /> Quel projet t’intéresse ?";
         }
 
         // Détection des projets spécifiques
