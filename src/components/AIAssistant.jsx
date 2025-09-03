@@ -163,7 +163,7 @@ const KNOWLEDGE_BASE = {
   },
   alternance: {
     content:
-      "🔍 Jérémy cherche une alternance développeur web et IA dès octobre 2025.<br />24 mois, région <strong>Bordeaux</strong>, avec un focus sur l'innovation et l'apprentissage.",
+      "🔍 Jérémy cherche une alternance développeur web et IA dès que possible.<br />12 ou 24 mois, région <strong>Bordeaux</strong>, avec un focus sur l'innovation et l'apprentissage.",
     keywords: [
       "alternance",
       "alternances",
@@ -601,7 +601,7 @@ const AIAssistant = () => {
           console.log("✅ Réponse spécifique: projets");
           setLastTopic("projets");
           setMainContext("projets");
-          return "💼 Jérémy a développé 5 projets principaux : ce portfolio (React/IA), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />Une belle progression du HTML vers React ! Quel projet t'intéresse ?";
+          return "💼 Au cours de ma formation, j’ai réalisé plusieurs projets. Parmi eux, 5 projets clés ainsi que ce portfolio illustrent parfaitement mon évolution : ce portfolio (React avec Assistant Intelligent), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />On y voit bien la progression, du HTML jusqu’à React !<br /><br /> Quel projet t’intéresse ?";
         }
 
         // Détection des projets spécifiques
