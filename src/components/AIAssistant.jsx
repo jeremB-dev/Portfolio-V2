@@ -17,7 +17,7 @@ import useWindowSize from "../hooks/useWindowSize";
 const KNOWLEDGE_BASE = {
   projets: {
     content:
-      "💼 Jérémy a développé 5 projets principaux : ce portfolio (React/IA), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />Une belle progression du HTML vers React ! Quel projet t'intéresse ?",
+      "💼 Jérémy a développé 5 projets principaux : ce portfolio (React avec assistant intelligent), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />Une belle progression du HTML vers React ! Quel projet t'intéresse ?",
     keywords: [
       "projet",
       "projets",
@@ -108,7 +108,7 @@ const KNOWLEDGE_BASE = {
   },
   formation: {
     content:
-      "🎓 Jérémy a un diplôme d'intégrateur web et suit actuellement une formation développeur web et IA en alternance.<br />Il combine théorie et pratique pour maîtriser les technologies modernes.",
+      "🎓 Jérémy a un diplôme d'intégrateur web et souhaite suivre une formation développeur web ou concepteur d'application en alternance.<br />Il combine théorie et pratique pour maîtriser les technologies modernes.",
     keywords: [
       "formation",
       "formations",
@@ -146,7 +146,7 @@ const KNOWLEDGE_BASE = {
   },
   ia: {
     content:
-      "🤖 Jérémy se forme en IA et a créé cet assistant pour montrer ses compétences.<br />Il étudie les APIs d'IA, le machine learning, et développe des projets pratiques.",
+      "🤖 Jérémy continue d'apprendre et a créé cet assistant pour montrer ses compétences.<br />Il aimerait étudier les APIs d'IA, le machine learning, afin de développer des projets pratiques.",
     keywords: [
       "ia",
       "intelligence artificielle",
@@ -163,7 +163,7 @@ const KNOWLEDGE_BASE = {
   },
   alternance: {
     content:
-      "🔍 Jérémy cherche une alternance développeur web et IA dès que possible.<br />12 ou 24 mois, région <strong>Bordeaux</strong>, avec un focus sur l'innovation et l'apprentissage.",
+      "🔍 Jérémy cherche une alternance développeur web ou concepteur d'application dès que possible.<br />12 ou 24 mois, région <strong>Bordeaux</strong>, avec un focus sur l'innovation et l'apprentissage.",
     keywords: [
       "alternance",
       "alternances",
@@ -218,7 +218,7 @@ const KNOWLEDGE_BASE = {
   },
   metier: {
     content:
-      "🎓 Jérémy est en formation développeur web et IA, développe des projets React, et cherche une alternance pour octobre 2025.<br />Il combine formation théorique et projets pratiques.",
+      "🎓 Jérémy espère commencer une formation développeur web ou concepteur d'application, continu de pratiquer sur des projet personnel, et cherche une alternance pour octobre 2025.<br />Il combine formation théorique et projets pratiques.",
     keywords: [
       "métier",
       "travail",
@@ -569,7 +569,7 @@ const AIAssistant = () => {
         ) {
           console.log("✅ Réponse spécifique: que fait jeremy");
           setLastTopic("metier");
-          return "🎓 Jérémy est en formation développeur web et IA, développe des projets React, et cherche une alternance pour octobre 2025.<br />Il combine formation théorique et projets pratiques.";
+          return "🎓 Jérémy espère commencer une formation développeur web ou concepteur d'application, continuer de pratiquer sur des projets personnels, et cherche une alternance pour octobre 2025.<br />Il combine formation théorique et projets pratiques.";
         }
 
         if (
@@ -601,7 +601,7 @@ const AIAssistant = () => {
           console.log("✅ Réponse spécifique: projets");
           setLastTopic("projets");
           setMainContext("projets");
-          return "💼 Au cours de sa formation, jérémy a réalisé plusieurs projets. Parmi eux, 5 projets clés ainsi que ce portfolio illustrent parfaitement mon évolution : ce portfolio (React avec Assistant Intelligent), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />On y voit bien la progression, du HTML jusqu’à React !<br /><br /> Quel projet t’intéresse ?";
+          return "💼 Au cours de sa formation, jérémy a réalisé plusieurs projets. Parmi eux, 5 projets clés ainsi que ce portfolio illustrent parfaitement son évolution : ce portfolio (React avec Assistant Intelligent), Ohmyfood (HTML/Sass), Sophie Bluel (JS/API), Nina Carducci (SEO), et ArgentBank (React/Redux).<br />On y voit bien la progression, du HTML jusqu’à React !<br /><br /> Quel projet t’intéresse ?";
         }
 
         // Détection des projets spécifiques
@@ -667,7 +667,7 @@ const AIAssistant = () => {
           console.log("✅ Réponse spécifique: alternance");
           setLastTopic("alternance");
           setMainContext("alternance");
-          return "🔍 Jérémy cherche une alternance développeur web et IA dès octobre 2025.<br />12-24 mois, région Bordeaux, avec un focus sur l'innovation et l'apprentissage.";
+          return "🔍 Jérémy cherche une alternance développeur web ou concepteur d'application dès que possible.<br />12 ou 24 mois, région <strong>Bordeaux</strong>, avec un focus sur l'innovation et l'apprentissage.";
         }
 
         if (
