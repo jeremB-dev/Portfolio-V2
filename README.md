@@ -52,7 +52,7 @@ Système de tracking des visites intégré :
 - Dashboard privé accessible via console
 - Respect RGPD - Aucune donnée personnelle collectée
 
-## 🤖 chat ia
+## 🤖 chat intélligent
 
 Un assistant interactif intégré pour faciliter l'accès aux informations du portfolio grâce à une interface conversationnelle.
 
