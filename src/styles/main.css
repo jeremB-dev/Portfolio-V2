@@ -6,6 +6,7 @@
 /* Composants */
 @import './components/buttons.css';
 @import './components/cards.css';
+@import './components/cards-animations.css';
 @import './components/forms.css';
 @import './components/header.css';
 @import './components/footer.css';
