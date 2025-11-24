@@ -1,0 +1,41 @@
+/* Animation Typing (Machine à écrire) */
+.typing-animation {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+.typing-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  color: var(--color-primary);
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Variantes de couleur */
+.typing-animation.primary {
+  color: var(--color-primary);
+}
+
+.typing-animation.gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .typing-animation {
+    font-size: 0.95em;
+  }
+}

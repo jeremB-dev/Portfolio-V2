@@ -1,0 +1,76 @@
+/* Curseur personnalisé - Desktop uniquement */
+.custom-cursor,
+.custom-cursor-dot {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease-out, opacity 0.15s ease;
+}
+
+/* Cercle extérieur */
+.custom-cursor {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  transition: transform 0.2s ease-out, opacity 0.2s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.custom-cursor.hovering {
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.custom-cursor.clicking {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* Point central */
+.custom-cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.custom-cursor-dot.hovering {
+  transform: translate(-50%, -50%) scale(0);
+}
+
+/* Cacher le curseur par défaut */
+body.custom-cursor-active {
+  cursor: none;
+}
+
+body.custom-cursor-active a,
+body.custom-cursor-active button,
+body.custom-cursor-active input,
+body.custom-cursor-active textarea {
+  cursor: none;
+}
+
+/* Désactiver sur mobile et tablette */
+@media (max-width: 1024px) {
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
+  }
+  
+  body.custom-cursor-active {
+    cursor: auto !important;
+  }
+}
+
+/* Respect de prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor,
+  .custom-cursor-dot {
+    display: none !important;
+  }
+}

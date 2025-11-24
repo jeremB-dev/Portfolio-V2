@@ -1,0 +1,35 @@
+/* Lazy Image - Optimisation du chargement */
+.lazy-image {
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.lazy-image.loading {
+  opacity: 0.6;
+  filter: blur(10px);
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* Animation de chargement */
+@keyframes shimmerLoading {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.lazy-image.loading {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmerLoading 2s infinite;
+}

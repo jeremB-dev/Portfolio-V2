@@ -16,7 +16,7 @@
 
 .project-card.active,
 .project-card.active:hover {
- transform: translateX(-50%) !important;
+ transform: translateX(-50%);
  box-shadow: var(--shadow-modal) !important;
 }
 
@@ -153,7 +153,7 @@
  width: 90% !important;
  max-width: 1200px !important;
  height: 90vh !important;
- transform: translateX(-50%) !important;
+ transform: translate3d(-50%, 0, 0) !important;
  z-index: var(--z-index-modal-content) !important;
  cursor: default;
  overflow-y: auto;
@@ -167,22 +167,13 @@
  margin: 0 !important;
  padding: 0 !important;
  
- will-change: unset !important;
+ will-change: transform, opacity !important;
  backface-visibility: hidden !important;
  -webkit-font-smoothing: subpixel-antialiased !important;
 }
 
-/* Désactive explicitement les effets de survol sur la modale active */
-.project-card.active:hover {
- transform: translateX(-50%) !important;
- box-shadow: var(--shadow-modal) !important;
- outline: none !important;
-}
-
 .project-card.active:focus,
 .project-card.active:active {
- transform: translateX(-50%) !important;
- box-shadow: var(--shadow-modal) !important;
  outline: none !important;
 }
 

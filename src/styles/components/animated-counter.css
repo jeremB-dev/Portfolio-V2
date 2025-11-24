@@ -1,0 +1,12 @@
+/* Compteur animé */
+.animated-counter {
+  display: inline-block;
+  font-weight: 700;
+  font-size: inherit;
+  color: var(--color-primary);
+  transition: transform 0.3s ease;
+}
+
+.animated-counter:hover {
+  transform: scale(1.05);
+}

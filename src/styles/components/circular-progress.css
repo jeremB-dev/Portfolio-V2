@@ -1,0 +1,64 @@
+/* Conteneur du graphique circulaire */
+.circular-progress-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress-svg {
+  transform: rotate(0deg);
+}
+
+.circular-progress-circle {
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.circular-progress-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.circular-progress-percentage {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.circular-progress-label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  margin-top: 4px;
+  max-width: 80px;
+  line-height: 1.2;
+}
+
+/* Animation au hover */
+.circular-progress-container:hover .circular-progress-circle {
+  filter: drop-shadow(0 0 12px currentColor);
+}
+
+.circular-progress-container:hover .circular-progress-percentage {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .circular-progress-percentage {
+    font-size: 1.25rem;
+  }
+  
+  .circular-progress-label {
+    font-size: 0.7rem;
+  }
+}

@@ -1,0 +1,81 @@
+/* Smooth Scroll - Comportement global */
+html {
+  scroll-behavior: auto; /* Désactiver le scroll natif pour utiliser notre custom */
+}
+
+/* Animation de scroll pour les sections */
+.scroll-section {
+  scroll-margin-top: 80px; /* Offset pour le header fixe */
+}
+
+/* Indicateur de scroll (optionnel) */
+.scroll-indicator {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 50px;
+  height: 50px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-indicator:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.scroll-indicator svg {
+  width: 24px;
+  height: 24px;
+  color: white;
+  animation: bounceUp 2s infinite;
+}
+
+@keyframes bounceUp {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    width: 45px;
+    height: 45px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .scroll-indicator svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Désactiver le smooth scroll si l'utilisateur préfère réduire les animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  
+  .scroll-indicator {
+    display: none;
+  }
+}

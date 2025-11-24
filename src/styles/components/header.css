@@ -11,7 +11,7 @@
   z-index: var(--z-index-header);
   transition: all var(--transition-bezier);
   flex-direction: column;
-  overflow-x: hidden;
+
   box-sizing: border-box;
 }
 

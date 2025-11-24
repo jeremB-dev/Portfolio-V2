@@ -1,0 +1,58 @@
+/* Transition fluide entre thèmes */
+.theme-transition,
+.theme-transition * {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Éviter la transition sur les éléments qui ne doivent pas changer */
+.theme-transition img,
+.theme-transition video,
+.theme-transition canvas {
+  transition: none !important;
+}
+
+/* Animation spéciale pour le body lors du changement de thème */
+body.theme-transitioning {
+  position: relative;
+}
+
+body.theme-transitioning::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9998;
+  animation: themeFlash 0.3s ease-out;
+}
+
+@keyframes themeFlash {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Désactiver les transitions si l'utilisateur préfère réduire les animations */
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition * {
+    transition: none !important;
+  }
+  
+  body.theme-transitioning::before {
+    display: none;
+  }
+}

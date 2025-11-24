@@ -1,0 +1,115 @@
+/* ============================================
+   ANIMATIONS MODERNES POUR CARTES PROJET
+   ============================================ */
+
+/* Animation d'ouverture de carte */
+
+@keyframes cardOpenAnimation {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, 30px, 0) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+}
+
+/* Animation de fermeture de carte */
+@keyframes cardCloseAnimation {
+  0% {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-50%, 30px, 0) scale(0.85);
+  }
+}
+
+/* Animation de l'overlay avec backdrop blur */
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes overlayFadeOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Animation fade in up pour le contenu */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation bounce in pour le bouton close */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Application des animations */
+.project-card.active {
+  animation: cardOpenAnimation 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+
+.project-card.active .close-button {
+  animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both !important;
+}
+
+.project-card.active .project-info h3 {
+  animation: fadeInUp 0.5s ease-out 0.1s both !important;
+}
+
+.project-card.active .project-info p {
+  animation: fadeInUp 0.6s ease-out 0.2s both !important;
+}
+
+.projects-overlay.active {
+  animation: overlayFadeIn 0.4s ease forwards !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Animation de fermeture */
+.project-card.closing {
+  animation: cardCloseAnimation 0.3s ease-out forwards !important;
+}
+
+.projects-overlay.closing {
+  animation: overlayFadeOut 0.3s ease-out forwards !important;
+}
+
+.close-button:hover {
+  background-color: var(--color-primary-dark) !important;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.5) !important;
+  transform: scale(1.15) rotate(90deg) !important;
+}

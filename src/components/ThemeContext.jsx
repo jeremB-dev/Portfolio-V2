@@ -18,6 +18,10 @@ export default function ThemeProvider({ children }) {
 
   // Met à jour le DOM et localStorage quand le thème change
   useEffect(() => {
+    // Ajouter la classe de transition
+    document.body.classList.add('theme-transition');
+    document.body.classList.add('theme-transitioning');
+    
     if (darkMode) {
       document.documentElement.classList.add('dark-theme');
       document.documentElement.classList.remove('light-theme');
@@ -27,6 +31,13 @@ export default function ThemeProvider({ children }) {
       document.documentElement.classList.remove('dark-theme');
       localStorage.setItem('theme', 'light');
     }
+
+    // Retirer la classe de transition après l'animation
+    const timer = setTimeout(() => {
+      document.body.classList.remove('theme-transitioning');
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [darkMode]);
 
   return (

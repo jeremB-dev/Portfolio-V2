@@ -28,7 +28,7 @@ function ProjectCard({ project }) {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
         if (isGalleryOpen) setIsGalleryOpen(false);
-        else if (isOpen) setIsOpen(false);
+        else if (isOpen) handleClose();
       }
     };
     if (isOpen || isGalleryOpen) {
@@ -59,8 +59,20 @@ function ProjectCard({ project }) {
 
   const handleClose = (e) => {
     e?.stopPropagation();
-    setIsOpen(false);
-    setIsGalleryOpen(false);
+    
+    // Ajouter la classe closing pour l'animation
+    if (projectCardRef.current) {
+      projectCardRef.current.classList.add('closing');
+    }
+    
+    // Attendre la fin de l'animation avant de fermer
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsGalleryOpen(false);
+      if (projectCardRef.current) {
+        projectCardRef.current.classList.remove('closing');
+      }
+    }, 300); // Durée de l'animation de fermeture
   };
 
   const handleImageClick = (e) => {
@@ -113,7 +125,14 @@ function ProjectCard({ project }) {
           <div className="tech-icons-btn-container">
             <div className="tech-icons">
               {technologies?.map((tech, index) => (
-                <img key={index} src={`/assets/logos/${tech}.svg`} alt={`Tech ${tech}`} width="32" height="32" loading="lazy" />
+                <img 
+                  key={index} 
+                  src={`/assets/logos/${tech.toLowerCase()}.svg`} 
+                  alt={tech} 
+                  width="32" 
+                  height="32" 
+                  loading="lazy" 
+                />
               ))}
             </div>
             <a

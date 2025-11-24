@@ -89,7 +89,7 @@ function Technologies() {
             }}
           ></div>
         </div>
-        <span className="skill-text">{label} ({level}%)</span>
+        <span className="skill-text">{level}%</span>
       </div>
     );
   };

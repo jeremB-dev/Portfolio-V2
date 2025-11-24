@@ -1,11 +1,30 @@
 :root {
-  /* Couleurs de base */
-  --color-primary: #4caf50;
-  --color-primary-dark: #45a049;
-  --color-secondary: #4286f4;
-  --color-secondary-dark: #373b44;
+  /* Système de couleurs HSL moderne */
+  --primary-hue: 145;
+  --secondary-hue: 215;
+  --accent-hue: 30;
+  
+  /* Couleurs principales */
+  --color-primary: hsl(var(--primary-hue), 63%, 55%);
+  --color-primary-light: hsl(var(--primary-hue), 63%, 65%);
+  --color-primary-dark: hsl(var(--primary-hue), 63%, 45%);
+  --color-primary-darker: hsl(var(--primary-hue), 63%, 35%);
+  
+  /* Couleurs secondaires */
+  --color-secondary: hsl(var(--secondary-hue), 85%, 60%);
+  --color-secondary-light: hsl(var(--secondary-hue), 85%, 70%);
+  --color-secondary-dark: hsl(220, 13%, 24%);
+  
+  /* Couleurs d'accent */
+  --color-accent: hsl(var(--accent-hue), 100%, 60%);
+  --color-accent-light: hsl(var(--accent-hue), 100%, 70%);
+  
+  /* Couleurs de texte */
   --color-text: #333;
   --color-text-light: #666;
+  --color-text-lighter: #999;
+  
+  /* Couleurs de fond */
   --color-background: #fff;
   --color-background-alt: #f5f5f5;
   --color-border: #ddd;
@@ -13,27 +32,41 @@
   --color-assistant-suggestion-title: rgba(255, 255, 255, 0.7);
 
   /* Palette de compétences (progression bleu → vert) */
-  --skill-color-1: #7986cb;
-  --skill-color-2: #90caf9;
-  --skill-color-3: #5c6bc0;
-  --skill-color-4: #42a5f5;
-  --skill-color-5: #4286f4;
-  --skill-color-6: #66bb6a;
-  --skill-color-7: #4caf50;
-  --skill-color-8: #bbdefb;
+  --skill-color-1: hsl(231, 48%, 63%);
+  --skill-color-2: hsl(207, 89%, 77%);
+  --skill-color-3: hsl(231, 44%, 57%);
+  --skill-color-4: hsl(207, 90%, 61%);
+  --skill-color-5: hsl(var(--secondary-hue), 85%, 60%);
+  --skill-color-6: hsl(var(--primary-hue), 45%, 59%);
+  --skill-color-7: hsl(var(--primary-hue), 63%, 55%);
+  --skill-color-8: hsl(207, 89%, 86%);
 
-  /* Dégradés de base */
+  /* Dégradés modernes */
   --gradient-primary: linear-gradient(
-    45deg,
+    135deg,
     var(--color-primary),
     var(--color-primary-dark)
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--color-secondary),
+    var(--color-secondary-dark)
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--color-accent),
+    var(--color-accent-light)
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    hsl(var(--secondary-hue), 85%, 60%),
+    hsl(var(--primary-hue), 63%, 55%)
   );
   --gradient-background: linear-gradient(
     135deg,
     var(--color-secondary-dark) 0%,
     var(--color-secondary) 100%
   );
-  --gradient-primary: linear-gradient(270deg, #4286f4, #4caf50);
 
   /* Dégradés de compétences */
   --gradient-skill-discovery: linear-gradient(
@@ -82,6 +115,19 @@
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
   --shadow-card: 0 6px 12px rgba(0, 0, 0, 0.1);
   --shadow-modal: 0 40px 80px rgba(0, 0, 0, 0.2);
+  
+  /* Effets visuels modernes */
+  --glow-primary: 0 0 20px hsla(var(--primary-hue), 63%, 55%, 0.3),
+                  0 0 40px hsla(var(--primary-hue), 63%, 55%, 0.2);
+  --glow-secondary: 0 0 20px hsla(var(--secondary-hue), 85%, 60%, 0.3),
+                    0 0 40px hsla(var(--secondary-hue), 85%, 60%, 0.2);
+  --glow-accent: 0 0 20px hsla(var(--accent-hue), 100%, 60%, 0.3),
+                 0 0 40px hsla(var(--accent-hue), 100%, 60%, 0.2);
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(10px);
 
   /* Transitions */
   --transition-fast: 0.3s ease;
@@ -101,4 +147,35 @@
   --header-height: 80px;
   --footer-height: 80px;
   --container-max-width: 1200px;
+
+  /* Breakpoints (pour référence dans les media queries) */
+  --breakpoint-tablet: 1024px;
+  --breakpoint-mobile: 768px;
+  --breakpoint-small: 480px;
+
+  /* Variables de thème (fusionné depuis theme.css) */
+  --background-color: transparent;
+  --text-color: #fff;
+  --border-color: transparent;
+  --form-background: #fff;
+  --form-text: #333;
+}
+
+/* Thème sombre */
+.dark-theme {
+  --background-color: #212529;
+  --text-color: #f8f9fa;
+  --primary-color: #53ba5f;
+  --secondary-color: #adb5bd;
+  --accent-color: #ffc107;
+  --border-color: #495057;
+  --form-background: #333;
+  --form-text: #fff;
+}
+
+/* Application du thème aux sections */
+section {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }

@@ -3,6 +3,8 @@ import BackgroundAnimation from './BackgroundAnimation';
 import useAnimation from '../hooks/useAnimation';
 import useWindowSize from '../hooks/useWindowSize';
 import { HashLink } from 'react-router-hash-link';
+import CTAButtons from './CTAButtons';
+import AnimatedCounter from './AnimatedCounter';
 
 function About() {
   const { animationsEnabled } = useAnimation();
@@ -58,6 +60,29 @@ function About() {
             permettent d'apporter un regard neuf et une belle énergie à chaque
             projet.
           </p>
+          <CTAButtons />
+          
+          {/* Statistiques */}
+          <div className="about-stats">
+            <div className="stat-item">
+              <div className="stat-number">
+                <AnimatedCounter end={10} suffix="+" />
+              </div>
+              <div className="stat-label">Projets réalisés</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">
+                <AnimatedCounter end={15} suffix="+" />
+              </div>
+              <div className="stat-label">Technologies maîtrisées</div>
+            </div>
+            <div className="stat-item">
+              <div className="stat-number">
+                <AnimatedCounter end={100} suffix="%" />
+              </div>
+              <div className="stat-label">Motivation</div>
+            </div>
+          </div>
         </div>
         <div className="profile-photo-container">
           <img

@@ -143,7 +143,7 @@
   border-radius: var(--border-radius-lg);
   padding: 30px 20px;
   text-align: center;
-  transition: all var(--transition-fast);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(5px);
@@ -155,6 +155,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.quality-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  border-color: var(--color-primary);
 }
 
 .quality-card::before {
@@ -350,4 +356,89 @@
    font-size: 1.1rem;
    margin-bottom: 12px;
  }
+}
+/* --- Statistiques Section About --- */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 4rem;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--border-radius-md);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(76, 175, 80, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--color-primary), #a5d6a7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Responsive Stats */
+@media (max-width: 768px) {
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .stat-item {
+    padding: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
+  
+  .stat-label {
+    text-align: right;
+    font-size: 0.9rem;
+  }
 }

@@ -1,0 +1,218 @@
+/* Toggle pour changer de vue */
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--border-radius-lg);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toggle-button {
+  padding: 10px 24px;
+  background: transparent;
+  border: 2px solid rgba(76, 175, 80, 0.2);
+  border-radius: var(--border-radius-md);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(76, 175, 80, 0.1) 0%, 
+    rgba(76, 175, 80, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toggle-button:hover::before {
+  opacity: 1;
+}
+
+.toggle-button:hover {
+  border-color: rgba(76, 175, 80, 0.4);
+  transform: translateY(-2px);
+}
+
+.toggle-button.active {
+  background: var(--gradient-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.toggle-button.active::before {
+  opacity: 0;
+}
+
+/* Grille pour l'affichage en cercles */
+.skills-grid-circles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.skills-grid-circles .skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skills-grid-circles .skill-header {
+  flex-direction: column;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.skills-grid-circles .skill-logo {
+  width: 40px;
+  height: 40px;
+}
+
+/* Styles pour la vue en barres */
+.skills-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.skills-category h3 {
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.skill-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  border: 1px solid rgba(76, 175, 80, 0.1);
+  transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(76, 175, 80, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.skill-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.skill-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.skill-bar-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skill-bar-background {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+.skill-label {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  min-width: 90px;
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .view-toggle {
+    width: 100%;
+  }
+  
+  .toggle-button {
+    flex: 1;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .skills-grid-circles {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-grid-circles {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
